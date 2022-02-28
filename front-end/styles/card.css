@@ -1,0 +1,9 @@
+.card {
+    position: relative;
+    @apply p-5;
+    /*@apply mb-6;*/
+    background-color: #ffffff;
+    @apply shadow-base;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+}

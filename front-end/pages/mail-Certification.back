@@ -1,0 +1,77 @@
+import Card from "../components/card";
+import Modal from "../components/modal";
+import Alert from "../components/alert";
+import Toast from "../components/toast";
+import CampaignsCheck from "../components/campaignsCheck";
+
+const Mail = () => {
+
+    const mailtitle = {
+        color: "#6c757d",
+        fontSize: "2rem"
+    };
+
+    const title = {
+        color: "#727cf5",
+        fontSize: "2rem",
+        marginRight: "0.75rem"
+    };
+
+    const hr = {
+        border: "0",
+        height: "5px",
+        background: "#727cf5",
+        marginTop: "1.25rem",
+        marginBottom: "1.25rem"
+    };
+
+    const main = {
+        color: "#6c757d",
+        marginTop: "1.5rem",
+    };
+
+    const maintext = {
+        color: "#727cf5",
+        fontWeight: "bold",
+    }
+
+    const button = {
+        display: "inline-block",
+        backgroundColor: "#fa5c7c",
+        border: "1px solid #fa5c7c",
+        padding: "0.45rem 3rem",
+        borderRadius: "0.15rem",
+        fontSize: "0.9rem",
+        color: "#ffffff",
+        textAlign: "center",
+        boxShadow: "0 2px 6px 0 rgb(250 92 124 / 50%)",
+        marginTop: "2rem"
+    };
+
+    return (
+        <>
+            <Card className>
+                <hr style={hr}/>
+                <span style={title}>메일인증</span>
+                <span style={mailtitle}>안내입니다.</span>
+
+                <div style={main}>
+                    안녕하세요<br/>
+                    팜캐드폼 인증 확인 메일입니다.<br/>
+                    아래 <span style={maintext}>'메일인증'</span> 버튼을 클릭하여 메일 인증을 진행해 주세요.<br/>
+                    감사합니다.
+                </div>
+                <button style={button}>메일인증</button>
+            </Card>
+            {/*<Modal />*/}
+            {/*<Alert title="dfdsf" />*/}
+            {/*<Toast />*/}
+            <CampaignsCheck />
+        </>
+    )
+}
+
+export default Mail;
+
+
+

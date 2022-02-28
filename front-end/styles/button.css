@@ -1,0 +1,167 @@
+.btn {
+    display: inline-block;
+    background-color: #fa5c7c;
+    border: 1px solid #fa5c7c;
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.15rem;
+    font-size: 0.9rem;
+    color: #ffffff;
+    /*margin-left: 0.75rem;*/
+    /*margin-bottom: 0.75rem;*/
+    text-align: center;
+    font-weight: 400;
+    box-shadow: 0 2px 6px 0 rgb(250 92 124 / 50%);
+}
+
+.btn:hover {
+    background-color: #d54e69;
+}
+
+.btn:focus {
+    background-color: #d54e69;
+    box-shadow: 0 0 0 0.2rem rgb(251 116 144 / 50%);
+}
+
+.btn:active,
+.btn.active:not(.btn_link)
+{
+    color: #fff;
+    background-color: #fa5c7c;
+}
+
+.btn:disabled,
+.btn.disabled
+{
+    background-color: gray;
+    box-shadow: 0 2px 6px 0 rgba(128, 128, 128, 0.68);
+    border: 1px solid gray;
+}
+
+
+
+/* Link Button */
+.btn_link {
+    color: #727cf5;
+    background-color: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+
+.btn_link.active {
+    color: #4751f8;
+    font-weight: 900;
+}
+
+.btn_link:hover {
+    color: #6169d0;
+    background-color: transparent;
+}
+
+.btn_link:focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.btn_link.disabled {
+    box-shadow: none;
+    background-color: transparent;
+    color: #7e868c;
+    border: none;
+}
+
+.btn_icon svg {
+    display: inline-block;
+}
+
+.btn_icon:disabled svg {
+    @apply text-gray-300;
+}
+
+.btn_outline {
+    background-color: transparent;
+    border: 1px solid #fa5c7c;
+    box-shadow: none;
+    color: #fa5c7c;
+}
+
+.btn_outline:focus {
+    box-shadow: 0 0 0 0.2rem rgb(251 116 144 / 50%);
+    background-color: transparent;
+    color: #fa5c7c;
+}
+
+.btn_outline:hover {
+    color: white;
+    background-color: #fa5c7c;
+}
+
+
+.btn_block {
+    display: block;
+    width: 100%;
+}
+
+.btn_sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.7rem;
+}
+
+.btn_lg {
+    padding: 0.8rem 2rem;
+}
+
+
+/* 토글 스위치 시작 */
+
+.switch-button {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* width: height = 2 : 1*/
+    height: 25px;
+}
+
+.switch-button input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.on-off-switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    background-color: #ccc;
+    transition: .2s;
+}
+
+.on-off-switch:before {
+    position: absolute;
+    content: "";
+    width: calc(50% - 6px);
+    padding-bottom: calc(50% - 6px);
+    left: 3px;
+    bottom: 3px;
+    background-color: #fff;
+    transition: .2s;
+    border-radius: 20px;
+}
+
+.switch-button input:checked + .on-off-switch {
+    background-color: #727cf5;
+}
+
+.switch-button input:checked + .on-off-switch:before {
+    left: calc(100% - (50% - 6px + 3px));
+}
+
+.switch-button.sm {
+    width: 40px;
+    height: 20px;
+}
+
+/* 토글 스위치 끝 */
+

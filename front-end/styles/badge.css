@@ -1,0 +1,30 @@
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.badge-group {
+    margin: -.25em;
+}
+.badge-group .badge {
+    margin: .25em;
+}
+
+
+.badge-outline {
+    @apply bg-transparent;
+    @apply border-primary;
+    @apply border-2;
+    @apply text-primary;
+}
+
+.rounded-pill {
+    border-radius: 50rem !important;
+}

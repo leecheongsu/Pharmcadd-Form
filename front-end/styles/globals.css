@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'layout.css';
+@import 'tables.css';
+@import 'card.css';
+@import 'form.css';
+@import 'button.css';
+@import 'check.css';
+
+@import "modal.css";
+@import "alert.css";
+@import "toast.css";
+
+
+@import 'breadcrumb.css';
+@import 'pagination.css';
+@import 'badge.css';
+
+/* page */
+@import 'login.css';
+@import 'find-pw.css';
+@import 'admin.css';
+@import "signup.css";
+@import "campaign.css";
+@import "campaigncreate.css";
+
+
+
+
+

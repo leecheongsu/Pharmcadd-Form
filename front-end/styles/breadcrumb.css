@@ -1,0 +1,14 @@
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.breadcrumb li svg {
+    position: relative;
+    top: 2px;
+}
+
+.breadcrumbItem {
+    @apply text-sm;
+    color: #727cf5;
+}

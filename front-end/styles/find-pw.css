@@ -1,0 +1,18 @@
+.pw_box {
+    margin-bottom: 1rem;
+}
+
+.pw-text {
+    font-size: 1.5rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.pw_box .certification {
+    /*display: inline-block;*/
+    /*width: 75%;*/
+    margin-bottom: 2rem;
+}
+
+

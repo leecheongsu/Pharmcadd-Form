@@ -1,0 +1,37 @@
+.fl {float:left!important;}
+.fr {float:right!important;}
+.al {text-align:left!important;}
+.ac {text-align:center!important;}
+.ar {text-align:right!important;}
+
+.w70 {width: 70% !important;}
+.w60 {width: 60% !important;}
+.w50 {width: 50% !important;}
+.w40 {width: 40% !important;}
+.w30 {width: 30% !important;}
+.w20 {width: 20% !important;}
+.w10 {width: 10% !important;}
+
+.typography-label {
+    position: absolute;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #6c757d;
+    line-height: 1.5;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.typography-plaintext {
+    position: absolute;
+    display: block;
+    width: 100%;
+    line-height: 1.5;
+    color: #6c757d;
+    background-color: transparent;
+    border-width: 1px 0;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}

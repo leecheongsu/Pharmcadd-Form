@@ -1,0 +1,21 @@
+.alert-back{
+    position: fixed;
+    top:0; left: 0; bottom: 0; right: 0;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.alert {
+    position: absolute;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: inline-block;
+    background-color: #ffffff;
+    border: 1px solid #fa5c7c;
+    padding: 0.45rem 2rem;
+    border-radius: 0.15rem;
+    font-size: 0.9rem;
+    color: #fa5c7c;
+    box-shadow: 0 2px 6px 0 rgb(250 92 124 / 50%);
+}

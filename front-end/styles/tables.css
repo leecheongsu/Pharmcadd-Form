@@ -1,0 +1,38 @@
+.table {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.table thead {
+    background-color: #edeff1;
+    /*padding: 15.2px;*/
+    text-align: left;
+    /*color: #313a46;*/
+}
+
+.table thead th {
+    color: #313a46;
+}
+
+.table th,
+.table td {
+    /*border-bottom-width: 1px;*/
+    /*border-color: rgb(238, 242, 247);*/
+    /*border-style: solid;*/
+    border-bottom: 1px solid rgb(238, 242, 247);
+    padding: 16px;
+    color: #6c757d;
+}
+
+.table-board th,
+.table-board td {
+    white-space: nowrap;
+}
+
+.table-board .has-link {
+    cursor: pointer;
+}
+
+.table-board .has-link:hover {
+    background-color: #fafafa;
+}

@@ -1,0 +1,35 @@
+.campaign .title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+}
+
+.campaign h3 {
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.campaign .necessary {
+    color: #fa5c7c;
+}
+
+.title_header {
+    @apply grid;
+    @apply grid-cols-6;
+    @apply items-center;
+}
+
+.title_header ._title {
+    @apply col-span-4;
+    @apply text-lg;
+    @apply font-bold;
+    @apply text-center;
+}
+
+.plain-center {
+    text-align: center;
+    padding-top: 30vh;
+}
+

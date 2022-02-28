@@ -1,0 +1,44 @@
+.side_menu {
+    position: relative;
+    width: 260px;
+    background-color: #313a46;
+    @apply min-h-screen;
+    transition: all 0.5s ease 0s;
+}
+
+.side_menu:not(.show) {
+    width: 0;
+}
+
+.side_menu ._inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100%;
+}
+
+.side_menu .logo {
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
+    height: 100px;
+}
+
+.side_menu .cate {
+    @apply inline-block;
+    @apply text-xs;
+    @apply text-gray-500;
+}
+
+.side_menu nav .menu li a {
+    @apply block;
+    @apply text-sm;
+    @apply text-gray-300;
+}
+
+.side_menu nav .menu li a:hover,
+.side_menu nav .menu li a.active {
+    @apply text-white;
+    background-color: rgba(255, 255, 255, 0.1);
+}

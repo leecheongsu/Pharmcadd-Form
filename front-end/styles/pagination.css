@@ -1,0 +1,44 @@
+.pagination {
+    display: flex;
+}
+
+.pagination .page-link {
+    display: block;
+    font-size: 0.875rem;
+    color: #313a46;
+    width: 30px;
+    line-height: 29px;
+    text-align: center;
+    border-radius: 30px;
+    cursor: pointer;
+    @apply font-light;
+    @apply mx-1;
+}
+
+.pagination .page-link:not(.active):not(.disabled):hover {
+    color: #313a46;
+    background-color: #eef2f7;
+}
+
+.pagination .page-link.active {
+    color: #ffffff;
+    @apply bg-primary;
+}
+
+.pagination .page-link.disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.pagination .page-link:not(.disabled):focus {
+    box-shadow: 0 0 0 0.2rem rgb(114 124 245 / 25%);
+}
+
+.pagination .page-arr svg {
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    @apply w-4;
+    @apply h-4;
+    @apply text-gray-400;
+}

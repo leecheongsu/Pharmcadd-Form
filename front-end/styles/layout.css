@@ -1,0 +1,52 @@
+body {
+    @apply font-light;
+    background-color: #fafbfe;
+}
+
+/* Container */
+.container-fluid {
+    @apply w-full;
+    @apply pl-5;
+    @apply pr-5;
+    @apply ml-auto;
+    @apply mr-auto;
+}
+
+.container_sm {
+    max-width: 640px;
+    color: #6c757d;
+    @apply ml-auto;
+    @apply mr-auto;
+}
+
+.content-area {
+    position: relative;
+    padding-bottom: 85px;
+}
+
+.content {
+    max-width: 1280px;
+}
+
+.navbar {
+    @apply shadow-base;
+}
+
+/* Page Header */
+.page_header {
+    border-bottom: 10px solid #f4f3f8;
+    height: 52px;
+}
+
+.pageTitle {
+    color: #6c757d;
+    height: 75px;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: 1px solid rgba(152, 166, 173, .2);
+}

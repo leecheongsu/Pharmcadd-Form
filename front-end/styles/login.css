@@ -1,0 +1,33 @@
+.login_page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    @apply h-screen;
+
+    background-image: linear-gradient(
+            33deg, rgb(4 177 179), rgba(187, 0, 255, 0) 21%), linear-gradient(
+            153deg, #000000, rgba(51, 184, 148, 0) 70%), linear-gradient(
+            311deg, rgb(0 178 179), rgba(51, 184, 148, 0) 47%), linear-gradient(
+            225deg, rgb(255 255 255), rgba(0, 255, 242, 0) 51%);
+
+}
+
+.login_box {
+    width: 100%;
+}
+
+@screen tablet {
+    .login_box {
+        width: 360px;
+    }
+}
+
+.login_box .pw {
+    margin-bottom: 1rem;
+}
+
+.login_box .btn_find {
+    margin-left: 56%;
+    padding-right: 0;
+}
