@@ -59,4 +59,4 @@ storage:
   upload-dir: ./storage
 logging:
   file:
-    path: ${user.home}/${spring.application.name}/logs
+    path: ${user.home}/${spring.application.name}/dist/back-end/logs
