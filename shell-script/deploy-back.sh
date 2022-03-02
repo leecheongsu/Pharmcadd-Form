@@ -20,7 +20,8 @@ cd "$GIT_PATH_BACK" || exit
 ./gradlew -DJDBC_HOST="$DB_HOST" clean flywayMigrate generateJooq bootJar || exit
 
 # jar 파일 dist 폴더로 덮어쓰기
-cp -f build/libs/"$BUILD_FILE" $DIST_PATH_BACK || exit
+cp -f "$GIT_PATH_BACK"/build/libs/"$BUILD_FILE" $DIST_PATH_BACK || exit
 
 # 서비스 재실행
+cd "$DIST_PATH_BACK"
 sudo systemctl restart pharmcadd-form
