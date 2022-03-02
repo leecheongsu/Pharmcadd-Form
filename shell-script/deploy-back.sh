@@ -17,6 +17,7 @@ git pull
 
 # 폴더로 이동, build
 cd "$GIT_PATH_BACK" || exit
+chmod +x gradlew
 ./gradlew -DJDBC_HOST="$DB_HOST" clean flywayMigrate generateJooq bootJar || exit
 
 # jar 파일 dist 폴더로 덮어쓰기
