@@ -51,19 +51,21 @@ const Login = () => {
     })
 
     useEffect(() => {
-        if(router.query.result) {
-            if( router.query.result === 'failed') {
+        if(router.query.result || router.query.reset) {
+            if( router.query.result === 'failed' || router.query.reset === 'failed') {
+                const content = router.query.result ? 'Join Failed' : 'Reset Failed'
                 setModalConf({
                     title : 'Failed',
-                    content : 'Join Failed',
+                    content : content,
                     blindFilter : true,
                     handleRightButton : rightButton
                 })
                 setIsModal(true)
             } else {
+                const content = router.query.result ? 'Join Completed' : 'Reset Succeeded'
                 setModalConf({
                     title : 'Success',
-                    content : 'Join Completed',
+                    content : content,
                     blindFilter : true,
                     handleRightButton : rightButton
                 })

@@ -1,110 +1,227 @@
 import Card from "../../components/Card";
-import FormInput from "../../components/form-input";
-import React, { useRef, useState } from "react";
-import useInputs from "../../hooks/useInputs";
-import useValidation from "../../hooks/useValidation";
+import React, {useRef, useState} from "react";
 import axios from "../../lib/axios";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import {useRouter} from "next/router";
+import Form from "../../components/Form";
+import FormLabel from "../../components/FormLabel";
+import FormGroup from "../../components/FormGroup";
+import FormControl from "../../components/FormControl";
+import Feedback from "../../components/Feedback";
+import Link from "../../components/Link";
+import useForm from "../../hooks/useForm";
+import ModalBox from "../../components/modal/ModalBox";
 
 const FindPw = () => {
     const router = useRouter();
-    const [{ email, code, password, passwordConfirm }, onChange] = useInputs({
+    const [{email, code, password, passwordConfirm}, validated, {submit, onChange, reset}] = useForm({
         email: '',
         code: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
     })
 
-    const [valid, validate, validateForm] = useValidation({
-        email: {
-            rules: [v => !!v, v => v.endsWith('@pharmcadd.com')],
-            message: 'Enter your company email account.',
-        },
-        code: {
-            rules: [v => !!v, v => v.match(/[0-9]{6}/)],
-            message: 'Enter 6 digits.'
-        },
-        password: {
-            rules: [v => !!v, v => v.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)],
-            message: 'Enter 6 or more characters, including letters and numbers.',
-        },
-        passwordConfirm: {
-            rules: [v => !!v, v => (v === comparePassword.current)],
-            message: 'Passwords do not match.',
-        }
-    })
-
-    const onChangeItem = (e) => {
-        validate(e)
+    const sendCodeActivate = useRef(false)
+    const [emailInvalid, setEmailInvalid] = useState(null)
+    const onChangeWithEmailCheck = (e) => {
         onChange(e)
+        const isValid = e.target.checkValidity()
+        setEmailInvalid(!isValid)
+        sendCodeActivate.current = true
     }
 
-    /* code */
-    const [codeStatus, setCodeStatus] = useState({
+    const [inputCode, setInputCode] = useState({
         isSend: false,
-        isError: false,
-        message: 'Code does not match.'
+        isComplete: false
     })
-    const sendCode = (value) => {
-        axios.post('/backapi/valid-code', { email: value }).then(() => {
-            setCodeStatus(v => ({ ...v, isSend: true, isError: false }))
-        })
-    }
-    const onChangeCode = (e) => {
-        onChangeItem(e)
-        setCodeStatus(v => ({ ...v, isError: false }))
+
+    const handleRightButton = () => {
+        setIsModal(false)
     }
 
-    /* password */
-    const comparePassword = useRef(password); /* FIXME: 더 좋은 방법은? */
-    const onChangePassword = (e) => {
-        onChangeItem(e)
-        comparePassword.current = e.target.value;
+    const rightButton = ({
+        title : 'Confirm',
+        onClick : handleRightButton
+    })
+
+    const sendCode = async (value) => {
+        setInputCode(prev => ({...prev, isSend: true}))
+        await axios.post('/backapi/valid-code', {email: value})
+            .then((res) => {
+                if(res.status === 200) {
+                    setIsModal(true)
+                    setModalConf({
+                        title : 'Success',
+                        content : 'Send Completed',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
+                }
+            })
+            .catch((e) => {
+                if(e.response.status < 500) {
+                    setIsModal(true)
+                    setModalConf({
+                        title : 'Fail',
+                        content : 'Send Failed',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
+                }
+            })
     }
 
-    const handleSubmit = () => {
-        axios.patch('/backapi/password', {
-            email, code, password
-        }).then(() => {
-            /* TODO : 성공 모달 */
-            router.push('/account/login')
-        }).catch(err => {
-            setCodeStatus(v => ({ ...v, isError: true }))
-            /* TODO : ErrorHandler */
-        })
+    const [codeInvalid, setCodeInvalid] = useState(null)
+    const onChangeWithVerification = (e) => {
+        onChange(e)
+        const isValid = e.target.checkValidity()
+        setCodeInvalid(!isValid)
+        if(isValid) {
+           verificationCode(e.target.value)
+        }
+    }
+
+    const verificationCode = async (code) => {
+        await axios.post('/backapi/valid-code/confirm', {email: email, code: code})
+            .then((res) => {
+                if(res.status === 200) {
+                    setModalConf({
+                        title : 'Success',
+                        content : 'Authenticate Code Done',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
+                    setIsModal(true)
+                    setInputCode(prev => ({...prev, isComplete: true}))
+                }
+            })
+            .catch((e) => {
+                if(e.response.status < 500) {
+                    setModalConf({
+                        title : 'Failed',
+                        content : 'Authenticate Code Deny',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
+                    setIsModal(true)
+                }
+            })
+
+    }
+
+    const [pwdInvalid, setPwdInvalid] = useState(null)
+    const onChangeWithPassword = (e) => {
+        onChange(e)
+        const isValid = e.target.checkValidity()
+        setPwdInvalid(!isValid)
+    }
+
+    const [pwdConfirmInvalid, setPwdConfirmInvalid] = useState(null)
+    const onChangePasswordConfirm = (e) => {
+        onChange(e)
+        const isValid = e.target.checkValidity()
+        setPwdConfirmInvalid(!isValid)
+    }
+
+    const [isModal, setIsModal] = useState(null)
+    const [modalConf, setModalConf] = useState({
+        title : '',
+        content : '',
+        blindFilter : false,
+        handleRightButton : []
+    })
+
+    async function handleSubmit() {
+        await axios.patch('/backapi/users/self/password/reset', {email: email, code: code, newPassword: password})
+            .then(async (res) => {
+                if(res.status === 200) {
+                    await router.push('/account/login?reset=succeeded')
+                }
+            })
+            .catch(async (e) => {
+                if(e.response.status < 500) {
+                    await router.push('/account/login?reset=failed')
+                }
+            })
     }
 
     return (
-        <Card className="pw_box mb-0 mx-5">
-            <form onSubmit={v => validateForm(v, handleSubmit)}>
-                <h2 className="pw-text">Reset password</h2>
-                <FormInput type="email" name="email" label="Email" placeholder="your_id@pharmcadd.com" err={valid.email.error}
-                           value={email} onChange={onChangeItem} readonly={codeStatus.isSend} />
+        <Card className="signup-box mb-0 mx-5">
+            <h2 className="pw-text">Reset password</h2>
+            <Form validated={validated} onSubmit={e => submit(e, handleSubmit)}>
+                <FormGroup>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl
+                        type="email"
+                        name="email"
+                        placeholder="your_id@pharmcadd.com"
+                        pattern=".+@pharmcadd\.com"
+                        required
+                        value={email}
+                        onChange={onChangeWithEmailCheck}
+                        invalid={emailInvalid}
+                    />
+                    <Feedback>Enter your company email account.</Feedback>
+                </FormGroup>
+                {!inputCode.isComplete &&
                 <div className="text-right">
                     <button type="button" onClick={() => sendCode(email)} className="btn_link text-xs"
-                            disabled={!email || valid.email.error}>{codeStatus.isSend ? 'Resend code' : 'Send code'}
+                            disabled={!sendCodeActivate.current}>
+                        {inputCode.isSend ? 'Resend code' : 'Send code'}
                     </button>
                 </div>
-
-                <FormInput name="code" placeholder="Verification code" err={valid.code.error || (codeStatus.isError && codeStatus.message)}
-                           value={code} onChange={onChangeCode} className="mt-2" />
-
-                <FormInput type="password" name="password" label="Password" err={valid.password.error}
-                           value={password} onChange={onChangePassword}
-                           className="mt-5" />
-                <FormInput type="password" name="passwordConfirm" label="Password confirm" err={valid.passwordConfirm.error}
-                           value={passwordConfirm} onChange={onChangeItem} className="mt-2" />
-
-                <button type="submit" className="btn btn_block mt-5">Reset the password</button>
-                <div className="text-right mt-4">
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <span className="text-sm text-gray-400 mr-2">Don't have an account?</span>
-                    <Link href="/account/sign-up">
-                        <a className="btn btn_link text-sm p-0">Sign up</a>
-                    </Link>
-                </div>
-            </form>
+                }
+                {inputCode.isSend && !inputCode.isComplete &&
+                <FormGroup>
+                    <FormLabel>Verification Code</FormLabel>
+                    <FormControl
+                        type="password"
+                        name="code"
+                        required
+                        value={code}
+                        onChange={onChangeWithVerification}
+                        pattern="[0-9]{6}"
+                        minLength="6"
+                        maxLength="6"
+                        invalid={codeInvalid}
+                    />
+                    <Feedback>Enter a six-digit numbers.</Feedback>
+                </FormGroup>
+                }
+                <FormGroup className="mt-3">
+                    <FormLabel>Password</FormLabel>
+                    <FormControl
+                        type="password"
+                        name="password"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+                        required
+                        value={password}
+                        onChange={onChangeWithPassword}
+                        invalid={pwdInvalid}
+                    />
+                    <Feedback>Enter 6 or more characters, including letters and numbers.</Feedback>
+                </FormGroup>
+                <FormGroup>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl
+                        type="password"
+                        name="passwordConfirm"
+                        required
+                        value={passwordConfirm}
+                        onChange={onChangePasswordConfirm}
+                        pattern={password}
+                        invalid={pwdConfirmInvalid}
+                    />
+                    <Feedback>Passwords do not matched.</Feedback>
+                </FormGroup>
+                    <button type="submit" className="btn btn_block mt-5">Reset</button>
+                    <div className="text-right mt-4">
+                        <span className="text-sm text-gray-400 mr-2">Don't you have an account?</span>
+                        <Link href="/account/sign-up">
+                            <a className="btn btn_link text-sm p-0">Sign up</a>
+                        </Link>
+                    </div>
+            </Form>
+            <ModalBox state={isModal} modalConf={modalConf}/>
         </Card>
     )
 }

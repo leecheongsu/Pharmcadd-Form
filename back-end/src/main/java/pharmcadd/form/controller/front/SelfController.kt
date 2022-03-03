@@ -44,7 +44,7 @@ class SelfController : BaseController() {
     @PatchMapping("/password/reset")
     fun resetPassword(@RequestBody form: ResetPasswordForm) {
         val user = userService.findOne(securityService.userId) ?: throw NotFound()
-        authorizationCodeService.findByEmailAndCodeAndVerify(form.email, form.code, false) ?: throw BadRequest()
+        authorizationCodeService.findByEmailAndCodeAndVerify(form.email, form.code, true) ?: throw BadRequest()
         userService.changePassword(user.id, form.newPassword)
     }
 
