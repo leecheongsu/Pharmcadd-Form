@@ -131,7 +131,7 @@ const FindPw = () => {
     })
 
     async function handleSubmit() {
-        await axios.patch('/backapi/users/self/password/reset', {email: email, code: code, newPassword: password})
+        await axios.patch('/backapi/password/reset', {email: email, code: code, newPassword: password})
             .then(async (res) => {
                 if(res.status === 200) {
                     await router.push('/account/login?reset=succeeded')
