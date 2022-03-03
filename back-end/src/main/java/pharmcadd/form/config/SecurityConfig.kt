@@ -65,7 +65,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         .anyRequest().permitAll()
                 } else if (environment.isProd) {
                     it
-                        .antMatchers("/valid-email", "/valid-code/**", "/join").permitAll()
+                        .antMatchers("/valid-email", "/valid-code/**", "/join", "/password/reset").permitAll()
                         .antMatchers("/admin/**").hasAnyRole("ADMIN", "CAMPAIGN_ADMIN")
                         .anyRequest().authenticated()
                 } else {

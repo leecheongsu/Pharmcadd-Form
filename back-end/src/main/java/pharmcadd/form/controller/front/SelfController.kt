@@ -8,9 +8,7 @@ import pharmcadd.form.common.exception.BadRequest
 import pharmcadd.form.common.exception.NotFound
 import pharmcadd.form.controller.front.form.ChangePasswordForm
 import pharmcadd.form.controller.front.form.JoinForm
-import pharmcadd.form.controller.front.form.ResetPasswordForm
 import pharmcadd.form.model.UserDetail
-import pharmcadd.form.service.AuthorizationCodeService
 import pharmcadd.form.service.UserService
 
 @RestController
@@ -22,9 +20,6 @@ class SelfController : BaseController() {
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
-
-    @Autowired
-    lateinit var authorizationCodeService: AuthorizationCodeService
 
     @GetMapping
     fun detail(): UserDetail {
@@ -39,13 +34,6 @@ class SelfController : BaseController() {
         } else {
             userService.changePassword(user.id, form.newPassword)
         }
-    }
-
-    @PatchMapping("/password/reset")
-    fun resetPassword(@RequestBody form: ResetPasswordForm) {
-        val user = userService.findOne(securityService.userId) ?: throw NotFound()
-        authorizationCodeService.findByEmailAndCodeAndVerify(form.email, form.code, true) ?: throw BadRequest()
-        userService.changePassword(user.id, form.newPassword)
     }
 
     @PostMapping("/groups")
