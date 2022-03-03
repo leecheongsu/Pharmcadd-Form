@@ -15,6 +15,7 @@ import Form from "../../components/Form";
 import FormSelect from "../../components/FormSelect";
 import FormCheck from "../../components/FormCheck";
 import Button from "../../components/Button";
+import ModalBox from "../../components/modal/ModalBox";
 
 const SignUp = () => {
     const [{code, name, password, email, placeOfWork, confirmPassword, policy}, validated, {
@@ -78,6 +79,14 @@ const SignUp = () => {
         }
     }, [step])
 
+    const [isModal, setIsModal] = useState(false)
+    const [modalConf, setModalConf] = useState({
+        title : '',
+        content : '',
+        blindFilter : true,
+        handleRightButton : null
+    })
+
     return (
         <Card className="signup-box mb-0 mx-5">
             <h2 className="signup-text">Sign up</h2>
@@ -85,7 +94,7 @@ const SignUp = () => {
                 ?
                 <SignupStep1 email={email} password={password} code={code}
                              nextStep={nextStep} onChange={onChange} submit={submit} validated={validatedChange}
-                             confirmPassword={confirmPassword}/>
+                             confirmPassword={confirmPassword} setIsModal={setIsModal} setModalConf={setModalConf}/>
                 : (step === 1
                         ? <SignupStep2 name={name} positions={positions} setPositions={setPositions}
                                        placeOfWork={placeOfWork} nextStep={nextStep} onChange={onChange} submit={submit}
@@ -94,11 +103,12 @@ const SignUp = () => {
                                        nextStep={nextStep}/>
                 )
             }
+            <ModalBox state={isModal} modalConf={modalConf}/>
         </Card>
     );
 }
 
-function SignupStep1({email, password, confirmPassword, code, nextStep, onChange, validated, submit}) {
+function SignupStep1({email, password, confirmPassword, code, nextStep, onChange, validated, submit, setIsModal, setModalConf}) {
 
     const [inputCode, setInputCode] = useState({
         isSend: false,
@@ -115,6 +125,15 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
         sendCodeActivate.current = true
     }
 
+    const handleRightButton = () => {
+        setIsModal(false)
+    }
+
+    const rightButton = ({
+        title : 'Confirm',
+        onClick : handleRightButton
+    })
+
     const [emailDuplicate, setEmailDuplicate] = useState(false)
     const checkEmailAndSendCode = async (value) => {
         await axios.post('/backapi/valid-email', {email: value})
@@ -123,12 +142,26 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
                     axios.post('/backapi/valid-code', {email: value})
                         .then(() => {
                             setInputCode(v => ({...v, isSend: true}))
+
+                            setModalConf({
+                                title : 'Success',
+                                content : 'Send Completed',
+                                blindFilter : true,
+                                handleRightButton : rightButton
+                            })
+                            setIsModal(true)
                         })
                 }
             }).catch((e) => {
                 if (e.response.status < 500) {
                     setEmailInvalid(true)
                     setEmailDuplicate(true)
+                    setModalConf({
+                        title : 'Fail',
+                        content : 'Send Failed',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
                 }
             })
     }
@@ -140,17 +173,35 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
         onChange(e)
         const isValid = e.target.checkValidity()
         setCodeInvalid(!isValid)
-        setInputCode(prev => ({...prev, code: e.target.value}))
-    }
 
+        if(isValid) {
+            confirmCode(e.target.value)
+        }
+        setInputCode(prev => ({...prev, code: e.target.value}))
+
+    }
     const confirmCode = async (code) => {
         await axios.post('/backapi/valid-code/confirm', {email: email, code: code})
             .then(() => {
                 setInputCode(v => ({...v, isComplete: true}))
+                setModalConf({
+                    title : 'Success',
+                    content : 'Authenticate Code Done',
+                    blindFilter : true,
+                    handleRightButton : rightButton
+                })
+                setIsModal(true)
             }).catch((e) => {
                 if (e.response.status < 500) {
                     setCodeInvalid(true)
                     setFailConfirmCode(true)
+                    setModalConf({
+                        title : 'Fail',
+                        content : 'Authenticate Code Deny',
+                        blindFilter : true,
+                        handleRightButton : rightButton
+                    })
+                    setIsModal(true)
                 }
             })
     }
@@ -170,7 +221,7 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
     }
 
     return (
-        <Form validated={validated} onSubmit={e => submit(e, nextStep)}>
+            <Form validated={validated} onSubmit={e => submit(e, nextStep)}>
             <FormGroup>
                 <FormLabel>Email</FormLabel>
                 <FormControl
@@ -215,13 +266,6 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
                     <Feedback>Enter a six-digit numbers.</Feedback>
                 )}
             </FormGroup>
-            }
-            {inputCode.isSend && !inputCode.isComplete &&
-            <div className="text-right">
-                <button type="button" onClick={() => confirmCode(code)} className="btn_link text-xs">
-                    Verification
-                </button>
-            </div>
             }
             <FormGroup>
                 <FormLabel>Password</FormLabel>
