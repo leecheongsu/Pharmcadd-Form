@@ -215,7 +215,7 @@ const FindPw = () => {
                 </FormGroup>
                     <button type="submit" className="btn btn_block mt-5">Reset</button>
                     <div className="text-right mt-4">
-                        <span className="text-sm text-gray-400 mr-2">Don't you have an account?</span>
+                        <span className="text-sm text-gray-400 mr-2">Don&apos;t you have an account?</span>
                         <Link href="/account/sign-up">
                             <a className="btn btn_link text-sm p-0">Sign up</a>
                         </Link>
