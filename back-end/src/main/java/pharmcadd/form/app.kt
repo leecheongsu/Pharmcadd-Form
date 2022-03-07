@@ -141,10 +141,13 @@ class FormApplication : CommandLineRunner {
                     insertUser("김천호", "k1005", 1, sub2, "부장")
                     insertUser("이용홍", "hong", 1, sub2, "부장")
                     insertUser("오지혜", "ojhwlxk", 1, sub2, "과장")
+                    insertUser("이진아", "jalee", 1, sub2, "과장")
                     insertUser("이청수", "leecheongsu", 1, sub2, "주임")
-//                    insertUser("제부건", "jbg", 1, sub2, "사원")
+
                 }
                 groupService.add("Bio Assay Lab", sub1).also { sub2 ->
+                    insertUser("신재영", "jyshin", 1, sub2, "수석연구원")
+                    insertUser("이재혜", "jaehye.lee", 1, sub2, "책임연구원")
                     insertUser("신유정", "yjshin", 1, sub2, "선임연구원")
                 }
             }
@@ -153,9 +156,11 @@ class FormApplication : CommandLineRunner {
 
                 groupService.add("사업개발본부", sub1).also { sub2 ->
                     insertUser("김선장", "sjkim", 1, sub2, "전무이사")
+                    insertUser("박재형", "jh.park", 1, sub2, "전무이사")
 
                     groupService.add("Biz.Development", sub2).also { sub3 ->
                         insertUser("황진하", "jhwang", 1, sub3, "상무이사")
+                        insertUser("임채홍",  "chhlim", 1, sub3, "차장")
                         insertUser("이지선", "jisun", 1, sub3, "대리")
                         insertUser("김예지", "yeji.kim", 1, sub3, "대리")
                     }
@@ -204,6 +209,7 @@ class FormApplication : CommandLineRunner {
                         groupService.add("데이터설계팀", sub3).also { sub4 ->
                             insertUser("임대원", "moses", 1, sub4, "부장")
                             insertUser("정현호", "jungh20503", 1, sub4, "대리")
+                            insertUser("송리하", "lhsong", 1, sub4, "대리")
                             insertUser("정수빈", "subinjeong", 1, sub4, "주임")
                         }
                         groupService.add("정보보안팀", sub3).also { sub4 ->
@@ -318,43 +324,6 @@ class FormApplication : CommandLineRunner {
 
             formService.addNotification(formId, leeUserId)
             formService.addNotification(formId, kunduUserId)
-        }
-
-        run {
-            // 테스트용 양식 추가 ex) 우수사원
-            val formId = formService.save(
-                FormVo(
-                    title = "테스트용 - 개발팀 오늘의 우수사원 투표",
-                    questions = listOf(
-                        FormVo.QuestionVo(
-                            title = "우수사원 추천!!",
-                            type = QuestionType.CHOICE_SINGLE,
-                            required = true,
-                            options = listOf(
-                                FormVo.QuestionVo.OptionVo(text = "김천호 부장"),
-                                FormVo.QuestionVo.OptionVo(text = "이용홍 부장"),
-                                FormVo.QuestionVo.OptionVo(text = "오지혜 과장"),
-                                FormVo.QuestionVo.OptionVo(text = "이청수 주임"),
-                            )
-                        ),
-                        FormVo.QuestionVo(
-                            title = "건의 사항",
-                            type = QuestionType.TEXT_SHORT
-                        ),
-                    )
-                ),
-                1L
-            )
-
-            val scheduleId = formScheduleService.addCron(
-                formId,
-                1,
-                "0 0 9 ? * MON-FRI", // 9시부터 시작해서
-                Duration.ofHours(10).toMillis(), // 오후 6시에 종료
-                true,
-            )
-
-            formScheduleParticipantService.addGroup(scheduleId, formId, itDevGroupId, false)
         }
     }
 }
