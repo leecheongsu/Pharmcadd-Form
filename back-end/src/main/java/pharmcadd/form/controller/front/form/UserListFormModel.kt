@@ -13,5 +13,6 @@ data class UserListFormModel(
     val active: Boolean,
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime,
-    val groupNames: List<String> = emptyList()
+    val groupNames: List<String> = emptyList(),
+    val positionNames: List<String> = emptyList()
 )

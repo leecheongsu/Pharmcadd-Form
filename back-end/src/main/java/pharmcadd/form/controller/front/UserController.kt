@@ -1,5 +1,6 @@
 package pharmcadd.form.controller.front
 
+import kotlinx.coroutines.selects.select
 import org.jooq.impl.DSL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -11,6 +12,7 @@ import pharmcadd.form.controller.front.form.UserListFormModel
 import pharmcadd.form.jooq.Tables.*
 import pharmcadd.form.model.UserDetail
 import pharmcadd.form.model.UserVo
+import pharmcadd.form.service.PositionService
 import pharmcadd.form.service.UserService
 
 @RestController
@@ -24,6 +26,8 @@ class UserController : BaseController() {
     fun list(form: UserListForm): DataTablePagination<UserListFormModel> {
         val groupNamesField = DSL.arrayAgg(GROUP.NAME).`as`("group_names")
 
+        val positionNamesField = DSL.arrayAgg(POSITION.NAME).`as`("position_names")
+
         val query = dsl
             .select(
                 *USER.fields()
@@ -31,9 +35,13 @@ class UserController : BaseController() {
             .select(
                 groupNamesField
             )
+            .select(
+                positionNamesField
+            )
             .from(USER)
             .leftJoin(GROUP_USER).on(GROUP_USER.USER_ID.eq(USER.ID).and(GROUP_USER.DELETED_AT.isNull))
             .leftJoin(GROUP).on(GROUP_USER.GROUP_ID.eq(GROUP.ID).and(GROUP.DELETED_AT.isNull))
+            .leftJoin(POSITION).on(GROUP_USER.POSITION_ID.eq(POSITION.ID).and(POSITION.DELETED_AT.isNull))
             .where(
                 USER.DELETED_AT.isNull
             )
@@ -53,6 +61,10 @@ class UserController : BaseController() {
             }
         }
 
+        if (form.positionId != null) {
+            query.and(GROUP_USER.POSITION_ID.eq(form.positionId))
+        }
+
         query.groupBy(*USER.fields())
 
         return DataTablePagination.of(dsl, query, form) {
@@ -68,6 +80,7 @@ class UserController : BaseController() {
                 user.createdAt,
                 user.updatedAt,
                 (it.get(groupNamesField) ?: emptyArray<String>()).filterNotNull().toList(),
+                (it.get(positionNamesField) ?: emptyArray<String>()).filterNotNull().toList()
             )
         }
     }
