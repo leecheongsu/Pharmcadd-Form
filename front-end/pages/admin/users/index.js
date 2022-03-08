@@ -26,6 +26,15 @@ const Users = ({ content, options: initOptions }) => {
         handleGroups()
     }, [])
 
+    const [positions, setPositions] = useState([])
+    useEffect(async () => {
+        const { data } = await axios.get('/backapi/positions')
+        setPositions(data.map(v => ({
+            id: v.id,
+            text: v.name,
+        })))
+    }, [])
+
     const loadData = (params) => {
         return axios.get('/backapi/admin/users', { params })
             .then(({ data }) => {
@@ -58,17 +67,33 @@ const Users = ({ content, options: initOptions }) => {
                     loadData={(params) => loadData(params)}
                 >
                     {{
-                        header: <FormSelect
-                            name="groupId"
-                            value={options.groupId}
-                            options={groups}
-                            onChange={onChange}
-                            className="form-input w-1/5 mr-3"
-                        />,
+                        header: <div className="flex items-center">
+                            <FormSelect
+                                name="groupId"
+                                value={options.groupId}
+                                options={groups}
+                                onChange={onChange}
+                                className="form-input mr-3"
+                            />
+                            <FormSelect
+                                name="positionId"
+                                value={options.positionId}
+                                options={positions}
+                                onChange={onChange}
+                                className="form-input mr-3"
+                                placeholder="전체"
+                            />
+                        </div>,
                         groupNames: ({ groupNames }) => <div className="badge-group">
                             {groupNames.length > 0
                                 ? groupNames.map((name, i) => (<Badge outline pill text="xs" key={i}>{name}</Badge>))
                                 : '-'}
+                        </div>,
+                        positionNames: ({ positionNames }) => <div className="badge-group">
+                            {positionNames.length > 0
+                                ? (<Badge outline pill text="xs">{new Set([...positionNames])}</Badge>)
+                                : '-'
+                            }
                         </div>,
                         active: ({ active }) => <Badge text="xs">{active ? 'ON' : 'OFF'}</Badge>,
                     }}
@@ -87,6 +112,7 @@ export const getServerSideProps = async () => {
         sortDesc: true,
         keyword: '',
         groupId: '',
+        positionId: '',
         includeSubgroup: true,
     }
     const { data } = await axios.get('/backapi/admin/users', { params })

@@ -21,6 +21,7 @@ export const USERS_HEADER = [
     { label: '이름', value: 'name', className: 'w-1/4' },
     { label: '메일', value: 'email' },
     { label: '부서', value: 'groupNames' },
+    { label: '직책', value: 'positionNames' },
     { label: '생성일', value: 'createdAt', dayFormat: true },
     { label: '활성화', value: 'active' },
 ]
