@@ -1,17 +1,17 @@
-import { useRouter } from "next/router";
-import PageTitle from "../../../../components/PageTitle";
-import Card from "../../../../components/Card";
-import axios from "../../../../lib/axios";
-import { INPUT_TYPE_OF_QUESTION_MAP, QUESTION_TYPE } from "../../../../assets/data";
-import FormControl from "../../../../components/FormControl";
-import FormSelect from "../../../../components/FormSelect";
-import Button from "../../../../components/Button";
-import FormCheck from "../../../../components/FormCheck";
+import { useRouter } from 'next/router'
+import PageTitle from '../../../../components/PageTitle'
+import Card from '../../../../components/Card'
+import axios from '../../../../lib/axios'
+import { INPUT_TYPE_OF_QUESTION_MAP, QUESTION_TYPE } from '../../../../assets/data'
+import FormControl from '../../../../components/FormControl'
+import FormSelect from '../../../../components/FormSelect'
+import Button from '../../../../components/Button'
+import FormCheck from '../../../../components/FormCheck'
 
 const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
     ...(i === 0 ? { selected: true } : {}),
     id: v.value,
-    text: v.label
+    text: v.label,
 }))
 
 const FormDetail = ({ id, title, description, questions }) => {
@@ -74,8 +74,8 @@ export const getServerSideProps = async ({ params }) => {
     return {
         props: {
             ...data,
-        }
+        },
     }
 }
 
-export default FormDetail;
+export default FormDetail

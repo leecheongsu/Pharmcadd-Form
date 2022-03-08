@@ -1,14 +1,14 @@
-import {useRouter} from "next/router";
+import { useRouter } from 'next/router'
 import Image from 'next/image'
-import classNames from "classnames";
-import {ADMIN_MENUS} from "../../assets/menus";
-import Link from "../Link";
-import axios from "axios";
-import {LogoutIcon} from "@heroicons/react/outline";
-import Button from "../Button";
+import classNames from 'classnames'
+import { ADMIN_MENUS } from '../../assets/menus'
+import Link from '../Link'
+import axios from 'axios'
+import { LogoutIcon } from '@heroicons/react/outline'
+import Button from '../Button'
 
-const SideMenu = ({show, className}) => {
-    const {asPath} = useRouter()
+const SideMenu = ({ show, className }) => {
+    const { asPath } = useRouter()
     const router = useRouter()
 
     const logout = async () => {
@@ -55,7 +55,7 @@ const SideMenu = ({show, className}) => {
                 </nav>
                 <div className="py-5 ml-7 mt-auto text-sm">
                     <Button icon onClick={logout}>
-                            <LogoutIcon className="w-6 h-6 text-gray-500"/>
+                        <LogoutIcon className="w-6 h-6 text-gray-500" />
                         <span className="w-6 h-6 text-gray-500">Logout</span>
                     </Button>
                 </div>
@@ -64,4 +64,4 @@ const SideMenu = ({show, className}) => {
     )
 }
 
-export default SideMenu;
+export default SideMenu

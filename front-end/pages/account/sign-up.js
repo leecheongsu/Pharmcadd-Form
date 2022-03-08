@@ -1,46 +1,47 @@
-import React, {useState, useRef, useEffect} from "react";
-import {useRouter} from 'next/router';
-import Link from "next/link";
-import {ChevronRightIcon, PlusCircleIcon, MinusCircleIcon} from '@heroicons/react/solid'
-import axios from "../../lib/axios";
-import {WORKPLACES} from "../../assets/data";
-import {POLICY} from "../../assets/policy";
-import Card from "../../components/Card";
-import useForm from "../../hooks/useForm";
-import FormGroup from "../../components/FormGroup";
-import FormLabel from "../../components/FormLabel";
-import FormControl from "../../components/FormControl";
-import Feedback from "../../components/Feedback";
-import Form from "../../components/Form";
-import FormSelect from "../../components/FormSelect";
-import FormCheck from "../../components/FormCheck";
-import Button from "../../components/Button";
-import ModalBox from "../../components/modal/ModalBox";
+import React, { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { ChevronRightIcon, PlusCircleIcon, MinusCircleIcon } from '@heroicons/react/solid'
+import axios from '../../lib/axios'
+import { WORKPLACES } from '../../assets/data'
+import { POLICY } from '../../assets/policy'
+import Card from '../../components/Card'
+import useForm from '../../hooks/useForm'
+import FormGroup from '../../components/FormGroup'
+import FormLabel from '../../components/FormLabel'
+import FormControl from '../../components/FormControl'
+import Feedback from '../../components/Feedback'
+import Form from '../../components/Form'
+import FormSelect from '../../components/FormSelect'
+import FormCheck from '../../components/FormCheck'
+import Button from '../../components/Button'
+import ModalBox from '../../components/modal/ModalBox'
 
 const SignUp = () => {
-    const [{code, name, password, email, placeOfWork, confirmPassword, policy}, validated, {
-        onChange,
-        submit,
-        reset
-    }] = useForm({
+    const [
+        { code, name, password, email, placeOfWork, confirmPassword, policy }, validated, {
+            onChange,
+            submit,
+            reset,
+        }] = useForm({
         code: '',
         name: '',
         password: '',
         confirmPassword: '',
         email: '',
         policy: false,
-        placeOfWork: 'BUSAN' // default
+        placeOfWork: 'BUSAN', // default
     })
 
-    const router = useRouter();
-    const [step, setStep] = useState(0);
+    const router = useRouter()
+    const [step, setStep] = useState(0)
     const [validatedChange, setValidatedChange] = useState(validated)
     const nextStep = () => {
         setValidatedChange(false)
         setStep(step + 1)
     }
 
-    const [positions, setPositions] = useState([]);
+    const [positions, setPositions] = useState([])
 
     const [groups, setGroups] = useState(null)
     useEffect(() => {
@@ -49,7 +50,7 @@ const SignUp = () => {
         } else {
             setGroups(positions.map((data) => ({
                 groupId: data.team,
-                positionId: data.position
+                positionId: data.position,
             })))
         }
     }, [positions])
@@ -64,15 +65,15 @@ const SignUp = () => {
                 password: password,
                 email: email,
                 timeZoneId: 1,
-                groups: groups
+                groups: groups,
             })
                 .then(async (res) => {
-                    if(res.status === 200) {
+                    if (res.status === 200) {
                         await router.push('/account/login?result=succeeded')
                     }
                 })
                 .catch(async (e) => {
-                    if(e.response.status < 500) {
+                    if (e.response.status < 500) {
                         await router.push('/account/login?result=failed')
                     }
                 })
@@ -81,10 +82,10 @@ const SignUp = () => {
 
     const [isModal, setIsModal] = useState(false)
     const [modalConf, setModalConf] = useState({
-        title : '',
-        content : '',
-        blindFilter : true,
-        handleRightButton : null
+        title: '',
+        content: '',
+        blindFilter: true,
+        handleRightButton: null,
     })
 
     return (
@@ -94,26 +95,26 @@ const SignUp = () => {
                 ?
                 <SignupStep1 email={email} password={password} code={code}
                              nextStep={nextStep} onChange={onChange} submit={submit} validated={validatedChange}
-                             confirmPassword={confirmPassword} setIsModal={setIsModal} setModalConf={setModalConf}/>
+                             confirmPassword={confirmPassword} setIsModal={setIsModal} setModalConf={setModalConf} />
                 : (step === 1
                         ? <SignupStep2 name={name} positions={positions} setPositions={setPositions}
                                        placeOfWork={placeOfWork} nextStep={nextStep} onChange={onChange} submit={submit}
-                                       validated={validatedChange}/>
+                                       validated={validatedChange} />
                         : <SignupStep3 policy={policy} validated={validatedChange} onChange={onChange} submit={submit}
-                                       nextStep={nextStep}/>
+                                       nextStep={nextStep} />
                 )
             }
-            <ModalBox state={isModal} modalConf={modalConf}/>
+            <ModalBox state={isModal} modalConf={modalConf} />
         </Card>
-    );
+    )
 }
 
-function SignupStep1({email, password, confirmPassword, code, nextStep, onChange, validated, submit, setIsModal, setModalConf}) {
+function SignupStep1({ email, password, confirmPassword, code, nextStep, onChange, validated, submit, setIsModal, setModalConf }) {
 
     const [inputCode, setInputCode] = useState({
         isSend: false,
         isComplete: false,
-        code: ''
+        code: '',
     })
 
     const sendCodeActivate = useRef(false)
@@ -130,24 +131,24 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
     }
 
     const rightButton = ({
-        title : 'Confirm',
-        onClick : handleRightButton
+        title: 'Confirm',
+        onClick: handleRightButton,
     })
 
     const [emailDuplicate, setEmailDuplicate] = useState(false)
     const checkEmailAndSendCode = async (value) => {
-        await axios.post('/backapi/valid-email', {email: value})
+        await axios.post('/backapi/valid-email', { email: value })
             .then((res) => {
                 if (res.status === 200) {
-                    axios.post('/backapi/valid-code', {email: value})
+                    axios.post('/backapi/valid-code', { email: value })
                         .then(() => {
-                            setInputCode(v => ({...v, isSend: true}))
+                            setInputCode(v => ({ ...v, isSend: true }))
 
                             setModalConf({
-                                title : 'Success',
-                                content : 'Send Completed',
-                                blindFilter : true,
-                                handleRightButton : rightButton
+                                title: 'Success',
+                                content: 'Send Completed',
+                                blindFilter: true,
+                                handleRightButton: rightButton,
                             })
                             setIsModal(true)
                         })
@@ -157,10 +158,10 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
                     setEmailInvalid(true)
                     setEmailDuplicate(true)
                     setModalConf({
-                        title : 'Fail',
-                        content : 'Send Failed',
-                        blindFilter : true,
-                        handleRightButton : rightButton
+                        title: 'Fail',
+                        content: 'Send Failed',
+                        blindFilter: true,
+                        handleRightButton: rightButton,
                     })
                 }
             })
@@ -174,21 +175,21 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
         const isValid = e.target.checkValidity()
         setCodeInvalid(!isValid)
 
-        if(isValid) {
+        if (isValid) {
             confirmCode(e.target.value)
         }
-        setInputCode(prev => ({...prev, code: e.target.value}))
+        setInputCode(prev => ({ ...prev, code: e.target.value }))
 
     }
     const confirmCode = async (code) => {
-        await axios.post('/backapi/valid-code/confirm', {email: email, code: code})
+        await axios.post('/backapi/valid-code/confirm', { email: email, code: code })
             .then(() => {
-                setInputCode(v => ({...v, isComplete: true}))
+                setInputCode(v => ({ ...v, isComplete: true }))
                 setModalConf({
-                    title : 'Success',
-                    content : 'Authenticate Code Done',
-                    blindFilter : true,
-                    handleRightButton : rightButton
+                    title: 'Success',
+                    content: 'Authenticate Code Done',
+                    blindFilter: true,
+                    handleRightButton: rightButton,
                 })
                 setIsModal(true)
             }).catch((e) => {
@@ -196,10 +197,10 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
                     setCodeInvalid(true)
                     setFailConfirmCode(true)
                     setModalConf({
-                        title : 'Fail',
-                        content : 'Authenticate Code Deny',
-                        blindFilter : true,
-                        handleRightButton : rightButton
+                        title: 'Fail',
+                        content: 'Authenticate Code Deny',
+                        blindFilter: true,
+                        handleRightButton: rightButton,
                     })
                     setIsModal(true)
                 }
@@ -221,7 +222,7 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
     }
 
     return (
-            <Form validated={validated} onSubmit={e => submit(e, nextStep)}>
+        <Form validated={validated} onSubmit={e => submit(e, nextStep)}>
             <FormGroup>
                 <FormLabel>Email</FormLabel>
                 <FormControl
@@ -303,7 +304,7 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
                 <button type="submit" disabled={!inputCode.isComplete} className="btn_link -mr-1.5">
                     <div className="flex items-center">
                         <span className="text-sm">Next</span>
-                        <ChevronRightIcon className="w-4 h-4"/>
+                        <ChevronRightIcon className="w-4 h-4" />
                     </div>
                 </button>
             </div>
@@ -311,7 +312,7 @@ function SignupStep1({email, password, confirmPassword, code, nextStep, onChange
     )
 }
 
-function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onChange, validated, submit}) {
+function SignupStep2({ name, positions, setPositions, placeOfWork, nextStep, onChange, validated, submit }) {
     const [nameInvalid, setNameInvalid] = useState(null)
     const onChangeWithName = (e) => {
         onChange(e)
@@ -319,18 +320,18 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
         setNameInvalid(!isValid)
     }
 
-    const [workPlaces, setWorkPlaces] = useState([{
-        id: '',
-        text: ''
-    }])
+    const [workPlaces, setWorkPlaces] = useState([
+        {
+            id: '',
+            text: '',
+        }])
 
     useEffect(() => {
         setWorkPlaces(WORKPLACES.map((data) => ({
             id: data.label,
-            text: data.value
+            text: data.value,
         })))
     }, [])
-
 
     const [teamOption, setTeamOption] = useState([])
     const [positionOption, setPositionOption] = useState([])
@@ -349,7 +350,7 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
             if (res.status === 200) {
                 setPositionOption(res.data.map((data) => ({
                     id: data.id,
-                    text: data.name
+                    text: data.name,
                 })))
             }
         })
@@ -359,13 +360,13 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
         team: '',
         position: '',
         teamLabel: '',
-        positionLabel: ''
+        positionLabel: '',
     }
-    const [inputPositions, setInputPositions] = useState({...initInputPositions});
-    const {team, position, teamLabel, positionLabel} = inputPositions;
+    const [inputPositions, setInputPositions] = useState({ ...initInputPositions })
+    const { team, position, teamLabel, positionLabel } = inputPositions
 
     const onChangePosition = e => {
-        const {name, value} = e.target;
+        const { name, value } = e.target
         setInputPositions({
             ...inputPositions,
             [name]: value,
@@ -375,17 +376,17 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
 
     const checkPositionValid = () => {
         setInputPositions({
-            ...inputPositions
-        });
+            ...inputPositions,
+        })
         return team && position
     }
 
     const addPosition = () => {
         if (!checkPositionValid()) return
 
-        const newPositions = positions.concat({team, position, teamLabel, positionLabel})
+        const newPositions = positions.concat({ team, position, teamLabel, positionLabel })
         setPositions(newPositions)
-        setInputPositions({...initInputPositions})
+        setInputPositions({ ...initInputPositions })
     }
     const removePosition = (index) => {
         const newPositions = positions.filter((v, i) => i !== index)
@@ -394,7 +395,7 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
 
     const [positionState, setPositionState] = useState(null)
     useEffect(() => {
-        if(positions.length === 0) {
+        if (positions.length === 0) {
             setPositionState(true)
         } else {
             setPositionState(false)
@@ -418,24 +419,24 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
                 <FormGroup className="flex-1">
                     <FormLabel>Team / Position</FormLabel>
                     <FormSelect name="team" options={teamOption} placeholder="Choose Team"
-                                value={team} onChange={onChangePosition} className="form-input"/>
+                                value={team} onChange={onChangePosition} className="form-input" />
                     <FormSelect name="position" options={positionOption} placeholder="Choose Position"
-                                value={position} onChange={onChangePosition} className="form-input mt-1"/>
+                                value={position} onChange={onChangePosition} className="form-input mt-1" />
                 </FormGroup>
                 <button type="button" onClick={addPosition} className="btn_icon">
-                    <PlusCircleIcon className="flex-auto text-gray-400 w-6 h-6 mt-8"/>
+                    <PlusCircleIcon className="flex-auto text-gray-400 w-6 h-6 mt-8" />
                 </button>
             </div>
             {positions.length ?
                 <ul className="mt-1 mb-4">
-                    {positions.map(({team, position, teamLabel, positionLabel}, i) => (
+                    {positions.map(({ team, position, teamLabel, positionLabel }, i) => (
                         <li key={i}>
                         <span className="text-xs font-medium text-gray-500">
                             - {team && teamLabel}
                             , {position && positionLabel}
                         </span>
                             <button type="button" onClick={() => removePosition(i)} className="btn_icon">
-                                <MinusCircleIcon className="text-gray-400 w-4 h-4 ml-2"/>
+                                <MinusCircleIcon className="text-gray-400 w-4 h-4 ml-2" />
                             </button>
                         </li>
                     ))}
@@ -456,14 +457,14 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
             <FormGroup className="mt-3">
                 <FormLabel>Place Of Work</FormLabel>
                 <FormSelect name="placeOfWork" value={placeOfWork}
-                            options={workPlaces} onChange={onChange} className="form-input"/>
+                            options={workPlaces} onChange={onChange} className="form-input" />
             </FormGroup>
 
             <div className="text-right mt-3">
                 <button type="submit" className="btn_link -mr-1.5">
                     <div className="flex items-center">
                         <span className="text-sm">Next</span>
-                        <ChevronRightIcon className="w-4 h-4"/>
+                        <ChevronRightIcon className="w-4 h-4" />
                     </div>
                 </button>
             </div>
@@ -471,7 +472,7 @@ function SignupStep2({name, positions, setPositions, placeOfWork, nextStep, onCh
     )
 }
 
-function SignupStep3({policy, onChange, submit, validated, nextStep}) {
+function SignupStep3({ policy, onChange, submit, validated, nextStep }) {
     const [policyInvalid, setPolicyInvalid] = useState(null)
     const onChangeWithPolicy = (e) => {
         const isValid = e.target.checkValidity()
@@ -485,17 +486,17 @@ function SignupStep3({policy, onChange, submit, validated, nextStep}) {
     return (
         <Form validated={validated} onSubmit={e => submit(e, nextStep)}>
             <h3 className="form-label">Terms of Use</h3>
-            <textarea className="form-input" readOnly rows="10" value={POLICY}/>
+            <textarea className="form-input" readOnly rows="10" value={POLICY} />
             <div className="text-right mt-2">
-                <FormCheck name="agree" type='checkbox' value={policy}
+                <FormCheck name="agree" type="checkbox" value={policy}
                            onChange={onChangeWithPolicy} required
                            className="mt-3" invalid={policyInvalid}
                            label="Agree to terms and conditions"
-                           feedback="You must agree before submitting."/>
+                           feedback="You must agree before submitting." />
             </div>
             <Button type="submit" className="btn btn_block mt-4">Sign Up</Button>
         </Form>
     )
 }
 
-export default SignUp;
+export default SignUp

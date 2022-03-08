@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 /* TODO: 대체 */
 const FormSelect = ({ value, onChange, name, className, label, help, options, err, placeholder }) => {
@@ -13,7 +13,7 @@ const FormSelect = ({ value, onChange, name, className, label, help, options, er
             </select>
             {help && <span className="help-block"><small>{help}</small></span>}
         </div>
-    );
+    )
 }
 
-export default React.memo(FormSelect);
+export default React.memo(FormSelect)

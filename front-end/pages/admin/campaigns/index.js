@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import axios from "../../../lib/axios";
-import { dayFormat } from "../../../lib/dayjs";
-import { CAMPAIGNS_STATUS } from "../../../assets/data";
-import { CAMPAIGNS_HEADER } from "../../../assets/tableHeaders";
-import Card from "../../../components/Card";
-import PageTitle from "../../../components/PageTitle";
-import Board from "../../../components/Board";
-import Badge from "../../../components/Badge";
-import FormSelect from "../../../components/FormSelect";
+import axios from '../../../lib/axios'
+import { dayFormat } from '../../../lib/dayjs'
+import { CAMPAIGNS_STATUS } from '../../../assets/data'
+import { CAMPAIGNS_HEADER } from '../../../assets/tableHeaders'
+import Card from '../../../components/Card'
+import PageTitle from '../../../components/PageTitle'
+import Board from '../../../components/Board'
+import Badge from '../../../components/Badge'
+import FormSelect from '../../../components/FormSelect'
 
 const NEW_CAMPAIGNS_STATUS = [{ id: '', text: 'All Status' }, ...CAMPAIGNS_STATUS]
 
@@ -26,7 +26,7 @@ const Campaigns = ({ content, options: initOptions }) => {
                     options: {
                         ...params,
                         total: data.total,
-                    }
+                    },
                 })
             })
     }
@@ -58,7 +58,7 @@ const Campaigns = ({ content, options: initOptions }) => {
                             className="form-input w-1/5 mr-3"
                         />,
                         startsAt: ({ startsAt, endsAt }) => <>{dayFormat(startsAt)} ~ {dayFormat(endsAt)}</>,
-                        status: ({ status }) => <Badge text="xs">{status}</Badge>
+                        status: ({ status }) => <Badge text="xs">{status}</Badge>,
                     }}
                 </Board>
             </Card>
@@ -86,9 +86,8 @@ export const getServerSideProps = async () => {
                 total,
             },
             content,
-        }
+        },
     }
 }
 
-
-export default Campaigns;
+export default Campaigns

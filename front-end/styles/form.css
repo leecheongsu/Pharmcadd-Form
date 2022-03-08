@@ -121,7 +121,7 @@ select.form-input {
 }
 
 .valid-box > .form-input,
-/*.was-validated .form-input:valid,*/
+    /*.was-validated .form-input:valid,*/
 .form-input.is-valid {
     border: 2px solid #4cec4c;
     color: #0C0;
@@ -143,8 +143,8 @@ select.form-input {
 }
 
 .valid-feedback {
-/*.was-validated :valid ~ .form-check-label,*/
-/*.was-validated .is-valid ~ .form-check-label {*/
+    /*.was-validated :valid ~ .form-check-label,*/
+    /*.was-validated .is-valid ~ .form-check-label {*/
     color: #198754;
 }
 

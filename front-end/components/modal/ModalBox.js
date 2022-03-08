@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Button from "../Button";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from '../Button'
 
 const propTypes = {
     state: PropTypes.bool,
@@ -11,14 +11,14 @@ const propTypes = {
         blindFilter: PropTypes.bool,
         handleLeftButton: PropTypes.shape({
             title: PropTypes.string,
-            onClick: PropTypes.func
+            onClick: PropTypes.func,
         }),
         handleRightButton: PropTypes.shape({
             title: PropTypes.string,
-            onClick: PropTypes.func
+            onClick: PropTypes.func,
         }),
     }),
-    as: PropTypes.elementType
+    as: PropTypes.elementType,
 }
 
 const ModalBox = ({
@@ -26,7 +26,7 @@ const ModalBox = ({
                       className,
                       child,
                       modalConf: configs = [],
-                      as: Component = 'div'
+                      as: Component = 'div',
                   }) => {
 
     let leftButton = configs.handleLeftButton
@@ -36,7 +36,7 @@ const ModalBox = ({
         <div>
             {state && (
                 <div>{configs.blindFilter && (
-                    <div className="modal-wrap"/>
+                    <div className="modal-wrap" />
                 )}
                     <Component className="alert text-center">
                         <p className="text-xl">
@@ -62,9 +62,9 @@ const ModalBox = ({
             )}
         </div>
     )
-};
+}
 
-ModalBox.displayName = 'ModalBox';
-ModalBox.propTypes = propTypes;
+ModalBox.displayName = 'ModalBox'
+ModalBox.propTypes = propTypes
 
-export default ModalBox;
+export default ModalBox

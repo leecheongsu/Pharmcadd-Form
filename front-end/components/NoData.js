@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classNames from 'classnames'
 
 const NoData = (
     {
@@ -17,7 +17,7 @@ const NoData = (
             {show && <Component
                 {...props}
                 className={classNames(
-                    center && 'text-center'
+                    center && 'text-center',
                 )}>
                 {content}
             </Component>}
@@ -25,4 +25,4 @@ const NoData = (
     )
 }
 
-export default NoData;
+export default NoData

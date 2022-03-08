@@ -1,9 +1,9 @@
-import App from 'next/app';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import '/styles/globals.css';
-import axios, { setAuth } from "../lib/axios";
+import App from 'next/app'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
+import '/styles/globals.css'
+import axios, { setAuth } from '../lib/axios'
 
 const DefaultLayout = dynamic(() => import('../layouts/campaign'))
 const AccountLayout = dynamic(() => import('../layouts/login'))
@@ -13,7 +13,7 @@ const MyApp = ({ Component, pageProps, accessToken }) => {
     const { pathname } = useRouter()
     const Layout = pathname.startsWith('/admin') ? AdminLayout
         : (pathname.startsWith('/account') ? AccountLayout
-            : DefaultLayout);
+            : DefaultLayout)
 
     setAuth(accessToken)
 
@@ -28,20 +28,20 @@ const MyApp = ({ Component, pageProps, accessToken }) => {
                 <Component {...pageProps} />
             </Layout>
         </>
-    );
+    )
 }
 
 MyApp.getInitialProps = async (appContext) => {
-    const appProps = await App.getInitialProps(appContext);
+    const appProps = await App.getInitialProps(appContext)
     const { req } = appContext.ctx
     if (req) {
         setAuth(req.cookies.accessToken)
         if (req.cookies && req.cookies.accessToken) {
-            axios.defaults.headers.common['Authorization'] = "Bearer " + req.cookies.accessToken
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + req.cookies.accessToken
             return { ...appProps, accessToken: req.cookies.accessToken }
         }
     }
     return { ...appProps }
 }
 
-export default MyApp;
+export default MyApp

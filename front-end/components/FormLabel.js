@@ -1,18 +1,18 @@
-import { forwardRef, useContext } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import FormContext from "./FormContext";
+import { forwardRef, useContext } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import FormContext from './FormContext'
 
 const propTypes = {
     check: PropTypes.bool,
     htmlFor: PropTypes.string,
     hidden: PropTypes.bool,
     as: PropTypes.elementType,
-};
+}
 
 const defaultProps = {
     hidden: false,
-};
+}
 
 const FormLabel = forwardRef((
         {
@@ -25,7 +25,7 @@ const FormLabel = forwardRef((
         },
         ref,
     ) => {
-        const { cid } = useContext(FormContext);
+        const { cid } = useContext(FormContext)
 
         return (
             <Component
@@ -38,12 +38,12 @@ const FormLabel = forwardRef((
                 )}
                 ref={ref}
             />
-        );
+        )
     },
-);
+)
 
-FormLabel.displayName = 'FormLabel';
-FormLabel.propTypes = propTypes;
-FormLabel.defaultProps = defaultProps;
+FormLabel.displayName = 'FormLabel'
+FormLabel.propTypes = propTypes
+FormLabel.defaultProps = defaultProps
 
-export default FormLabel;
+export default FormLabel

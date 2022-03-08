@@ -10,7 +10,7 @@ export default function Breadcrumb() {
         .filter(v => !!v)
         .map((v, i, arr) => ({
             text: v,
-            link: '/' + arr.filter((f,j) => j <= i).join('/'),
+            link: '/' + arr.filter((f, j) => j <= i).join('/'),
         }))
 
     return (

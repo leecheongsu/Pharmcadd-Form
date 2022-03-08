@@ -1,5 +1,5 @@
 import { MenuIcon } from '@heroicons/react/solid'
-import Button from "../Button";
+import Button from '../Button'
 
 const Navbar = ({ onClickMenu }) => {
     return (
@@ -12,4 +12,4 @@ const Navbar = ({ onClickMenu }) => {
     )
 }
 
-export default Navbar;
+export default Navbar

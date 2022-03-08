@@ -1,6 +1,6 @@
-import { forwardRef } from "react";
-import PropTypes from 'prop-types';
-import classNames from "classnames";
+import { forwardRef } from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 const propTypes = {
     outline: PropTypes.bool,
@@ -14,33 +14,33 @@ const propTypes = {
     target: PropTypes.oneOf(['_blank', '_self', '_parent', '_top', null]),
     type: PropTypes.oneOf(['button', 'reset', 'submit', null]),
     onClick: PropTypes.func,
-};
+}
 
 const useButtonProps = ({ disabled, href, target, onClick, type }) => {
-    const tagName = href ? 'a' : 'button';
-    const meta = { tagName };
+    const tagName = href ? 'a' : 'button'
+    const meta = { tagName }
 
     if (tagName === 'button') {
-        return [{ type: type || 'button', disabled }, meta];
+        return [{ type: type || 'button', disabled }, meta]
     }
 
     const handleClick = (e) => {
         if (disabled) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
+            e.preventDefault()
+            e.stopPropagation()
+            return
         }
 
         if (onClick) {
-            onClick(e);
+            onClick(e)
         }
-    };
-
-    if (disabled) {
-        href = undefined;
     }
 
-    return [{ href, target, onClick: handleClick }, meta];
+    if (disabled) {
+        href = undefined
+    }
+
+    return [{ href, target, onClick: handleClick }, meta]
 }
 
 const Button = forwardRef((
@@ -60,7 +60,7 @@ const Button = forwardRef((
         const [buttonProps, { tagName: Component }] = useButtonProps({
             disabled,
             ...props,
-        });
+        })
 
         return <Component
             {...props}
@@ -75,12 +75,12 @@ const Button = forwardRef((
                 active && 'active',
                 props.href && disabled && 'disabled',
             )}
-        />;
+        />
     },
-);
+)
 
-Button.displayName = 'Button';
-Button.propTypes = propTypes;
+Button.displayName = 'Button'
+Button.propTypes = propTypes
 
-export default Button;
+export default Button
 

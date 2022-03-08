@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo, useState} from "react";
-import {throttle} from "lodash";
+import React, { useEffect, useMemo, useState } from 'react'
+import { throttle } from 'lodash'
 
 const useScroll = (totalPage, limit) => {
     const [page, setPage] = useState(1)

@@ -1,13 +1,13 @@
-import { forwardRef } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import { forwardRef } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     outline: PropTypes.bool,
     pill: PropTypes.bool,
     text: PropTypes.string,
     as: PropTypes.elementType,
-};
+}
 
 const Badge = forwardRef(
     (
@@ -35,11 +35,11 @@ const Badge = forwardRef(
                     (!outline && bg) && `bg-${bg}`,
                 )}
             />
-        );
+        )
     },
-);
+)
 
-Badge.displayName = 'Badge';
-Badge.propTypes = propTypes;
+Badge.displayName = 'Badge'
+Badge.propTypes = propTypes
 
-export default Badge;
+export default Badge

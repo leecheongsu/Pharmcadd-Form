@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { dayFormat } from "../lib/dayjs";
-import classNames from "classnames";
-import Search from "./Search";
-import NoData from "./NoData";
-import Pagination from "./Pagination";
+import { useEffect, useState } from 'react'
+import { dayFormat } from '../lib/dayjs'
+import classNames from 'classnames'
+import Search from './Search'
+import NoData from './NoData'
+import Pagination from './Pagination'
 
 const Board = (
     {
@@ -17,7 +17,7 @@ const Board = (
         children = {},
     }) => {
     const [options, setOptions] = useState({
-        ...initOptions
+        ...initOptions,
     })
     useEffect(() => {
         setOptions({ ...initOptions })
@@ -83,4 +83,4 @@ const Board = (
     )
 }
 
-export default Board;
+export default Board

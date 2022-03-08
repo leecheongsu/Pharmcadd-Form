@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import { localDateTime } from "../../../lib/dayjs";
-import { XIcon } from "@heroicons/react/solid";
-import axios from "../../../lib/axios";
-import useForm from "../../../hooks/useForm";
-import PageTitle from "../../../components/PageTitle";
-import Card from "../../../components/Card";
-import Form from "../../../components/Form";
-import FormControl from "../../../components/FormControl";
-import FormSelect from "../../../components/FormSelect";
-import Button from "../../../components/Button";
-import FormLabel from "../../../components/FormLabel";
-import FormCheck from "../../../components/FormCheck";
-import Badge from "../../../components/Badge";
+import { useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
+import { localDateTime } from '../../../lib/dayjs'
+import { XIcon } from '@heroicons/react/solid'
+import axios from '../../../lib/axios'
+import useForm from '../../../hooks/useForm'
+import PageTitle from '../../../components/PageTitle'
+import Card from '../../../components/Card'
+import Form from '../../../components/Form'
+import FormControl from '../../../components/FormControl'
+import FormSelect from '../../../components/FormSelect'
+import Button from '../../../components/Button'
+import FormLabel from '../../../components/FormLabel'
+import FormCheck from '../../../components/FormCheck'
+import Badge from '../../../components/Badge'
 
 const CampaignCreate = ({ formInfo }) => {
-    const router = useRouter();
-    const [hasSchedule, setHasSchedule] = useState(false);
+    const router = useRouter()
+    const [hasSchedule, setHasSchedule] = useState(false)
     const [inputData, validated, { onChange, handleChange, submit: handleSubmit }] = useForm({
         formId: formInfo.id || '',
         title: formInfo.title || '',
@@ -32,7 +32,7 @@ const CampaignCreate = ({ formInfo }) => {
         cronExpression: '0 0 8 ? * MON-SAT',
         cronDuration: '86400000',
         active: true,
-    });
+    })
     const { title, description, startsAt, endsAt, timeZoneId, participants, cronExpression } = inputData
     const [timeZones, setTimeZones] = useState([])
     useEffect(() => {
@@ -40,7 +40,7 @@ const CampaignCreate = ({ formInfo }) => {
             const { data } = await axios.get('/backapi/time-zones')
             setTimeZones(data.map(v => ({
                 ...v,
-                text: v.country
+                text: v.country,
             })))
             handleChange('timeZoneId', data[0].id)
         }
@@ -159,7 +159,7 @@ const Participants = ({ onChange }) => {
         groups: [],
         groupTree: null,
         groupMap: {},
-    });
+    })
     const [{ users, userMap }, setUserInfo] = useState({
         users: [],
         userMap: {},
@@ -234,7 +234,7 @@ const Participants = ({ onChange }) => {
                         ...userMap[id],
                         checked: checked,
                     },
-                }
+                },
             })
         } else if (type === 'group') {
             setGroupInfo({
@@ -245,8 +245,8 @@ const Participants = ({ onChange }) => {
                     [id]: {
                         ...groupMap[id],
                         checked: checked,
-                    }
-                }
+                    },
+                },
             })
         }
     }
@@ -261,7 +261,7 @@ const Participants = ({ onChange }) => {
         includedGroupIds.forEach(id => {
             temp[id] = {
                 ...groupMap[id],
-                checked: checked
+                checked: checked,
             }
         })
         setGroupInfo({
@@ -270,7 +270,7 @@ const Participants = ({ onChange }) => {
             groupMap: {
                 ...groupMap,
                 ...temp,
-            }
+            },
         })
     }
 
@@ -383,8 +383,8 @@ export const getServerSideProps = async ({ query }) => {
 
         return {
             props: {
-                formInfo: data
-            }
+                formInfo: data,
+            },
         }
     }
 
@@ -395,4 +395,4 @@ export const getServerSideProps = async ({ query }) => {
     }
 }
 
-export default CampaignCreate;
+export default CampaignCreate

@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     label: PropTypes.string,
@@ -10,14 +10,14 @@ const propTypes = {
     readOnly: PropTypes.bool,
     rows: PropTypes.oneOfType(
         PropTypes.number,
-        PropTypes.any
+        PropTypes.any,
     ),
     answer: PropTypes.oneOfType([
         PropTypes.array,
-        PropTypes.any
+        PropTypes.any,
     ]),
-    as: PropTypes.elementType
-};
+    as: PropTypes.elementType,
+}
 
 const FormText = (
     {
@@ -29,14 +29,14 @@ const FormText = (
         onChange,
         rows,
         answer,
-        as: Component = rows !== null ? 'textarea' : 'input'
+        as: Component = rows !== null ? 'textarea' : 'input',
     }) => {
 
     let dif = ''
     let difValue = ''
 
     useEffect(() => {
-        if(Component === 'textarea') {
+        if (Component === 'textarea') {
             dif = 'rows'
             difValue = rows
         } else {
@@ -46,9 +46,9 @@ const FormText = (
     }, [])
 
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         if (onChange) {
-            onChange({name, value})
+            onChange({ name, value })
         }
     }
 
@@ -69,9 +69,9 @@ const FormText = (
             />
         </div>
     )
-};
+}
 
-FormText.displayName = 'FormText';
-FormText.propTypes = propTypes;
+FormText.displayName = 'FormText'
+FormText.propTypes = propTypes
 
-export default FormText;
+export default FormText

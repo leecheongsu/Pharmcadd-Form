@@ -1,6 +1,6 @@
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     page: PropTypes.number.isRequired,
@@ -23,7 +23,7 @@ const Pagination = (
         className,
         as: Component = 'div',
         ...props
-    }
+    },
 ) => {
     const { page, onChange } = props
     const lastPage = Math.ceil(total / itemsPerPage)
@@ -120,6 +120,6 @@ const PageItem = ({ page, active, disabled, className, onChange, ...props }) => 
     )
 }
 
-Pagination.propTypes = propTypes;
+Pagination.propTypes = propTypes
 
-export default Pagination;
+export default Pagination

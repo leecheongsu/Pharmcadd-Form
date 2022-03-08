@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classNames from 'classnames'
 
 const Card = (
     {
@@ -18,4 +18,4 @@ const Card = (
     )
 }
 
-export default Card;
+export default Card

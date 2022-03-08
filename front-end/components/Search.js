@@ -1,16 +1,16 @@
-import { memo, useEffect, useState } from 'react';
-import classNames from "classnames";
-import FormControl from "./FormControl";
-import Button from "./Button";
+import { memo, useEffect, useState } from 'react'
+import classNames from 'classnames'
+import FormControl from './FormControl'
+import Button from './Button'
 
 const Search = (
     {
         keyword: initKeyword,
         placeholder,
         className,
-        onSearch
+        onSearch,
     }) => {
-    const [keyword, setKeyword] = useState(initKeyword);
+    const [keyword, setKeyword] = useState(initKeyword)
     useEffect(() => {
         setKeyword(initKeyword)
     }, [initKeyword])
@@ -30,7 +30,7 @@ const Search = (
     return (
         <div className={classNames(
             'form-search flex',
-            className
+            className,
         )}>
             <FormControl
                 placeholder={placeholder}
@@ -41,7 +41,7 @@ const Search = (
             />
             <Button onClick={onClick} className="flex-none">Search</Button>
         </div>
-    );
+    )
 }
 
-export default memo(Search);
+export default memo(Search)

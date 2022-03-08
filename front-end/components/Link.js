@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
+import { forwardRef } from 'react'
 import Link from 'next/link'
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     icon: PropTypes.bool,
@@ -12,7 +12,7 @@ const propTypes = {
     disabled: PropTypes.bool,
     className: PropTypes.string,
     href: PropTypes.string.isRequired,
-};
+}
 
 const LinkButton = forwardRef((
     {
@@ -42,11 +42,11 @@ const LinkButton = forwardRef((
                 className,
             )}
         />
-    </Link>;
+    </Link>
 
 })
 
-LinkButton.displayName = 'Link';
-LinkButton.propTypes = propTypes;
+LinkButton.displayName = 'Link'
+LinkButton.propTypes = propTypes
 
-export default LinkButton;
+export default LinkButton

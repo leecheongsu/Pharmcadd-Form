@@ -11,4 +11,4 @@ export const getServerSideProps = async () => {
     }
 }
 
-export default Admin;
+export default Admin

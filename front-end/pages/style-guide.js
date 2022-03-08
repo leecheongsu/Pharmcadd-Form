@@ -1,68 +1,68 @@
-import Card from "../components/Card";
-import {useEffect, useState} from "react";
-import Link from "next/link";
-import Button from "../components/Button";
-import Form from "../components/Form";
-import FormGroup from "../components/FormGroup";
-import FormLabel from "../components/FormLabel";
-import FormSelect from "../components/FormSelect";
-import FormControl from "../components/FormControl";
-import Feedback from "../components/Feedback";
-import FormCheck from "../components/FormCheck";
-import FormCheckGroup from "../components/FormCheckGroup";
-import FormRadioGroup from "../components/FormRadioGroup";
-import Toastbox from "../components/modal/ToastBox";
+import Card from '../components/Card'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import Button from '../components/Button'
+import Form from '../components/Form'
+import FormGroup from '../components/FormGroup'
+import FormLabel from '../components/FormLabel'
+import FormSelect from '../components/FormSelect'
+import FormControl from '../components/FormControl'
+import Feedback from '../components/Feedback'
+import FormCheck from '../components/FormCheck'
+import FormCheckGroup from '../components/FormCheckGroup'
+import FormRadioGroup from '../components/FormRadioGroup'
+import Toastbox from '../components/modal/ToastBox'
 
 export default function StyleGuide() {
-    const [validated, setValidated] = useState(false);
+    const [validated, setValidated] = useState(false)
     const handleSubmit = (e) => {
-        const form = e.currentTarget;
+        const form = e.currentTarget
         const hasInvalid = Array.from(form).some(v => (v.dataset && v.dataset.invalid))
         if (!form.checkValidity() || hasInvalid) {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault()
+            e.stopPropagation()
         }
 
-        setValidated(true);
-    };
+        setValidated(true)
+    }
 
-    const [passwordInvalid, setPasswordInvalid] = useState(false);
+    const [passwordInvalid, setPasswordInvalid] = useState(false)
     const validate = (e) => {
         const isValid = e.target.checkValidity()
         setPasswordInvalid(!isValid)
     }
 
     const items = [
-        {id: 1, text: '1'},
-        {id: 2, text: '2'},
-        {id: 3, text: '3'},
-        {id: 4, text: '4'},
-        {id: 5, text: '5'}
+        { id: 1, text: '1' },
+        { id: 2, text: '2' },
+        { id: 3, text: '3' },
+        { id: 4, text: '4' },
+        { id: 5, text: '5' },
     ]
 
     const [inputData, setInputData] = useState({
         checkbox: ['gilad'],
         radio: '',
         agree: false,
-    });
+    })
 
-    const {checkbox, radio, agree} = inputData
-    const handleInputData = ({name, value}) => {
+    const { checkbox, radio, agree } = inputData
+    const handleInputData = ({ name, value }) => {
         setInputData({
             ...inputData,
             [name]: value,
-        });
-    };
+        })
+    }
 
     const handleCheckChange = (e) => {
-        const {name, checked} = e.target
-        handleInputData({name, value: checked})
+        const { name, checked } = e.target
+        handleInputData({ name, value: checked })
     }
 
     const sampleCheckbox = [
-        {id: 'gilad', text: '1'},
-        {id: 'jason', text: '2'},
-        {id: 'antoine', text: '3', disabled: true},
+        { id: 'gilad', text: '1' },
+        { id: 'jason', text: '2' },
+        { id: 'antoine', text: '3', disabled: true },
     ]
 
     useEffect(() => {
@@ -80,25 +80,25 @@ export default function StyleGuide() {
 
             <FormGroup id="sample_id" className="mb-3">
                 <FormLabel>Text</FormLabel>
-                <FormControl placeholder="placeholder..."/>
+                <FormControl placeholder="placeholder..." />
             </FormGroup>
             <FormGroup className="mb-3">
                 <FormLabel>readOnly</FormLabel>
-                <FormControl value="readOnly" readOnly/>
+                <FormControl value="readOnly" readOnly />
             </FormGroup>
             <FormGroup className="mb-3">
                 <FormLabel>disabled</FormLabel>
-                <FormControl value="disabled" disabled/>
+                <FormControl value="disabled" disabled />
             </FormGroup>
             <FormGroup className="mb-3">
                 <FormLabel>plaintext</FormLabel>
-                <FormControl plaintext readOnly defaultValue="email@example.com"/>
+                <FormControl plaintext readOnly defaultValue="email@example.com" />
             </FormGroup>
             <FormGroup className="mb-3">
                 <FormLabel>textarea</FormLabel>
-                <FormControl as="textarea" rows="3"/>
+                <FormControl as="textarea" rows="3" />
             </FormGroup>
-            <br/>
+            <br />
 
             {/* Form Validation */}
             <Form validated={validated} onSubmit={handleSubmit}>
@@ -176,7 +176,7 @@ export default function StyleGuide() {
 
             <div className="mb-3">
                 <label htmlFor="example-helping" className="form-label">Helping text</label>
-                <input type="text" id="example-helping" className="form-input" placeholder="Helping text"/>
+                <input type="text" id="example-helping" className="form-input" placeholder="Helping text" />
                 <span className="help-block"><small>A block of help text that breaks onto a new line and may extend beyond one line.</small></span>
             </div>
 
@@ -199,39 +199,39 @@ export default function StyleGuide() {
 
             <div className="mb-3">
                 <label htmlFor="example-fileinput" className="form-label">Default file input</label>
-                <input type="file" id="example-fileinput" className="form-input"/>
+                <input type="file" id="example-fileinput" className="form-input" />
             </div>
 
             <div className="mt-3">
                 <div className="form-check">
-                    <input type="radio" id="customRadio1" name="customRadio" className="form-check-input"/>
+                    <input type="radio" id="customRadio1" name="customRadio" className="form-check-input" />
                     <label className="form-check-label" htmlFor="customRadio1">Toggle this custom radio</label>
                 </div>
                 <div className="form-check">
-                    <input type="radio" id="customRadio2" name="customRadio" className="form-check-input"/>
+                    <input type="radio" id="customRadio2" name="customRadio" className="form-check-input" />
                     <label className="form-check-label" htmlFor="customRadio2">Or toggle this other custom radio</label>
                 </div>
             </div>
 
             <div className="mt-2">
                 <div className="form-check form-check-inline">
-                    <input type="radio" id="customRadio3" name="customRadio1" className="form-check-input"/>
+                    <input type="radio" id="customRadio3" name="customRadio1" className="form-check-input" />
                     <label className="form-check-label" htmlFor="customRadio3">Toggle this custom radio</label>
                 </div>
                 <div className="form-check form-check-inline">
-                    <input type="radio" id="customRadio4" name="customRadio1" className="form-check-input"/>
+                    <input type="radio" id="customRadio4" name="customRadio1" className="form-check-input" />
                     <label className="form-check-label" htmlFor="customRadio4">Or toggle this other custom radio</label>
                 </div>
             </div>
 
             <div className="mt-2">
                 <div className="form-check form-check-inline">
-                    <input type="radio" id="customRadio5" name="customRadio2" className="form-check-input" disabled/>
+                    <input type="radio" id="customRadio5" name="customRadio2" className="form-check-input" disabled />
                     <label className="form-check-label" htmlFor="customRadio5">Toggle this custom radio</label>
                 </div>
                 <div className="form-check form-check-inline">
                     <input type="radio" id="customRadio6" name="customRadio2" className="form-check-input" checked
-                           disabled/>
+                           disabled />
                     <label className="form-check-label" htmlFor="customRadio6">Or toggle this other custom radio</label>
                 </div>
             </div>
@@ -247,7 +247,7 @@ export default function StyleGuide() {
                 <Link href="/" passHref>
                     <Button className="btn_link" disabled>Link</Button>
                 </Link>{' '}
-                <br/>
+                <br />
 
                 <Link href="/" passHref>
                     <Button>Link</Button>
@@ -275,19 +275,19 @@ export default function StyleGuide() {
                 <Button className="btn_block">Block</Button>
             </div>
 
-            <br/>
+            <br />
             <label className="switch-button">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <span className="on-off-switch"></span>
             </label>
 
             <label className="switch-button sm">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <span className="on-off-switch"></span>
             </label>
 
-            <br/>
-            <br/>
+            <br />
+            <br />
 
             <Card className="cam-card">
                 <div className="surname text-2xl mb-5">
@@ -318,10 +318,10 @@ export default function StyleGuide() {
                 </div>
 
             </Card>
-            <br/><br/>
+            <br /><br />
 
             {isVisible &&
-            <Toastbox type="success" message="success!!" transition={false} onChange={closeModal}/>
+            <Toastbox type="success" message="success!!" transition={false} onChange={closeModal} />
             }
 
             <div>

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react'
 import { useRouter } from 'next/router'
-import axios from "../../../lib/axios";
-import { FORMS_HEADER } from "../../../assets/tableHeaders";
-import Card from "../../../components/Card";
-import PageTitle from "../../../components/PageTitle";
-import Board from "../../../components/Board";
-import Button from "../../../components/Button";
+import axios from '../../../lib/axios'
+import { FORMS_HEADER } from '../../../assets/tableHeaders'
+import Card from '../../../components/Card'
+import PageTitle from '../../../components/PageTitle'
+import Board from '../../../components/Board'
+import Button from '../../../components/Button'
 
 const Forms = ({ content, options: initOptions }) => {
     const router = useRouter()
@@ -21,14 +21,14 @@ const Forms = ({ content, options: initOptions }) => {
                     options: {
                         ...params,
                         total: data.total,
-                    }
+                    },
                 })
             })
     }
 
     const onClickSchedules = (e, id) => {
         e.preventDefault()
-        e.stopPropagation();
+        e.stopPropagation()
         router.push(`/admin/forms/${id}/schedules`)
     }
 
@@ -44,7 +44,7 @@ const Forms = ({ content, options: initOptions }) => {
                     loadData={(params) => loadData(params)}
                 >
                     {{
-                        description: ({ id }) => <Button outline onClick={e => onClickSchedules(e, id)}>스케줄링</Button>
+                        description: ({ id }) => <Button outline onClick={e => onClickSchedules(e, id)}>스케줄링</Button>,
                     }}
                 </Board>
             </Card>
@@ -71,8 +71,8 @@ export const getServerSideProps = async () => {
                 total,
             },
             content,
-        }
+        },
     }
 }
 
-export default Forms;
+export default Forms

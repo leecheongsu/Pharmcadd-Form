@@ -1,11 +1,11 @@
-import { forwardRef } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import { forwardRef } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     validated: PropTypes.bool,
     as: PropTypes.elementType,
-};
+}
 
 const Form = forwardRef((
         {
@@ -22,13 +22,13 @@ const Form = forwardRef((
             ref={ref}
             className={classNames(
                 className,
-                validated && 'was-validated'
+                validated && 'was-validated',
             )}
         />
     ),
-);
+)
 
-Form.displayName = 'Form';
-Form.propTypes = propTypes;
+Form.displayName = 'Form'
+Form.propTypes = propTypes
 
-export default Form;
+export default Form

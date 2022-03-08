@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 const Main = () => {
     const links = [
@@ -62,5 +62,4 @@ export const getServerSideProps = async () => {
     }
 }
 
-
-export default Main;
+export default Main

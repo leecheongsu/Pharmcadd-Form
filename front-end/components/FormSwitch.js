@@ -1,12 +1,12 @@
-import { forwardRef } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import { forwardRef } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
     checked: PropTypes.bool,
-};
+}
 
 const FormSwitch = forwardRef((
         {
@@ -36,7 +36,7 @@ const FormSwitch = forwardRef((
     },
 )
 
-FormSwitch.displayName = 'FormSwitch';
-FormSwitch.propTypes = propTypes;
+FormSwitch.displayName = 'FormSwitch'
+FormSwitch.propTypes = propTypes
 
-export default FormSwitch;
+export default FormSwitch

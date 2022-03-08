@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "../../../../lib/axios";
-import { dayFormat } from "../../../../lib/dayjs";
-import { time2string } from "../../../../utils/time";
-import PageTitle from "../../../../components/PageTitle";
-import Card from "../../../../components/Card";
-import Badge from "../../../../components/Badge";
-import FormSwitch from "../../../../components/FormSwitch";
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from '../../../../lib/axios'
+import { dayFormat } from '../../../../lib/dayjs'
+import { time2string } from '../../../../utils/time'
+import PageTitle from '../../../../components/PageTitle'
+import Card from '../../../../components/Card'
+import Badge from '../../../../components/Badge'
+import FormSwitch from '../../../../components/FormSwitch'
 
 const FormSchedules = ({ data }) => {
-    const router = useRouter();
+    const router = useRouter()
     const [timeZonesMap, setTimeZonesMap] = useState(null)
     useEffect(() => {
         const handleTimeZones = async () => {
@@ -89,8 +89,8 @@ export const getServerSideProps = async ({ params }) => {
     return {
         props: {
             data,
-        }
+        },
     }
 }
 
-export default FormSchedules;
+export default FormSchedules

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react'
 import Navbar from '../components/admin/navbar'
 import SideMenu from '../components/admin/sideMenu'
 import Footer from '../components/admin/footer'
@@ -23,4 +23,4 @@ const AdminLayout = ({ children }) => {
     )
 }
 
-export default AdminLayout;
+export default AdminLayout

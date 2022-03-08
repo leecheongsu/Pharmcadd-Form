@@ -1,11 +1,11 @@
-import { forwardRef } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import { forwardRef } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     type: PropTypes.oneOf(['valid', 'invalid']),
     as: PropTypes.elementType,
-};
+}
 
 const Feedback = forwardRef((
         {
@@ -26,9 +26,9 @@ const Feedback = forwardRef((
             )}
         />
     ),
-);
+)
 
-Feedback.displayName = 'Feedback';
-Feedback.propTypes = propTypes;
+Feedback.displayName = 'Feedback'
+Feedback.propTypes = propTypes
 
-export default Feedback;
+export default Feedback

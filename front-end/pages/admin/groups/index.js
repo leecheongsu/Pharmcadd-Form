@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import axios from "../../../lib/axios";
-import { dayFormat } from "../../../lib/dayjs";
-import PageTitle from "../../../components/PageTitle";
-import Card from "../../../components/Card";
-import Search from "../../../components/Search";
-import NoData from "../../../components/NoData";
+import { useMemo, useState } from 'react'
+import axios from '../../../lib/axios'
+import { dayFormat } from '../../../lib/dayjs'
+import PageTitle from '../../../components/PageTitle'
+import Card from '../../../components/Card'
+import Search from '../../../components/Search'
+import NoData from '../../../components/NoData'
 
 const Groups = ({ data: list }) => {
     const groupMap = {}
@@ -68,8 +68,8 @@ export const getServerSideProps = async () => {
     return {
         props: {
             data,
-        }
+        },
     }
 }
 
-export default Groups;
+export default Groups

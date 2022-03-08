@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import axios from "../../../lib/axios";
-import { USERS_HEADER } from "../../../assets/tableHeaders";
-import PageTitle from "../../../components/PageTitle";
-import Card from "../../../components/Card";
-import Board from "../../../components/Board";
-import FormSelect from "../../../components/FormSelect";
-import Badge from "../../../components/Badge";
+import axios from '../../../lib/axios'
+import { USERS_HEADER } from '../../../assets/tableHeaders'
+import PageTitle from '../../../components/PageTitle'
+import Card from '../../../components/Card'
+import Board from '../../../components/Board'
+import FormSelect from '../../../components/FormSelect'
+import Badge from '../../../components/Badge'
 
 const Users = ({ content, options: initOptions }) => {
     const router = useRouter()
@@ -34,7 +34,7 @@ const Users = ({ content, options: initOptions }) => {
                     options: {
                         ...params,
                         total: data.total,
-                    }
+                    },
                 })
             })
     }
@@ -70,7 +70,7 @@ const Users = ({ content, options: initOptions }) => {
                                 ? groupNames.map((name, i) => (<Badge outline pill text="xs" key={i}>{name}</Badge>))
                                 : '-'}
                         </div>,
-                        active: ({ active }) => <Badge text="xs">{active ? 'ON' : 'OFF'}</Badge>
+                        active: ({ active }) => <Badge text="xs">{active ? 'ON' : 'OFF'}</Badge>,
                     }}
                 </Board>
             </Card>
@@ -99,8 +99,8 @@ export const getServerSideProps = async () => {
                 total,
             },
             content,
-        }
+        },
     }
 }
 
-export default Users;
+export default Users

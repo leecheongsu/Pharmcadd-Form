@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { PlusCircleIcon, PlusIcon, TrashIcon, XIcon, ArrowCircleUpIcon, ArrowCircleDownIcon } from "@heroicons/react/outline";
-import axios from "../../../lib/axios";
-import { INPUT_TYPE_OF_QUESTION_MAP, QUESTION_TYPE } from "../../../assets/data";
-import useForm from "../../../hooks/useForm";
-import PageTitle from "../../../components/PageTitle";
-import Card from "../../../components/Card";
-import Form from "../../../components/Form";
-import FormControl from "../../../components/FormControl";
-import FormSelect from "../../../components/FormSelect";
-import Button from "../../../components/Button";
-import FormCheck from "../../../components/FormCheck";
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import { PlusCircleIcon, PlusIcon, TrashIcon, XIcon, ArrowCircleUpIcon, ArrowCircleDownIcon } from '@heroicons/react/outline'
+import axios from '../../../lib/axios'
+import { INPUT_TYPE_OF_QUESTION_MAP, QUESTION_TYPE } from '../../../assets/data'
+import useForm from '../../../hooks/useForm'
+import PageTitle from '../../../components/PageTitle'
+import Card from '../../../components/Card'
+import Form from '../../../components/Form'
+import FormControl from '../../../components/FormControl'
+import FormSelect from '../../../components/FormSelect'
+import Button from '../../../components/Button'
+import FormCheck from '../../../components/FormCheck'
 
 const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
     ...(i === 0 ? { selected: true } : {}),
     id: v.value,
-    text: v.label
+    text: v.label,
 }))
 
 const FormCreate = () => {
-    const router = useRouter();
+    const router = useRouter()
     const [inputData, validated, { onChange, handleChange, submit: handleSubmit }] = useForm({
         title: '',
         description: '',
@@ -28,11 +28,11 @@ const FormCreate = () => {
                 title: '',
                 type: 'CHOICE_SINGLE',
                 options: [
-                    { text: '' }
-                ]
-            }
-        ]
-    });
+                    { text: '' },
+                ],
+            },
+        ],
+    })
     const { title, description, questions } = inputData
 
     const addQuestion = () => {
@@ -40,8 +40,8 @@ const FormCreate = () => {
             title: '',
             type: 'CHOICE_SINGLE',
             options: [
-                { text: '' }
-            ]
+                { text: '' },
+            ],
         }
         const newQuestions = [...questions, item]
         handleChange('questions', newQuestions)
@@ -66,7 +66,7 @@ const FormCreate = () => {
                 title: v.title,
                 type: v.type,
                 options: ['CHOICE_SINGLE', 'CHOICE_MULTIPLE'].includes(v.type) ? v.options : [],
-            }))
+            })),
         }
         axios.post('/backapi/admin/forms', data)
             .then(({ data }) => {
@@ -120,16 +120,16 @@ const FormCreate = () => {
 }
 
 const Question = ({ id, data: initData, handleQuestion, onDelete }) => {
-    const [inputData, setInputData] = useState(initData);
+    const [inputData, setInputData] = useState(initData)
     const { title, type, options } = inputData
     const handleInputData = (name, value) => {
         const temp = {
             ...inputData,
             [name]: value,
         }
-        setInputData(temp);
+        setInputData(temp)
         handleQuestion(id, temp)
-    };
+    }
 
     const onChange = (e) => {
         const { name, value } = e.target
@@ -230,4 +230,4 @@ const Question = ({ id, data: initData, handleQuestion, onDelete }) => {
     )
 }
 
-export default FormCreate;
+export default FormCreate

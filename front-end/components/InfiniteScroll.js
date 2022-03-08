@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react'
 
 const InfiniteScroll = ({ onLoad }) => {
     const loader = useRef(null)
@@ -14,7 +14,7 @@ const InfiniteScroll = ({ onLoad }) => {
         const option = ({
             root: null,
             rootMargin: '20px',
-            threshold: 0
+            threshold: 0,
         })
         const observer = new IntersectionObserver(callback, option)
         if (loader.current) observer.observe(loader.current)
@@ -29,4 +29,4 @@ const InfiniteScroll = ({ onLoad }) => {
     )
 }
 
-export default InfiniteScroll;
+export default InfiniteScroll

@@ -1,8 +1,8 @@
-import React from 'react';
-import newId from '../utils/uid';
+import React from 'react'
+import newId from '../utils/uid'
 
 /* TODO: 대체 */
-const FormCheck = ({ type= 'checkbox', label, name, checked, onChange, className, err }) => {
+const FormCheck = ({ type = 'checkbox', label, name, checked, onChange, className, err }) => {
     const id = newId()
     return (
         <div className={className + (err ? ' invalid-box' : '')}>
@@ -13,7 +13,7 @@ const FormCheck = ({ type= 'checkbox', label, name, checked, onChange, className
             </div>
             {err && <span className="help-block"><small>{err}</small></span>}
         </div>
-    );
+    )
 }
 
-export default React.memo(FormCheck);
+export default React.memo(FormCheck)

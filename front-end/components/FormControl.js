@@ -1,7 +1,7 @@
-import { forwardRef, useContext } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import FormContext from "./FormContext";
+import { forwardRef, useContext } from 'react'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import FormContext from './FormContext'
 
 const propTypes = {
     as: PropTypes.elementType,
@@ -12,7 +12,7 @@ const propTypes = {
     plaintext: PropTypes.bool,
     valid: PropTypes.bool,
     invalid: PropTypes.bool,
-};
+}
 
 const FormControl = forwardRef((
         {
@@ -28,9 +28,9 @@ const FormControl = forwardRef((
         },
         ref,
     ) => {
-        const { cid } = useContext(FormContext);
+        const { cid } = useContext(FormContext)
         type = type || (Component === 'input' && !type ? 'text' : undefined)
-        const classes = type === 'checkbox' || type === 'radio' ? 'form-check-input' : 'form-input';
+        const classes = type === 'checkbox' || type === 'radio' ? 'form-check-input' : 'form-input'
 
         return (
             <Component
@@ -47,11 +47,11 @@ const FormControl = forwardRef((
                 )}
                 autoComplete={type !== 'password' ? undefined : 'true'}
             />
-        );
+        )
     },
-);
+)
 
-FormControl.displayName = 'FormControl';
-FormControl.propTypes = propTypes;
+FormControl.displayName = 'FormControl'
+FormControl.propTypes = propTypes
 
-export default FormControl;
+export default FormControl

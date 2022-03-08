@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 /* TODO: 대체 */
 const FormInput = ({ value, onChange, name, className, label, type = 'text', placeholder, readonly, help, err, valid }) => {
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         if (onChange) {
-            onChange({name, value})
+            onChange({ name, value })
         }
     }
 
@@ -20,12 +20,12 @@ const FormInput = ({ value, onChange, name, className, label, type = 'text', pla
                 onChange={handleChange}
                 className="form-input"
                 readOnly={readonly}
-                autoComplete={type !== 'password' ? undefined : "true"}
+                autoComplete={type !== 'password' ? undefined : 'true'}
             />
             {err && <span className="help-block"><small>{err}</small></span>}
             {help && <span className="help-block"><small>{help}</small></span>}
         </div>
-    );
+    )
 }
 
-export default React.memo(FormInput);
+export default React.memo(FormInput)

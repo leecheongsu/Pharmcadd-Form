@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import classNames from "classnames";
-import FormCheck from "./FormCheck";
-import Feedback from "./Feedback";
-import PropTypes from "prop-types";
+import { useEffect, useState } from 'react'
+import classNames from 'classnames'
+import FormCheck from './FormCheck'
+import Feedback from './Feedback'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     inline: PropTypes.bool,
@@ -25,10 +25,10 @@ const propTypes = {
     required: PropTypes.bool,
     answer: PropTypes.oneOfType([
         PropTypes.array,
-        PropTypes.any
+        PropTypes.any,
     ]),
-    as: PropTypes.elementType
-};
+    as: PropTypes.elementType,
+}
 
 const FormRadioGroup = (
     {
@@ -50,25 +50,25 @@ const FormRadioGroup = (
     const [items, setItems] = useState(initItems.map(v => ({
         label: v.text,
         value: v.id,
-        checked: String(v.id) === String(value)
-    })));
+        checked: String(v.id) === String(value),
+    })))
     const handleChange = (e) => {
-        const {name, value} = e.target
+        const { name, value } = e.target
         const newItems = items.map(v => ({
             ...v,
-            checked: String(v.value) === String(value)
+            checked: String(v.value) === String(value),
         }))
-        setItems(newItems);
+        setItems(newItems)
         if (onChange) {
-            onChange({name, value})
+            onChange({ name, value })
         }
     }
 
     useEffect(() => {
-        if(answer !== null) {
+        if (answer !== null) {
             const answers = items.map(v => ({
                 ...v,
-                checked: String(v.label) === String(answer.text)
+                checked: String(v.label) === String(answer.text),
             }))
             setItems(answers)
         }
@@ -102,9 +102,9 @@ const FormRadioGroup = (
             )}
         </Component>
     )
-};
+}
 
-FormRadioGroup.displayName = 'FormRadioGroup';
-FormRadioGroup.propTypes = propTypes;
+FormRadioGroup.displayName = 'FormRadioGroup'
+FormRadioGroup.propTypes = propTypes
 
-export default FormRadioGroup;
+export default FormRadioGroup

@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
-import jwt_decode from "jwt-decode";
+import { NextResponse } from 'next/server'
+import jwt_decode from 'jwt-decode'
 
 export function middleware(req) {
     const accessToken = req.cookies && req.cookies.accessToken || ''
     if (accessToken) {
-        const { authorities } = jwt_decode(accessToken);
+        const { authorities } = jwt_decode(accessToken)
         const isAdmin = authorities.some(v => ['ADMIN', 'CAMPAIGN_ADMIN'].includes(v))
         return isAdmin
             ? NextResponse.next()

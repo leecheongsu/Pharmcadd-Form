@@ -1,8 +1,8 @@
-import {forwardRef, useEffect, useState} from "react";
-import classNames from "classnames";
-import Feedback from "./Feedback";
-import FormCheck from "./FormCheck";
-import PropTypes from "prop-types";
+import { forwardRef, useEffect, useState } from 'react'
+import classNames from 'classnames'
+import Feedback from './Feedback'
+import FormCheck from './FormCheck'
+import PropTypes from 'prop-types'
 
 const propTypes = {
     inline: PropTypes.bool,
@@ -23,10 +23,10 @@ const propTypes = {
     rule: PropTypes.func,
     answer: PropTypes.oneOfType([
         PropTypes.array,
-        PropTypes.any
+        PropTypes.any,
     ]),
-    as: PropTypes.elementType
-};
+    as: PropTypes.elementType,
+}
 
 const FormCheckGroup = (
     {
@@ -49,21 +49,21 @@ const FormCheckGroup = (
     const [items, setItems] = useState(initItems.map(v => ({
         label: v.text,
         value: v.id,
-        checked: value.includes(v.value)
-    })));
+        checked: value.includes(v.value),
+    })))
     const handleChange = (e, i) => {
         const item = items[i]
         const newItems = [...items]
-        newItems.splice(i, 1, {...item, checked: e.target.checked})
-        setItems(newItems);
+        newItems.splice(i, 1, { ...item, checked: e.target.checked })
+        setItems(newItems)
 
         if (onChange && name) {
-            onChange({name, value: newItems.filter(v => v.checked).map(v => v.value)})
+            onChange({ name, value: newItems.filter(v => v.checked).map(v => v.value) })
         }
-    };
+    }
 
     const n = items.filter((v) => v.checked).length
-    const error = (required ? n === 0 : false) || (rule ? rule(n) : false);
+    const error = (required ? n === 0 : false) || (rule ? rule(n) : false)
 
     useEffect(() => {
         let text = []
@@ -75,7 +75,7 @@ const FormCheckGroup = (
             })
             const ansItems = [...items]
             ansItems.map((v) => {
-                v.checked = text.includes(v.label);
+                v.checked = text.includes(v.label)
             })
             setItems(ansItems)
         }
@@ -98,7 +98,7 @@ const FormCheckGroup = (
                     inline={inline}
                     disabled={disabled || v.disabled}
                     invalid={error}
-                    {...(error ? {'data-invalid': true} : {})}
+                    {...(error ? { 'data-invalid': true } : {})}
                     onChange={e => handleChange(e, i)}
                     key={v.value}
                 />
@@ -108,9 +108,9 @@ const FormCheckGroup = (
             )}
         </Component>
     )
-};
+}
 
-FormCheckGroup.displayName = 'FormCheckGroup';
-FormCheckGroup.propTypes = propTypes;
+FormCheckGroup.displayName = 'FormCheckGroup'
+FormCheckGroup.propTypes = propTypes
 
-export default FormCheckGroup;
+export default FormCheckGroup

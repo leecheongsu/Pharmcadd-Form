@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { dayFormat } from "../../../lib/dayjs";
-import axios from "../../../lib/axios";
-import PageTitle from "../../../components/PageTitle";
-import Card from "../../../components/Card";
-import Button from "../../../components/Button";
-import Badge from "../../../components/Badge";
-import FormLabel from "../../../components/FormLabel";
-import NoData from "../../../components/NoData";
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { dayFormat } from '../../../lib/dayjs'
+import axios from '../../../lib/axios'
+import PageTitle from '../../../components/PageTitle'
+import Card from '../../../components/Card'
+import Button from '../../../components/Button'
+import Badge from '../../../components/Badge'
+import FormLabel from '../../../components/FormLabel'
+import NoData from '../../../components/NoData'
 
 const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     const router = useRouter()
@@ -103,8 +103,8 @@ export const getServerSideProps = async ({ params }) => {
             campaign,
             participantGroups,
             participantUsers,
-        }
+        },
     }
 }
 
-export default CampaignDetail;
+export default CampaignDetail

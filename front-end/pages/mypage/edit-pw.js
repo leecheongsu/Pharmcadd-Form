@@ -1,48 +1,48 @@
-import Card from "../../components/Card";
-import {useRouter} from "next/router";
-import React, {useState} from "react";
-import axios from "../../lib/axios";
-import ToastBox from "../../components/modal/ToastBox";
-import FormControl from "../../components/FormControl";
-import FormGroup from "../../components/FormGroup";
-import FormLabel from "../../components/FormLabel";
-import Feedback from "../../components/Feedback";
-import Form from "../../components/Form";
-import useForm from "../../hooks/useForm";
+import Card from '../../components/Card'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import axios from '../../lib/axios'
+import ToastBox from '../../components/modal/ToastBox'
+import FormControl from '../../components/FormControl'
+import FormGroup from '../../components/FormGroup'
+import FormLabel from '../../components/FormLabel'
+import Feedback from '../../components/Feedback'
+import Form from '../../components/Form'
+import useForm from '../../hooks/useForm'
 
 export const getServerSideProps = async () => {
     return {
         props: {
-            title: 'Reset Password'
-        }
+            title: 'Reset Password',
+        },
     }
 }
 
 const EditPw = () => {
-    const router = useRouter();
+    const router = useRouter()
 
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false)
     const onSetIsVisible = (active) => {
-        setIsVisible(active);
-    };
+        setIsVisible(active)
+    }
 
     const [toastData, setToastData] = useState({})
 
-    const [{password, newPassword, confirmPassword}, validated, {onChange, reset, submit}] = useForm({
+    const [{ password, newPassword, confirmPassword }, validated, { onChange, reset, submit }] = useForm({
         password: '',
         newPassword: '',
-        confirmPassword: ''
+        confirmPassword: '',
     })
 
     async function handleNextButton() {
-        await axios.patch('/backapi/users/self/password', {password: password, newPassword: newPassword})
+        await axios.patch('/backapi/users/self/password', { password: password, newPassword: newPassword })
             .then((res) => {
                 if (res.status === 200) {
                     setToastData({
                         type: 'info',
                         message: 'complete password reset :)',
                         blindFilter: true,
-                        autoClose: false
+                        autoClose: false,
                     })
                 }
                 onSetIsVisible(true)
@@ -65,7 +65,7 @@ const EditPw = () => {
         setIsVisible(false)
 
         if (toastData.type === 'info') {
-            router.back();
+            router.back()
         } else {
             reset()
         }
@@ -125,11 +125,11 @@ const EditPw = () => {
                     </button>
                 </Form>
                 <div>
-                    <ToastBox state={isVisible} toastOnChange={handleToast} toastConf={toastData}/>
+                    <ToastBox state={isVisible} toastOnChange={handleToast} toastConf={toastData} />
                 </div>
             </Card>
         </div>
     )
 }
 
-export default EditPw;
+export default EditPw

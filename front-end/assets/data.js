@@ -16,7 +16,7 @@ export const TEAMS = [
     { label: '인사/총무팀', value: 15 },
     { label: 'R&D지원팀', value: 16 },
     { label: '홍보/IR팀', value: 17 },
-    { label: '재무/회계팀', value: 18 }
+    { label: '재무/회계팀', value: 18 },
 ]
 
 export const TEAMS_MAP = {
@@ -37,7 +37,7 @@ export const TEAMS_MAP = {
     15: { label: '인사/총무팀', value: 15 },
     16: { label: 'R&D지원팀', value: 16 },
     17: { label: '홍보/IR팀', value: 17 },
-    18: { label: '재무/회계팀', value: 18 }
+    18: { label: '재무/회계팀', value: 18 },
 }
 
 export const POSITIONS = [
@@ -58,7 +58,7 @@ export const POSITIONS = [
     { label: '책임연구원', value: 15 },
     { label: '선임연구원', value: 16 },
     { label: '연구원', value: 17 },
-    { label: '기타', value: 18 }
+    { label: '기타', value: 18 },
 ]
 
 export const POSITIONS_MAP = {
@@ -79,13 +79,13 @@ export const POSITIONS_MAP = {
     15: { label: '책임연구원', value: 15 },
     16: { label: '선임연구원', value: 16 },
     17: { label: '연구원', value: 17 },
-    18: { label: '기타', value: 18 }
+    18: { label: '기타', value: 18 },
 }
 
 export const WORKPLACES = [
     { label: 'Busan', value: 'BUSAN' },
     { label: 'Seoul', value: 'SEOUL' },
-    { label: 'India', value: 'INDIA' }
+    { label: 'India', value: 'INDIA' },
 ]
 
 export const QUESTION_TYPE = [
@@ -105,7 +105,7 @@ export const QUESTION_TYPE_MAP = {
     4: { label: '서술형', value: 'TEXT_LONG' },
     5: { label: '날짜', value: 'DATE' },
     6: { label: '날짜&시간', value: 'DATE_TIME' },
-    7: { label: '첨부파일', value: 'ATTACHMENT' }
+    7: { label: '첨부파일', value: 'ATTACHMENT' },
 }
 
 export const INPUT_TYPE_OF_QUESTION_MAP = {
@@ -118,7 +118,7 @@ export const INPUT_TYPE_OF_QUESTION_MAP = {
 export const ROLES = [
     { text: '유저', id: 'USER' },
     { text: '캠페인 관리자', id: 'CAMPAIGN_ADMIN' },
-    { text: '관리자', id: 'ADMIN' }
+    { text: '관리자', id: 'ADMIN' },
 ]
 
 export const CAMPAIGNS_STATUS = [
@@ -126,5 +126,5 @@ export const CAMPAIGNS_STATUS = [
     { id: 'RUNNING', text: 'Running' },
     { id: 'SUSPENDED', text: 'Suspended' },
     { id: 'FINISHED', text: 'Finished' },
-    { id: 'STOPPED', text: 'Stopped' }
+    { id: 'STOPPED', text: 'Stopped' },
 ]

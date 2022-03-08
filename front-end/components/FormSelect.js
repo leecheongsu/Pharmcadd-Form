@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { forwardRef } from "react";
-import classNames from "classnames";
+import PropTypes from 'prop-types'
+import { forwardRef } from 'react'
+import classNames from 'classnames'
 
 const propTypes = {
     name: PropTypes.string,
@@ -14,8 +14,8 @@ const propTypes = {
     onChange: PropTypes.func,
     valid: PropTypes.bool,
     invalid: PropTypes.bool,
-    placeholder: PropTypes.string
-};
+    placeholder: PropTypes.string,
+}
 
 const FormSelect = forwardRef((
         {
@@ -39,16 +39,16 @@ const FormSelect = forwardRef((
                     valid && 'is-valid',
                     invalid && 'is-invalid',
                 )}
-            >{placeholder && <option value=''>{placeholder}</option>}
-                {options.map(({id, text}) => (
+            >{placeholder && <option value="">{placeholder}</option>}
+                {options.map(({ id, text }) => (
                     <option value={id} key={id}>{text}</option>
                 ))}
             </select>
-        );
+        )
     },
-);
+)
 
-FormSelect.displayName = 'FormSelect';
-FormSelect.propTypes = propTypes;
+FormSelect.displayName = 'FormSelect'
+FormSelect.propTypes = propTypes
 
-export default FormSelect;
+export default FormSelect

@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
 import { LogoutIcon, UserCircleIcon, VariableIcon } from '@heroicons/react/outline'
-import axios from "axios";
-import Link from "./Link";
-import Button from "./Button";
+import axios from 'axios'
+import Link from './Link'
+import Button from './Button'
 
 export default function PageHeader({ title = 'title' }) {
     const router = useRouter()

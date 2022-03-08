@@ -1,11 +1,11 @@
-import { forwardRef, useEffect, useMemo, useState } from "react";
-import classNames from "classnames";
-import getUid from "../utils/uid";
-import PropTypes from "prop-types";
-import FormContext from "./FormContext";
-import Feedback from "./Feedback";
-import FormLabel from "./FormLabel";
-import FormControl from "./FormControl";
+import { forwardRef, useEffect, useMemo, useState } from 'react'
+import classNames from 'classnames'
+import getUid from '../utils/uid'
+import PropTypes from 'prop-types'
+import FormContext from './FormContext'
+import Feedback from './Feedback'
+import FormLabel from './FormLabel'
+import FormControl from './FormControl'
 
 const propTypes = {
     as: PropTypes.elementType,
@@ -18,7 +18,7 @@ const propTypes = {
     type: PropTypes.oneOf(['radio', 'checkbox']),
     valid: PropTypes.bool,
     invalid: PropTypes.bool,
-};
+}
 
 const FormCheck = forwardRef((
         {
@@ -39,8 +39,8 @@ const FormCheck = forwardRef((
         },
         ref,
     ) => {
-        const [cid, setCid] = useState(id);
-        const checkContext = useMemo(() => ({ cid }), [cid]);
+        const [cid, setCid] = useState(id)
+        const checkContext = useMemo(() => ({ cid }), [cid])
         useEffect(() => {
             if (!id) {
                 const newId = getUid()
@@ -73,7 +73,7 @@ const FormCheck = forwardRef((
                         <FormLabel
                             check
                             className={classNames(
-                                text && `text-${text}`
+                                text && `text-${text}`,
                             )}
                         >{label}</FormLabel>
                     )}
@@ -82,11 +82,11 @@ const FormCheck = forwardRef((
                     )}
                 </div>
             </FormContext.Provider>
-        );
+        )
     },
-);
+)
 
-FormCheck.displayName = 'FormCheck';
-FormCheck.propTypes = propTypes;
+FormCheck.displayName = 'FormCheck'
+FormCheck.propTypes = propTypes
 
-export default FormCheck;
+export default FormCheck
