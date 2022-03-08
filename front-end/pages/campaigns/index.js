@@ -1,12 +1,14 @@
-import { useMemo, useRef, useState } from "react";
-import dayjs, { dayFormat } from "../../lib/dayjs";
+import {useEffect, useMemo, useRef, useState} from "react";
+import dayjs, {dayFormat} from "../../lib/dayjs";
 import axios from "../../lib/axios";
 import Button from "../../components/Button";
 import Search from "../../components/Search";
 import InfiniteScroll from "../../components/InfiniteScroll";
 import Link from "../../components/Link";
+import {throttle} from "lodash";
+import useScroll from "../../hooks/useScroll";
 
-const Campaigns = ({ data: initData, options: initOptions }) => {
+const Campaigns = ({data: initData, options: initOptions}) => {
     const options = useRef(initOptions)
     const [info, setInfo] = useState({
         list: initData.content,
@@ -15,8 +17,8 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
     const activeInfinite = useMemo(() => info.list.length < info.total, [info]);
 
     const loadData = (add = false) => {
-        return axios.get('/backapi/campaigns', { params: options.current })
-            .then(({ data }) => {
+        return axios.get('/backapi/campaigns', {params: options.current})
+            .then(({data}) => {
                 setInfo(v => ({
                     list: add ? [...v.list, ...data.content] : data.content,
                     total: data.total,
@@ -33,16 +35,6 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
         await loadData()
     }
 
-    const handleInfiniteScroll = useMemo(async () => {
-        if (activeInfinite) {
-            options.current = {
-                ...options.current,
-                page: options.current.page + 1,
-            }
-            await loadData(true)
-        }
-    }, [activeInfinite])
-
     const handleType = async (type) => {
         if (options.current.type === type) return
         options.current = {
@@ -52,6 +44,19 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
         }
         await loadData()
     }
+
+    const [page] = useScroll(info.total, 10)
+
+    useEffect(async () => {
+        if(activeInfinite) {
+            options.current = {
+                ...options.current,
+                page: options.current.page + 1,
+            }
+            await loadData(true)
+        }
+    }, [page])
+
 
     return (
         <div className="px-3">
@@ -66,29 +71,29 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
                     <span className="text-xs font-bold text-gray-400">total: {info.total}</span>
                 </div>
                 <div className="flex-initial">
-                    <Search placeholder="keyword" onSearch={handleSearch} />
+                    <Search placeholder="keyword" onSearch={handleSearch}/>
                 </div>
             </header>
             {info.list.length > 0
                 ? <>
                     <ul className="grid grid-cols-2 gap-3">
                         {info.list.map((item, i) => (
-                            <li key={i}>
-                                <CampaignItem item={item} type={options.current.type} />
-                            </li>
+                           <li key={i}>
+                               <CampaignItem item={item} type={options.current.type}/>
+                           </li>
                         ))}
                     </ul>
-                    <InfiniteScroll onLoad={handleInfiniteScroll} key={options.current.type} />
                 </>
                 : <div className="plain-center">
                     <span>No results.</span>
-                </div>}
+                </div>
+            }
         </div>
     )
 }
 
-const CampaignItem = ({ item, type }) => {
-    const { id, title, endsAt } = item
+const CampaignItem = ({item, type}) => {
+    const {id, title, endsAt} = item
     const dDay = endsAt ? `D-${dayjs().diff(dayFormat(endsAt, 'YYYY-MM-DD'), 'day') || 'day'}` : 'Unsubmitted'
 
     return (
@@ -109,7 +114,7 @@ export const getServerSideProps = async () => {
         itemsPerPage: 10,
         keyword: '',
     })
-    const { data } = await axios.get('/backapi/campaigns', { params })
+    const {data} = await axios.get('/backapi/campaigns', {params})
 
     return {
         props: {
