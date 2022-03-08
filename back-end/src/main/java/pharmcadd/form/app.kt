@@ -57,7 +57,6 @@ class FormApplication : CommandLineRunner {
             listOf(
                 " 대표이사",
                 " 부사장",
-                " 이사",
                 " 전무이사",
                 " 상무이사",
                 " 이사",
@@ -216,7 +215,7 @@ class FormApplication : CommandLineRunner {
                             insertUser("금봉권", "keum1976", 1, sub4, "부장")
                         }
                         groupService.add("서버관리팀", sub3).also { sub4 ->
-                            insertUser("안성민", "jerry.ahn", 1, sub4, "차장")
+                            insertUser("안성민", "jerry.ahn", 1, sub4, "부장")
                             insertUser("강현호", "heno7609", 1, sub4, "주임")
                             insertUser("황승준", "mark", 1, sub4, null)
                         }
