@@ -160,10 +160,13 @@ const Participants = ({ onChange }) => {
         groupTree: null,
         groupMap: {},
     })
-    const [{ users, userMap }, setUserInfo] = useState({
+    const [{ users, userMap, initUsers }, setUserInfo] = useState({
         users: [],
         userMap: {},
+        initUsers: [],
     })
+
+    const [positionOption, setPositionOption] = useState([])
 
     useEffect(() => {
         const handleInfo = async () => {
@@ -190,7 +193,18 @@ const Participants = ({ onChange }) => {
             setUserInfo({
                 users,
                 userMap,
+                initUsers: users,
             })
+
+            await axios.get('/backapi/positions')
+                .then((res) => {
+                    if (res.status === 200) {
+                        setPositionOption(res.data.map((data) => ({
+                            id: data.id,
+                            text: data.name,
+                        })))
+                    }
+                })
         }
         handleInfo()
     }, [])
@@ -235,6 +249,7 @@ const Participants = ({ onChange }) => {
                         checked: checked,
                     },
                 },
+                initUsers,
             })
         } else if (type === 'group') {
             setGroupInfo({
@@ -280,6 +295,7 @@ const Participants = ({ onChange }) => {
         setUserInfo({
             userMap,
             users: content,
+            initUsers,
         })
     }
 
@@ -313,6 +329,22 @@ const Participants = ({ onChange }) => {
         )
     }
 
+    const [position, setPosition] = useState('')
+    const onChangeUser = (e) => {
+        const positionId = e.target.value
+        const positionName = e.target.value === '' ? '직책' : e.target.children[positionId].text
+
+        setPosition(positionId)
+
+        setUserInfo({
+            users: positionName === '직책'
+                ? initUsers
+                : initUsers.filter((v) => v.positionNames.toString() === positionName),
+            userMap,
+            initUsers,
+        })
+    }
+
     return (
         <>
             {groupTree && <div className="flex flex-nowrap items-stretch gap-3 mt-3">
@@ -321,7 +353,11 @@ const Participants = ({ onChange }) => {
                     <RecGroupItem />
                 </Card>
                 <Card className="flex-1">
-                    <FormLabel className="mb-4">회원 목록</FormLabel>
+                    <div className="flex">
+                        <FormLabel className="mb-4 flex-1">회원 목록</FormLabel>
+                        <FormSelect name="position" className="flex-1 mb-4 bottom-lined" value={position}
+                                    options={positionOption} placeholder="직책" onChange={onChangeUser} />
+                    </div>
                     <div className="overflow-y-auto" style={{ maxHeight: '620px' }}>
                         {users.length > 0 && <ul>
                             {users.map(v => (
