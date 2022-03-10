@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import pharmcadd.form.common.controller.BaseController
 import pharmcadd.form.common.exception.BadRequest
-import pharmcadd.form.common.exception.NotFound
 import pharmcadd.form.controller.front.form.EmailForm
 import pharmcadd.form.controller.front.form.JoinForm
 import pharmcadd.form.controller.front.form.ResetPasswordForm

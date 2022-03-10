@@ -142,7 +142,6 @@ class FormApplication : CommandLineRunner {
                     insertUser("오지혜", "ojhwlxk", 1, sub2, "과장")
                     insertUser("이진아", "jalee", 1, sub2, "과장")
                     insertUser("이청수", "leecheongsu", 1, sub2, "주임")
-
                 }
                 groupService.add("Bio Assay Lab", sub1).also { sub2 ->
                     insertUser("신재영", "jyshin", 1, sub2, "수석연구원")
@@ -159,7 +158,7 @@ class FormApplication : CommandLineRunner {
 
                     groupService.add("Biz.Development", sub2).also { sub3 ->
                         insertUser("황진하", "jhwang", 1, sub3, "상무이사")
-                        insertUser("임채홍",  "chhlim", 1, sub3, "차장")
+                        insertUser("임채홍", "chhlim", 1, sub3, "차장")
                         insertUser("이지선", "jisun", 1, sub3, "대리")
                         insertUser("김예지", "yeji.kim", 1, sub3, "대리")
                     }

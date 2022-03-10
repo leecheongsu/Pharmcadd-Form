@@ -1,6 +1,5 @@
 package pharmcadd.form.controller.admin
 
-import mu.KotlinLogging
 import org.jooq.impl.DSL
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -8,8 +7,6 @@ import pharmcadd.form.common.Constants
 import pharmcadd.form.common.controller.BaseController
 import pharmcadd.form.common.exception.NotFound
 import pharmcadd.form.common.extension.*
-import pharmcadd.form.common.service.MailService
-import pharmcadd.form.common.service.TemplateService
 import pharmcadd.form.common.util.pagination.DataTableForm
 import pharmcadd.form.common.util.pagination.DataTablePagination
 import pharmcadd.form.controller.admin.form.*
@@ -19,12 +16,12 @@ import pharmcadd.form.jooq.enums.ParticipantType
 import pharmcadd.form.jooq.tables.pojos.Campaign
 import pharmcadd.form.jooq.tables.pojos.CancelAnswer
 import pharmcadd.form.model.AnswerStatVo
-import pharmcadd.form.controller.admin.form.ParticipantListFormModel
-import pharmcadd.form.jooq.tables.pojos.User
 import pharmcadd.form.model.ParticipantVo
-import pharmcadd.form.service.*
+import pharmcadd.form.service.CampaignService
+import pharmcadd.form.service.CancelAnswerService
+import pharmcadd.form.service.TimeZoneService
+import pharmcadd.form.service.UserService
 import java.time.LocalDateTime
-import java.util.logging.Logger
 import javax.validation.Valid
 
 @RestController
@@ -42,15 +39,6 @@ class AdminCampaignController : BaseController() {
 
     @Autowired
     lateinit var timeZoneService: TimeZoneService
-
-    @Autowired
-    lateinit var participantService: ParticipantService
-
-    @Autowired
-    lateinit var mailService: MailService
-
-    @Autowired
-    lateinit var templateService: TemplateService
 
     @GetMapping
     fun list(form: AdminCampaignListForm): DataTablePagination<Campaign> {
@@ -104,28 +92,6 @@ class AdminCampaignController : BaseController() {
     @PostMapping
     fun add(@RequestBody form: AdminCampaignForm): Campaign {
         val id: Long = campaignService.addByUser(form, securityService.userId)
-
-        val participants = participantService.findByCampaignId(id)
-
-        val userEmails = dsl
-            .selectFrom(USER)
-            .where(USER.ID.`in`(participants.map { it.userId }))
-            .fetch { it.into(User::class.java) }
-            .map { it.email }
-            .listIterator()
-
-        @Suppress("HttpUrlsUsage")
-        val linkUrl = "http://form.pharmcadd.com/campaigns/${id}"
-        val content = templateService.compile("template/campaignToAnswer.html.hbs", mapOf("linkUrl" to linkUrl))
-
-        while (userEmails.hasNext()) {
-            mailService.sendAndForget {
-                title("Pharmcadd-Form Notice")
-                to(userEmails.next())
-                content(content)
-            }
-        }
-
         return campaignService.findOne(id)?.into(Campaign::class.java) ?: throw NotFound()
     }
 

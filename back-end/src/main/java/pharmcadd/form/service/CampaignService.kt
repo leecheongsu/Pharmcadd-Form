@@ -14,6 +14,7 @@ import pharmcadd.form.common.extension.plus
 import pharmcadd.form.common.extension.zoneId
 import pharmcadd.form.common.extension.zoneOffset
 import pharmcadd.form.common.service.MailService
+import pharmcadd.form.common.service.TemplateService
 import pharmcadd.form.controller.admin.form.AdminCampaignForm
 import pharmcadd.form.jooq.Tables.*
 import pharmcadd.form.jooq.enums.*
@@ -49,6 +50,9 @@ class CampaignService {
 
     @Autowired
     lateinit var mailService: MailService
+
+    @Autowired
+    lateinit var templateService: TemplateService
 
     data class AddGroup(val groupId: Long, val includeSubgroup: Boolean)
 
@@ -167,6 +171,10 @@ class CampaignService {
         )
 
         addParticipants(campaignId, participantUserIds, participantGroupIds)
+
+        if (status == CampaignStatus.RUNNING) {
+            sendNotifications(campaignId)
+        }
 
         return campaignId
     }
@@ -431,6 +439,11 @@ class CampaignService {
                 query.set(CAMPAIGN.STARTS_AT, DSL.currentOffsetDateTime())
             }
         }
+
+        // 이전 상태가 READY 인 경우에만
+        if (campaign.status == CampaignStatus.READY) {
+            sendNotifications(id)
+        }
     }
 
     /***
@@ -453,6 +466,38 @@ class CampaignService {
             val questions = formService.questions(formId)
 
             // TODO : 통계 html 생성 후 메일 노티
+        }
+    }
+
+    /***
+     * "최초 실행 시" 노티를 보내도록 설계되어 있다.
+     */
+    @Transactional(readOnly = true)
+    fun sendNotifications(campaignId: Long) {
+        // NOTE : 만약에 이전 상태가 SUSPENDED 나 STOPPED 인 경우에는, 설문 완료한 사용자는 제외 하고 보내도록 수정
+        val emails = dsl
+            .select(
+                USER.EMAIL
+            )
+            .from(PARTICIPANT_USER_VIEW)
+            .join(USER).on(PARTICIPANT_USER_VIEW.USER_ID.eq(USER.ID).and(USER.DELETED_AT.isNull))
+            .where(
+                PARTICIPANT_USER_VIEW.CAMPAIGN_ID.eq(campaignId)
+            )
+            .fetch { it.get(USER.EMAIL) }
+
+        if (emails.isEmpty()) return
+
+        @Suppress("HttpUrlsUsage")
+        val linkUrl = "http://form.pharmcadd.com/campaigns/$campaignId"
+        val content = templateService.compile("template/campaignToAnswer.html.hbs", mapOf("linkUrl" to linkUrl))
+
+        emails.forEach { email ->
+            mailService.sendAndForget {
+                title("Pharmcadd-Form Notice")
+                to(emails)
+                content(content)
+            }
         }
     }
 

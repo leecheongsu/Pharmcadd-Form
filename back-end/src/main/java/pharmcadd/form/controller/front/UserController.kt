@@ -12,7 +12,6 @@ import pharmcadd.form.controller.front.form.UserListFormModel
 import pharmcadd.form.jooq.Tables.*
 import pharmcadd.form.model.UserDetail
 import pharmcadd.form.model.UserVo
-import pharmcadd.form.service.PositionService
 import pharmcadd.form.service.UserService
 
 @RestController

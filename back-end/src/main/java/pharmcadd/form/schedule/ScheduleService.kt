@@ -61,7 +61,7 @@ class CampaignStartJob : QuartzJobBean() {
             .fetch()
 
         for (campaign in campaigns) {
-            campaignService.modifyStatus(campaign.id, campaign.updatedBy, CampaignStatus.RUNNING)
+            campaignService.run(campaign.id, campaign.updatedBy)
         }
     }
 }
