@@ -114,7 +114,8 @@ class AdminCampaignController : BaseController() {
             .map { it.email }
             .listIterator()
 
-        val linkUrl = "http://10.200.35.81/campaigns/${id}"
+        @Suppress("HttpUrlsUsage")
+        val linkUrl = "http://form.pharmcadd.com/campaigns/${id}"
         val content = templateService.compile("template/campaignToAnswer.html.hbs", mapOf("linkUrl" to linkUrl))
 
         while (userEmails.hasNext()) {
