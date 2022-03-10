@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 import useForm from '../../hooks/useForm'
 import Card from '../../components/Card'
 import Form from '../../components/Form'
@@ -10,6 +10,7 @@ import FormControl from '../../components/FormControl'
 import Feedback from '../../components/Feedback'
 import Button from '../../components/Button'
 import ModalBox from '../../components/modal/ModalBox'
+import LinkButton from '../../components/Link'
 
 const Login = () => {
     const router = useRouter()
@@ -104,14 +105,13 @@ const Login = () => {
                 </FormGroup>
 
                 <div className="text-right">
-                    <Button href="/account/find-pw" className="btn btn_link text-sm p-0">Forgot password?</Button>
+                    <LinkButton href="/account/find-pw" className="text-sm">Forgot password?</LinkButton>
                 </div>
-                <Button type="submit" className="btn btn_block mt-3">Login</Button>
+                <Button type="submit" block className="mt-3">Login</Button>
             </Form>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <p className="text-center text-xs text-gray-400 mt-4">Don't have an account</p>
+            <p className="text-center text-xs text-gray-400 mt-4">Don&apos;t have an account</p>
             <div className="text-center mt-2">
-                <Button href="/account/sign-up" className="btn btn_outline btn_block">Sign up</Button>
+                <LinkButton href="/account/sign-up" outline block>Sign up</LinkButton>
             </div>
             <ModalBox state={isModal} modalConf={modalConf} />
         </Card>

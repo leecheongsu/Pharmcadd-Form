@@ -3,9 +3,7 @@ import dayjs, { dayFormat } from '../../lib/dayjs'
 import axios from '../../lib/axios'
 import Button from '../../components/Button'
 import Search from '../../components/Search'
-import InfiniteScroll from '../../components/InfiniteScroll'
 import Link from '../../components/Link'
-import { throttle } from 'lodash'
 import useScroll from '../../hooks/useScroll'
 
 const Campaigns = ({ data: initData, options: initOptions }) => {
@@ -60,10 +58,8 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
     return (
         <div className="px-3">
             <div className="grid grid-cols-2">
-                <Button outline active={options.current.type === 'READY'} className="btn_lg"
-                        onClick={() => handleType('READY')}>READY</Button>
-                <Button outline active={options.current.type === 'COMPLETED'} className="btn_lg"
-                        onClick={() => handleType('COMPLETED')}>FINISHED</Button>
+                <Button outline active={options.current.type === 'READY'} size="lg" onClick={() => handleType('READY')}>READY</Button>
+                <Button outline active={options.current.type === 'COMPLETED'} size="lg" onClick={() => handleType('COMPLETED')}>FINISHED</Button>
             </div>
             <header className="flex justify-between items-center my-4">
                 <div className="flex-none mr-8">
@@ -74,15 +70,13 @@ const Campaigns = ({ data: initData, options: initOptions }) => {
                 </div>
             </header>
             {info.list.length > 0
-                ? <>
-                    <ul className="grid grid-cols-2 gap-3">
-                        {info.list.map((item, i) => (
-                            <li key={i}>
-                                <CampaignItem item={item} type={options.current.type} />
-                            </li>
-                        ))}
-                    </ul>
-                </>
+                ? <ul className="grid grid-cols-2 gap-3">
+                    {info.list.map((item, i) => (
+                        <li key={i}>
+                            <CampaignItem item={item} type={options.current.type} />
+                        </li>
+                    ))}
+                </ul>
                 : <div className="plain-center">
                     <span>No results.</span>
                 </div>

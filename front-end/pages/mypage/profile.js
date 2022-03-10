@@ -1,7 +1,8 @@
-import Card from '../../components/Card'
-import axios from '../../lib/axios'
 import { useRouter } from 'next/router'
+import axios from '../../lib/axios'
+import Card from '../../components/Card'
 import FormInput from '../../components/form-input'
+import Button from '../../components/Button'
 
 const MemberDetails = ({ data }) => {
     const router = useRouter()
@@ -48,7 +49,7 @@ const MemberDetails = ({ data }) => {
                         value={data.timezone.country}
                         className="form-input-plaintext mt-3"
                     />
-                    <button type="button" className="btn btn_block btn_outline mt-3" onClick={handleNextClickButton}>Reset Password</button>
+                    <Button outline block className="mt-3" onClick={handleNextClickButton}>Reset Password</Button>
                 </form>
             </Card>
         </div>

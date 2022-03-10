@@ -9,6 +9,7 @@ import FormLabel from '../../components/FormLabel'
 import Feedback from '../../components/Feedback'
 import Form from '../../components/Form'
 import useForm from '../../hooks/useForm'
+import Button from '../../components/Button'
 
 export const getServerSideProps = async () => {
     return {
@@ -120,9 +121,7 @@ const EditPw = () => {
                         />
                         <Feedback>Passwords do not match.</Feedback>
                     </FormGroup>
-                    <button type="submit" className="btn btn_block btn_outline mt-3">
-                        Confirm
-                    </button>
+                    <Button type="submit" outline block className="mt-3">Confirm</Button>
                 </Form>
                 <div>
                     <ToastBox state={isVisible} toastOnChange={handleToast} toastConf={toastData} />

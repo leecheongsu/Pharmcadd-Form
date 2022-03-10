@@ -1,7 +1,8 @@
-import dayjs from 'dayjs'
 import React, { useEffect, useRef, useState } from 'react'
-import Card from '../../components/Card'
+import { useRouter } from 'next/router'
+import dayjs from 'dayjs'
 import axios from '../../lib/axios'
+import Card from '../../components/Card'
 import FormRadioGroup from '../../components/FormRadioGroup'
 import FormCheckGroup from '../../components/FormCheckGroup'
 import ToastBox from '../../components/modal/ToastBox'
@@ -10,7 +11,7 @@ import ModalBox from '../../components/modal/ModalBox'
 import FormGroup from '../../components/FormGroup'
 import FormLabel from '../../components/FormLabel'
 import FormControl from '../../components/FormControl'
-import { useRouter } from 'next/router'
+import Button from '../../components/Button'
 
 const Campaign = ({ detail, campaign, createdBy, answer }) => {
     const { id, questions } = detail
@@ -170,15 +171,14 @@ const Campaign = ({ detail, campaign, createdBy, answer }) => {
             <CampaignInfo title={detail.title} createdBy={createdBy} campaign={campaign} />
             <form onSubmit={onSubmit}>
                 {questions.map(v => (
-                    <QuestionItem item={v} inputData={inputData} onChange={onChange} key={`c${id}_q${v.id}`}
-                                  answer={answer} />
+                    <QuestionItem item={v} inputData={inputData} onChange={onChange} key={`c${id}_q${v.id}`} answer={answer} />
                 ))}
                 <div className="text-right mt-3">
                     {editable && (
-                        <button type="button" className="btn btn_outline mr-2" onClick={handleEditButton}>Reset</button>
+                        <Button outline className="mr-2" onClick={handleEditButton}>Reset</Button>
                     )}
                     {answer.length === 0 && (
-                        <button type="submit" className="btn">Submit</button>
+                        <Button type="submit">Submit</Button>
                     )}
                 </div>
             </form>

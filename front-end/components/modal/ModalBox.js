@@ -48,13 +48,10 @@ const ModalBox = ({
                         {child}
                         <div className="text-center">
                             {leftButton &&
-                            <Button className="btn btn_outline btn_sm px-3"
-                                    onClick={() => leftButton?.onClick()}>{leftButton?.title}</Button>
+                            <Button outline className="btn_sm" onClick={() => leftButton?.onClick()}>{leftButton?.title}</Button>
                             }
                             {rightButton &&
-                            <Button className="btn btn_sm px-3"
-                                    onClick={() => rightButton?.onClick()}>{rightButton?.title}</Button>
-
+                            <Button className="btn_sm" onClick={() => rightButton?.onClick()}>{rightButton?.title}</Button>
                             }
                         </div>
                     </Component>

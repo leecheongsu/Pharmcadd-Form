@@ -8,6 +8,7 @@ const propTypes = {
     link: PropTypes.bool,
     icon: PropTypes.bool,
     active: PropTypes.bool,
+    size: PropTypes.oneOf(['sm', 'lg', null]),
     className: PropTypes.string,
     disabled: PropTypes.bool,
     href: PropTypes.string,
@@ -51,6 +52,7 @@ const Button = forwardRef((
             icon = false,
             disabled = false,
             active = false,
+            size,
             className,
             style,
             ...props
@@ -67,7 +69,9 @@ const Button = forwardRef((
             {...buttonProps}
             ref={ref}
             className={classNames(
-                icon ? 'btn_icon' : 'btn',
+                (!icon && !link) && 'btn',
+                size && `btn_${size}`,
+                icon && 'btn_icon',
                 link && 'btn_link',
                 outline && 'btn_outline',
                 block && 'btn_block',

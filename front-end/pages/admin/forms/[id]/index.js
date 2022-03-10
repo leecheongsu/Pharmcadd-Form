@@ -1,12 +1,11 @@
-import { useRouter } from 'next/router'
-import PageTitle from '../../../../components/PageTitle'
-import Card from '../../../../components/Card'
 import axios from '../../../../lib/axios'
 import { INPUT_TYPE_OF_QUESTION_MAP, QUESTION_TYPE } from '../../../../assets/data'
+import PageTitle from '../../../../components/PageTitle'
+import Card from '../../../../components/Card'
 import FormControl from '../../../../components/FormControl'
 import FormSelect from '../../../../components/FormSelect'
-import Button from '../../../../components/Button'
 import FormCheck from '../../../../components/FormCheck'
+import LinkButton from '../../../../components/Link'
 
 const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
     ...(i === 0 ? { selected: true } : {}),
@@ -15,8 +14,6 @@ const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
 }))
 
 const FormDetail = ({ id, title, description, questions }) => {
-    const router = useRouter()
-
     return (
         <>
             <PageTitle title="양식 상세" />
@@ -31,8 +28,8 @@ const FormDetail = ({ id, title, description, questions }) => {
             ))}
 
             <div className="flex mt-3">
-                <Button onClick={() => router.push('/admin/forms')} className="mr-auto btn_outline">목록</Button>
-                <Button onClick={() => router.push(`/admin/campaigns/create?formId=${id}`)}>발송하기</Button>
+                <LinkButton href="/admin/forms" outline className="mr-auto">목록</LinkButton>
+                <LinkButton href={`/admin/campaigns/create?formId=${id}`}>발송하기</LinkButton>
             </div>
         </>
     )

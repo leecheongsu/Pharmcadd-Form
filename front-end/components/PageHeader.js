@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { ChevronLeftIcon } from '@heroicons/react/solid'
-import { LogoutIcon, UserCircleIcon, VariableIcon } from '@heroicons/react/outline'
+import { LogoutIcon, UserCircleIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import Link from './Link'
 import Button from './Button'
@@ -17,7 +17,7 @@ export default function PageHeader({ title = 'title' }) {
     }
 
     return (
-        <header className="page_header grid grid-cols-6 items-center mb-3">
+        <header className="page_header grid grid-cols-6 items-center px-2 mb-3">
             <div className="leading-none">
                 {router.pathname !== '/campaigns'
                 && <Button icon onClick={() => router.back()}><ChevronLeftIcon className="w-6 h-6 text-gray-500" /></Button>}

@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { ChevronRightIcon, PlusCircleIcon, MinusCircleIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/solid'
 import axios from '../../lib/axios'
 import { WORKPLACES } from '../../assets/data'
 import { POLICY } from '../../assets/policy'
@@ -16,14 +15,10 @@ import FormSelect from '../../components/FormSelect'
 import FormCheck from '../../components/FormCheck'
 import Button from '../../components/Button'
 import ModalBox from '../../components/modal/ModalBox'
+import LinkButton from '../../components/Link'
 
 const SignUp = () => {
-    const [
-        { code, name, password, email, placeOfWork, confirmPassword, policy }, validated, {
-            onChange,
-            submit,
-            reset,
-        }] = useForm({
+    const [{ code, name, password, email, placeOfWork, confirmPassword, policy }, validated, { onChange, submit, reset }] = useForm({
         code: '',
         name: '',
         password: '',
@@ -56,7 +51,6 @@ const SignUp = () => {
     }, [positions])
 
     useEffect(async () => {
-
         if (step >= 3) {
             await axios.post('/backapi/join', {
                 code: code,
@@ -92,10 +86,9 @@ const SignUp = () => {
         <Card className="signup-box mb-0 mx-5">
             <h2 className="signup-text">Sign up</h2>
             {step === 0
-                ?
-                <SignupStep1 email={email} password={password} code={code}
-                             nextStep={nextStep} onChange={onChange} submit={submit} validated={validatedChange}
-                             confirmPassword={confirmPassword} setIsModal={setIsModal} setModalConf={setModalConf} />
+                ? <SignupStep1 email={email} password={password} code={code}
+                               nextStep={nextStep} onChange={onChange} submit={submit} validated={validatedChange}
+                               confirmPassword={confirmPassword} setIsModal={setIsModal} setModalConf={setModalConf} />
                 : (step === 1
                         ? <SignupStep2 name={name} positions={positions} setPositions={setPositions}
                                        placeOfWork={placeOfWork} nextStep={nextStep} onChange={onChange} submit={submit}
@@ -241,10 +234,9 @@ function SignupStep1({ email, password, confirmPassword, code, nextStep, onChang
             </FormGroup>
             {!inputCode.isComplete &&
             <div className="text-right">
-                <button type="button" onClick={() => checkEmailAndSendCode(email)} className="btn_link text-xs"
-                        disabled={!sendCodeActivate.current}>
+                <Button onClick={() => checkEmailAndSendCode(email)} link className="text-xs" disabled={!sendCodeActivate.current}>
                     {inputCode.isSend ? 'Resend code' : 'Send code'}
-                </button>
+                </Button>
             </div>
             }
             {inputCode.isSend && !inputCode.isComplete &&
@@ -281,7 +273,7 @@ function SignupStep1({ email, password, confirmPassword, code, nextStep, onChang
                 />
                 <Feedback>Enter 6 or more characters, including letters and numbers.</Feedback>
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="mt-3">
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl
                     type="password"
@@ -297,16 +289,14 @@ function SignupStep1({ email, password, confirmPassword, code, nextStep, onChang
             <div className="flex justify-between mt-4">
                 <div>
                     <span className="text-xs text-gray-400 mr-2">Already a member?</span>
-                    <Link href="/account/login">
-                        <a className="btn btn_link text-xs p-0">Login</a>
-                    </Link>
+                    <LinkButton href="/account/login" className="text-xs">Login</LinkButton>
                 </div>
-                <button type="submit" disabled={!inputCode.isComplete} className="btn_link -mr-1.5">
+                <Button type="submit" disabled={!inputCode.isComplete} link className="-mr-1.5">
                     <div className="flex items-center">
                         <span className="text-sm">Next</span>
                         <ChevronRightIcon className="w-4 h-4" />
                     </div>
-                </button>
+                </Button>
             </div>
         </Form>
     )
@@ -418,14 +408,26 @@ function SignupStep2({ name, positions, setPositions, placeOfWork, nextStep, onC
             <div className="flex items-center gap-3 mt-3">
                 <FormGroup className="flex-1">
                     <FormLabel>Team / Position</FormLabel>
-                    <FormSelect name="team" options={teamOption} placeholder="Choose Team"
-                                value={team} onChange={onChangePosition} className="form-input" />
-                    <FormSelect name="position" options={positionOption} placeholder="Choose Position"
-                                value={position} onChange={onChangePosition} className="form-input mt-1" />
+                    <FormSelect
+                        name="team"
+                        options={teamOption}
+                        placeholder="Choose Team"
+                        value={team}
+                        onChange={onChangePosition}
+                        className="form-input"
+                    />
+                    <FormSelect
+                        name="position"
+                        options={positionOption}
+                        placeholder="Choose Position"
+                        value={position}
+                        onChange={onChangePosition}
+                        className="form-input mt-1"
+                    />
                 </FormGroup>
-                <button type="button" onClick={addPosition} className="btn_icon">
+                <Button onClick={addPosition} icon>
                     <PlusCircleIcon className="flex-auto text-gray-400 w-6 h-6 mt-8" />
-                </button>
+                </Button>
             </div>
             {positions.length ?
                 <ul className="mt-1 mb-4">
@@ -435,9 +437,9 @@ function SignupStep2({ name, positions, setPositions, placeOfWork, nextStep, onC
                             - {team && teamLabel}
                             , {position && positionLabel}
                         </span>
-                            <button type="button" onClick={() => removePosition(i)} className="btn_icon">
+                            <Button onClick={() => removePosition(i)} icon>
                                 <MinusCircleIcon className="text-gray-400 w-4 h-4 ml-2" />
-                            </button>
+                            </Button>
                         </li>
                     ))}
                 </ul>
@@ -461,12 +463,12 @@ function SignupStep2({ name, positions, setPositions, placeOfWork, nextStep, onC
             </FormGroup>
 
             <div className="text-right mt-3">
-                <button type="submit" className="btn_link -mr-1.5">
+                <Button type="submit" link className="-mr-1.5">
                     <div className="flex items-center">
                         <span className="text-sm">Next</span>
                         <ChevronRightIcon className="w-4 h-4" />
                     </div>
-                </button>
+                </Button>
             </div>
         </Form>
     )
@@ -488,13 +490,19 @@ function SignupStep3({ policy, onChange, submit, validated, nextStep }) {
             <h3 className="form-label">Terms of Use</h3>
             <textarea className="form-input" readOnly rows="10" value={POLICY} />
             <div className="text-right mt-2">
-                <FormCheck name="agree" type="checkbox" value={policy}
-                           onChange={onChangeWithPolicy} required
-                           className="mt-3" invalid={policyInvalid}
-                           label="Agree to terms and conditions"
-                           feedback="You must agree before submitting." />
+                <FormCheck
+                    name="agree"
+                    type="checkbox"
+                    value={policy}
+                    onChange={onChangeWithPolicy}
+                    required
+                    className="mt-3"
+                    invalid={policyInvalid}
+                    label="Agree to terms and conditions"
+                    feedback="You must agree before submitting."
+                />
             </div>
-            <Button type="submit" className="btn btn_block mt-4">Sign Up</Button>
+            <Button type="submit" block className="mt-4">Sign Up</Button>
         </Form>
     )
 }

@@ -1,6 +1,4 @@
-import Card from '../components/Card'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Button from '../components/Button'
 import Form from '../components/Form'
 import FormGroup from '../components/FormGroup'
@@ -12,6 +10,7 @@ import FormCheck from '../components/FormCheck'
 import FormCheckGroup from '../components/FormCheckGroup'
 import FormRadioGroup from '../components/FormRadioGroup'
 import Toastbox from '../components/modal/ToastBox'
+import LinkButton from '../components/Link'
 
 export default function StyleGuide() {
     const [validated, setValidated] = useState(false)
@@ -237,42 +236,26 @@ export default function StyleGuide() {
             </div>
 
             <div className="mt-4">
-                <h2>Link</h2>
-                <Link href="/" passHref>
-                    <Button className="btn_link">Link</Button>
-                </Link>{' '}
-                <Link href="/" passHref>
-                    <Button className="btn_link" active>Link</Button>
-                </Link>{' '}
-                <Link href="/" passHref>
-                    <Button className="btn_link" disabled>Link</Button>
-                </Link>{' '}
+                <h2 className="text-2xl font-bold mt-4">Link</h2>
+                <LinkButton href="/">Link</LinkButton>{' '}
+                <LinkButton href="/" active>Link</LinkButton>{' '}
+                <LinkButton href="/" disabled>Link</LinkButton>{' '}
                 <br />
 
-                <Link href="/" passHref>
-                    <Button>Link</Button>
-                </Link>{' '}
-                <Link href="/" passHref>
-                    <Button active>Link</Button>
-                </Link>{' '}
-                <Link href="/" passHref>
-                    <Button disabled>Link</Button>
-                </Link>{' '}
-
-                <h2>Button</h2>
+                <h2 className="text-2xl font-bold mt-4">Button</h2>
                 <Button onClick={() => console.log('click!')}>Button</Button>{' '}
                 <Button type="submit" active>Submit</Button>{' '}
                 <Button onClick={() => console.log('click!')} disabled>Reset</Button>{' '}
 
-                <h2>Size</h2>
-                <Button className="btn_lg">Large</Button>{' '}
-                <Button className="btn">Normal</Button>{' '}
-                <Button className="btn_sm">Small</Button>
+                <h2 className="text-2xl font-bold mt-4">Size</h2>
+                <Button size="sm">Small</Button>{' '}
+                <Button>Normal</Button>{' '}
+                <Button size="lg">Large</Button>{' '}
 
-                <h2>Style</h2>
-                <Button className="btn_link">Link</Button>{' '}
-                <Button className="btn_outline">Outline</Button>{' '}
-                <Button className="btn_block">Block</Button>
+                <h2 className="text-2xl font-bold mt-4">Style</h2>
+                <Button link>Link</Button>{' '}
+                <Button outline>Outline</Button>{' '}
+                <Button block>Block</Button>
             </div>
 
             <br />
@@ -289,37 +272,6 @@ export default function StyleGuide() {
             <br />
             <br />
 
-            <Card className="cam-card">
-                <div className="surname text-2xl mb-5">
-                    covid-19 surveyyyyyyyyyyyyy
-                </div>
-
-                <div className="camsub text-xs mb-3">
-                    작성중
-                </div>
-
-                <div className="text-right">
-                    <div className="d-day">D-5</div>
-                </div>
-
-            </Card>
-
-            <Card className="cam-card">
-                <div className="surname text-2xl mb-5">
-                    covid-19 surveyyyyyyyyyyyyy
-                </div>
-
-                <div className="camsub text-xs mb-3">
-                    미확인
-                </div>
-
-                <div className="text-right">
-                    <div className="d-day day-red">D-5</div>
-                </div>
-
-            </Card>
-            <br /><br />
-
             {isVisible &&
             <Toastbox type="success" message="success!!" transition={false} onChange={closeModal} />
             }
@@ -329,7 +281,7 @@ export default function StyleGuide() {
                     <p className="text-xl">alert 메세지 박스</p>
                     <p className="mb-3">메세지 박스 서브 내용</p>
                     <div className="text-center">
-                        <button type="button" className="btn btn_sm px-3">확인</button>
+                        <Button size="sm">확인</Button>
                     </div>
                 </div>
             </div>
@@ -341,7 +293,7 @@ export default function StyleGuide() {
                     <p className="text-xl">alert 메세지 박스</p>
                     <p className="mb-3">메세지 박스 서브 내용</p>
                     <div className="text-center">
-                        <button type="button" className="btn btn_sm px-3">확인</button>
+                        <Button size="sm">확인</button>
                     </div>
                 </div>
             </div>

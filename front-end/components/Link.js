@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 const propTypes = {
     icon: PropTypes.bool,
-    link: PropTypes.bool,
     outline: PropTypes.bool,
     block: PropTypes.bool,
     active: PropTypes.bool,
@@ -16,25 +15,25 @@ const propTypes = {
 
 const LinkButton = forwardRef((
     {
+        href,
         icon = false,
-        link = false,
         outline = false,
         block = false,
         active = false,
         disabled = false,
         className,
-        children,
         ...props
     },
     ref,
 ) => {
-    return <Link {...props}>
+    return <Link href={href}>
         <a
-            {...{ children }}
+            {...props}
             ref={ref}
             className={classNames(
+                (!icon && !outline && !block) && 'btn_link',
                 icon && 'btn_icon',
-                link && 'btn_link',
+                (outline || block) && 'btn',
                 outline && 'btn_outline',
                 block && 'btn_block',
                 active && 'active',

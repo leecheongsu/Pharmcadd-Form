@@ -1,15 +1,16 @@
-import Card from '../../components/Card'
 import React, { useRef, useState } from 'react'
-import axios from '../../lib/axios'
 import { useRouter } from 'next/router'
+import axios from '../../lib/axios'
+import Card from '../../components/Card'
 import Form from '../../components/Form'
 import FormLabel from '../../components/FormLabel'
 import FormGroup from '../../components/FormGroup'
 import FormControl from '../../components/FormControl'
 import Feedback from '../../components/Feedback'
-import Link from '../../components/Link'
+import LinkButton from '../../components/Link'
 import useForm from '../../hooks/useForm'
 import ModalBox from '../../components/modal/ModalBox'
+import Button from '../../components/Button'
 
 const FindPw = () => {
     const router = useRouter()
@@ -164,10 +165,9 @@ const FindPw = () => {
                 </FormGroup>
                 {!inputCode.isComplete &&
                 <div className="text-right">
-                    <button type="button" onClick={() => sendCode(email)} className="btn_link text-xs"
-                            disabled={!sendCodeActivate.current}>
+                    <Button onClick={() => sendCode(email)} link className="text-xs" disabled={!sendCodeActivate.current}>
                         {inputCode.isSend ? 'Resend code' : 'Send code'}
-                    </button>
+                    </Button>
                 </div>
                 }
                 {inputCode.isSend && !inputCode.isComplete &&
@@ -200,7 +200,7 @@ const FindPw = () => {
                     />
                     <Feedback>Enter 6 or more characters, including letters and numbers.</Feedback>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup className="mt-3">
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl
                         type="password"
@@ -213,12 +213,10 @@ const FindPw = () => {
                     />
                     <Feedback>Passwords do not matched.</Feedback>
                 </FormGroup>
-                <button type="submit" className="btn btn_block mt-5">Reset</button>
+                <Button type="submit" disabled={!inputCode.isComplete} block className="mt-5">Reset</Button>
                 <div className="text-right mt-4">
                     <span className="text-sm text-gray-400 mr-2">Don&apos;t you have an account?</span>
-                    <Link href="/account/sign-up">
-                        <a className="btn btn_link text-sm p-0">Sign up</a>
-                    </Link>
+                    <LinkButton href="/account/sign-up" className="text-xs">Sign up</LinkButton>
                 </div>
             </Form>
             <ModalBox state={isModal} modalConf={modalConf} />
