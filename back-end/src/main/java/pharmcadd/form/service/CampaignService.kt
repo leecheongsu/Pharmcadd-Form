@@ -495,7 +495,7 @@ class CampaignService {
         emails.forEach { email ->
             mailService.sendAndForget {
                 title("Pharmcadd-Form Notice")
-                to(emails)
+                to(email)
                 content(content)
             }
         }
