@@ -244,7 +244,7 @@ const UserPassword = ({ id, setModalChange }) => {
 
 const UserAuthority = ({ user, setModalChange }) => {
     const [{ role }, validated, { onChange, submit, reset }] = useForm({
-        role: '',
+        role: user.role,
     })
 
     const [data, setData] = useState({

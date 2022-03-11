@@ -19,7 +19,7 @@ const propTypes = {
 
 const FormSelect = forwardRef((
         {
-            value = '',
+            value,
             options,
             className,
             placeholder,
