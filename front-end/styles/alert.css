@@ -11,11 +11,13 @@
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     display: inline-block;
-    background-color: #ffffff;
-    border: 1px solid #fa5c7c;
+    @apply bg-white;
+    @apply border-solid;
+    @apply border;
+    @apply border-secondary;
     padding: 0.45rem 2rem;
-    border-radius: 0.15rem;
-    font-size: 0.9rem;
-    color: #fa5c7c;
+    @apply rounded-sm;
+    @apply text-sm;
+    @apply text-secondary;
     box-shadow: 0 2px 6px 0 rgb(250 92 124 / 50%);
 }

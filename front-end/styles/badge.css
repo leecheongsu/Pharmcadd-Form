@@ -1,13 +1,13 @@
 .badge {
     display: inline-block;
     padding: 0.35em 0.65em;
-    font-weight: 600;
+    @apply font-medium;
     line-height: 1;
-    color: #fff;
+    @apply text-white;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: 0.25rem;
+    @apply rounded;
 }
 
 .badge-group {
@@ -24,8 +24,4 @@
     @apply border-primary;
     @apply border-2;
     @apply text-primary;
-}
-
-.rounded-pill {
-    border-radius: 50rem !important;
 }

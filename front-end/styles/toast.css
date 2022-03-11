@@ -7,8 +7,8 @@
     background-color: #fedee5;
     border: 1px solid #fedee8;
     padding: 0.45rem 1.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
+    @apply rounded;
+    @apply text-sm;
     color: #f12c3b;
     text-align: center;
     box-shadow: 0 2px 6px 0 rgb(250 92 124 / 50%);
@@ -54,10 +54,10 @@
     top: 50%;
     left: 50%;
     padding: 0.45rem 1.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.9rem;
+    @apply rounded;
+    @apply text-sm;
     text-align: center;
-    background-color: white;
+    @apply bg-white;
     transform: translateX(-50%) translateY(-50%);
 }
 

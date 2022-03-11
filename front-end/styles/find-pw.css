@@ -3,7 +3,7 @@
 }
 
 .pw-text {
-    font-size: 1.5rem;
+    @apply text-2xl;
     color: #6c757d;
     margin-bottom: 1.5rem;
     text-align: center;

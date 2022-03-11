@@ -1,15 +1,17 @@
 .btn {
     display: inline-block;
-    background-color: #fa5c7c;
-    border: 1px solid #fa5c7c;
+    @apply bg-secondary;
+    @apply border-solid;
+    @apply border;
+    @apply border-secondary;
     padding: 0.45rem 0.9rem;
-    border-radius: 0.15rem;
-    font-size: 0.9rem;
-    color: #ffffff;
+    @apply rounded-sm;
+    @apply text-sm;
+    @apply text-white;
     /*margin-left: 0.75rem;*/
     /*margin-bottom: 0.75rem;*/
     text-align: center;
-    font-weight: 400;
+    @apply font-normal;
     box-shadow: 0 2px 6px 0 rgb(250 92 124 / 50%);
 }
 
@@ -24,8 +26,8 @@
 
 .btn:active,
 .btn.active:not(.btn_link) {
-    color: #fff;
-    background-color: #fa5c7c;
+    @apply text-white;
+    @apply bg-secondary;
 }
 
 .btn:disabled,
@@ -38,7 +40,7 @@
 
 /* Link Button */
 .btn_link {
-    color: #727cf5;
+    @apply text-primary;
     background-color: transparent;
     border: 1px solid transparent;
     box-shadow: none;
@@ -46,7 +48,7 @@
 
 .btn_link.active {
     color: #4751f8;
-    font-weight: 900;
+    @apply font-medium;
 }
 
 .btn_link:hover {
@@ -76,20 +78,22 @@
 
 .btn_outline {
     background-color: transparent;
-    border: 1px solid #fa5c7c;
+    @apply border-solid;
+    @apply border;
+    @apply border-secondary;
     box-shadow: none;
-    color: #fa5c7c;
+    @apply text-secondary;
 }
 
 .btn_outline:focus {
     box-shadow: 0 0 0 0.2rem rgb(251 116 144 / 50%);
     background-color: transparent;
-    color: #fa5c7c;
+    @apply text-secondary;
 }
 
 .btn_outline:hover {
-    color: white;
-    background-color: #fa5c7c;
+    @apply text-white;
+    @apply bg-secondary;
 }
 
 
@@ -100,7 +104,7 @@
 
 .btn_sm {
     padding: 0.2rem 0.4rem;
-    font-size: 0.7rem;
+    @apply text-xs;
 }
 
 .btn_lg {
@@ -130,7 +134,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 20px;
+    @apply rounded-sm;
     background-color: #ccc;
     transition: .2s;
 }
@@ -142,13 +146,13 @@
     padding-bottom: calc(50% - 6px);
     left: 3px;
     bottom: 3px;
-    background-color: #fff;
+    @apply bg-white;
     transition: .2s;
-    border-radius: 20px;
+    @apply rounded-sm;
 }
 
 .switch-button input:checked + .on-off-switch {
-    background-color: #727cf5;
+    @apply bg-primary;
 }
 
 .switch-button input:checked + .on-off-switch:before {

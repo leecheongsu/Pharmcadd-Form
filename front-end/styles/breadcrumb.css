@@ -10,5 +10,5 @@
 
 .breadcrumbItem {
     @apply text-sm;
-    color: #727cf5;
+    @apply text-primary;
 }

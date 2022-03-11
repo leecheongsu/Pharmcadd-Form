@@ -30,7 +30,7 @@ const Badge = forwardRef(
                     'badge',
                     className,
                     outline && 'badge-outline',
-                    pill && `rounded-pill`,
+                    pill && `rounded-full`,
                     text && `text-${text}`,
                     (!outline && bg) && `bg-${bg}`,
                 )}

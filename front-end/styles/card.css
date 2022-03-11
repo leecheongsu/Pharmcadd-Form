@@ -2,8 +2,8 @@
     position: relative;
     @apply p-5;
     /*@apply mb-6;*/
-    background-color: #ffffff;
+    @apply bg-white;
     @apply shadow-base;
-    border-radius: 0.25rem;
+    @apply rounded;
     padding: 0.75rem;
 }
