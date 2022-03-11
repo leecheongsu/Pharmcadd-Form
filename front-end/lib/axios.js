@@ -6,11 +6,6 @@ const instance = axios.create({
     paramsSerializer: function(params) {
         return qs.stringify(params)
     },
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin,X-CSRF-Token,X-Requested-With,Accept,Accept-Version,Content-Length,Content-MD5,Content-Type,Date,X-Api-Version',
-    },
 })
 
 // 요청 인터셉터 추가
@@ -33,9 +28,11 @@ instance.interceptors.response.use(res => {
 export default instance
 
 export const setAuth = (access_token) => {
+    // console.log(typeof window === 'undefined' ? 'Server!!' : 'Client!!')
+    // console.log('#setAuth', access_token)
     if (access_token) {
         instance.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
-    } else {
+    } else if (access_token === null) {
         delete instance.defaults.headers.common['Authorization']
     }
 }

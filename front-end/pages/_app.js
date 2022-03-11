@@ -22,7 +22,6 @@ const MyApp = ({ Component, pageProps, accessToken }) => {
             <Head>
                 <title>Pharmcadd Form</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet" />
             </Head>
             <Layout>
                 <Component {...pageProps} />
@@ -38,7 +37,7 @@ MyApp.getInitialProps = async (appContext) => {
         setAuth(req.cookies.accessToken)
         if (req.cookies && req.cookies.accessToken) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + req.cookies.accessToken
-            return { ...appProps, accessToken: req.cookies.accessToken }
+            return { ...appProps, accessToken: req.cookies.accessToken || null }
         }
     }
     return { ...appProps }
