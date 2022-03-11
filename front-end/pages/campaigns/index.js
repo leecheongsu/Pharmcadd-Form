@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
 import dayjs, { dayFormat } from '../../lib/dayjs'
 import axios from '../../lib/axios'
 import Button from '../../components/Button'
 import Search from '../../components/Search'
-import Link from '../../components/Link'
 import useScroll from '../../hooks/useScroll'
 
 const Campaigns = ({ data: initData, options: initOptions }) => {
@@ -90,11 +90,13 @@ const CampaignItem = ({ item, type }) => {
     const dDay = endsAt ? `D-${dayjs().diff(dayFormat(endsAt, 'YYYY-MM-DD'), 'day') || 'day'}` : 'Unsubmitted'
 
     return (
-        <Link href={`/campaigns/${id}`} className="card cam-card">
-            <h3 className="surname text-2xl mb-5">{title}</h3>
-            <div className="text-right">
-                <span className="d-day">{type === 'READY' ? dDay : 'Completed'}</span>
-            </div>
+        <Link href={`/campaigns/${id}`}>
+            <a className="card cam-card">
+                <h3 className="surname text-2xl mb-5">{title}</h3>
+                <div className="text-right">
+                    <span className="d-day">{type === 'READY' ? dDay : 'Completed'}</span>
+                </div>
+            </a>
         </Link>
     )
 }

@@ -28,8 +28,8 @@ const FormDetail = ({ id, title, description, questions }) => {
             ))}
 
             <div className="flex mt-3">
-                <LinkButton href="/admin/forms" outline className="mr-auto">목록</LinkButton>
-                <LinkButton href={`/admin/campaigns/create?formId=${id}`}>발송하기</LinkButton>
+                <LinkButton href="/admin/forms" btn outline className="mr-auto">목록</LinkButton>
+                <LinkButton href={`/admin/campaigns/create?formId=${id}`} btn>발송하기</LinkButton>
             </div>
         </>
     )

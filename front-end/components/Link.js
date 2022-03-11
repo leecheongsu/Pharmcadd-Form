@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 const propTypes = {
+    btn: PropTypes.bool,
     icon: PropTypes.bool,
     outline: PropTypes.bool,
     block: PropTypes.bool,
@@ -11,16 +12,19 @@ const propTypes = {
     disabled: PropTypes.bool,
     className: PropTypes.string,
     href: PropTypes.string.isRequired,
+    size: PropTypes.oneOf(['sm', 'lg', null]),
 }
 
 const LinkButton = forwardRef((
     {
         href,
+        btn = false,
         icon = false,
         outline = false,
         block = false,
         active = false,
         disabled = false,
+        size,
         className,
         ...props
     },
@@ -31,14 +35,15 @@ const LinkButton = forwardRef((
             {...props}
             ref={ref}
             className={classNames(
-                (!icon && !outline && !block) && 'btn_link',
+                (btn || outline || block) && 'btn',
+                size && `btn_${size}`,
                 icon && 'btn_icon',
-                (outline || block) && 'btn',
+                (!btn && !icon && !outline && !block) && 'btn_link',
                 outline && 'btn_outline',
                 block && 'btn_block',
-                active && 'active',
-                disabled && 'disabled',
                 className,
+                active && 'active',
+                props.href && disabled && 'disabled',
             )}
         />
     </Link>
