@@ -36,7 +36,7 @@ class AuthorizationCodeService {
 
         val content = templateService.compile("template/validCode.html.hbs", mapOf("code" to code))
         mailService.sendAndForget {
-            title("Pharmcadd-Form Valid Code")
+            title("[Pharmcadd] 인증코드")
             to(email)
             content(content)
         }
