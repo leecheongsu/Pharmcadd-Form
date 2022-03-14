@@ -6,6 +6,8 @@ import FormControl from '../../../../components/FormControl'
 import FormSelect from '../../../../components/FormSelect'
 import FormCheck from '../../../../components/FormCheck'
 import LinkButton from '../../../../components/Link'
+import Button from '../../../../components/Button'
+import { useRouter } from 'next/router'
 
 const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
     ...(i === 0 ? { selected: true } : {}),
@@ -14,6 +16,12 @@ const NEW_QUESTION_TYPE = QUESTION_TYPE.map((v, i) => ({
 }))
 
 const FormDetail = ({ id, title, description, questions }) => {
+    const router = useRouter()
+
+    const handleUpdateButton = () => {
+        router.push(`/admin/forms/${id}/update`)
+    }
+
     return (
         <>
             <PageTitle title="양식 상세" />
@@ -29,6 +37,7 @@ const FormDetail = ({ id, title, description, questions }) => {
 
             <div className="flex mt-3">
                 <LinkButton href="/admin/forms" btn outline className="mr-auto">목록</LinkButton>
+                <Button onClick={() => handleUpdateButton()} className="btn_outline mr-3" >수정하기</Button>
                 <LinkButton href={`/admin/campaigns/create?formId=${id}`} btn>발송하기</LinkButton>
             </div>
         </>
