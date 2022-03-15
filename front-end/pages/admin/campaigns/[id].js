@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { dayFormat } from '../../../lib/dayjs'
 import axios from '../../../lib/axios'
@@ -8,23 +8,96 @@ import Button from '../../../components/Button'
 import Badge from '../../../components/Badge'
 import FormLabel from '../../../components/FormLabel'
 import NoData from '../../../components/NoData'
+import ModalBox from '../../../components/modal/ModalBox'
+import FormGroup from '../../../components/FormGroup'
+import FormControl from '../../../components/FormControl'
 
 const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     const router = useRouter()
     const { id, formId, title, description, startsAt, endsAt, status } = campaign
 
-    const [{ questions, answers }, setData] = useState({
+    const [{ questions, answers, cancels }, setData] = useState({
         questions: [],
         answers: [],
+        cancels: [],
     })
+
     useEffect(() => {
         const handleData = async () => {
             const { data: questions } = await axios.get(`/backapi/admin/forms/${formId}/questions`)
             const { data: { content: answers } } = await axios.get(`/backapi/admin/campaigns/${id}/answers?page=1&itemsPerPage=100`)
-            setData({ questions, answers })
+            const { data: { content: cancels } } = await axios.get(`/backapi/admin/campaigns/${id}/answer-cancels`)
+            setData({ questions, answers, cancels })
         }
         handleData()
     }, [formId, id])
+
+    const answerCancelMap = {}
+    answers.map(a => {
+        cancels.filter(c => c.requester === a.userId).map(c => {
+            answerCancelMap[a.userId] = c
+        })
+    })
+
+    const [cancelAnswer, setCancelAnswer] = useState({
+        id: 0,
+        answer: '',
+    })
+
+    const handleAnswerCancelButton = (type) => {
+        console.log(cancelAnswer)
+        axios.patch(`/backapi/admin/campaigns/${id}/answer-cancels/${cancelAnswer.id}/${type}`, cancelAnswer.answer)
+            .then((res) => {
+                if (res.status === 200) {
+
+                }
+            })
+            .catch((e) => {
+                if (e.response.status < 500) {
+
+                }
+            })
+    }
+
+    const [isVisible, setIsVisible] = useState(false)
+    const [modalConf, setModalConf] = useState({
+        title: '답변 취소 요청',
+        content: '승인 혹은 거부에 대한 이유를 작성해주세요',
+        blindFilter: true,
+        handleLeftButton: {
+            title: '승인',
+            onClick: () => handleAnswerCancelButton('approve'),
+        },
+        handleRightButton: {
+            title: '거부',
+            onClick: () => handleAnswerCancelButton('reject'),
+        },
+    })
+
+    const onChangeCancelAnswer = (e) => {
+        const { name, value } = e.target
+        setCancelAnswer((prev) => ({
+            id: prev.id,
+            answer: value,
+        }))
+    }
+
+    const answerForRequest = () => {
+        return (
+            <FormGroup>
+                <FormLabel className="text-left">이유</FormLabel>
+                <FormControl name="answer" as="textarea" rows="3" onChange={onChangeCancelAnswer} />
+            </FormGroup>
+        )
+    }
+
+    const handleApprovalButton = (id) => {
+        setCancelAnswer((prev) => ({
+            id: id,
+            answer: prev.answer,
+        }))
+        setIsVisible(true)
+    }
 
     return (
         <>
@@ -61,6 +134,7 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
                     <tbody>
                     {answers.length > 0
                         ? answers.map((a, i) => (
+                            // eslint-disable-next-line react/jsx-key
                             <tr key={i}>
                                 <td>{a.userName}</td>
                                 {questions.map((q, j) => (
@@ -68,8 +142,14 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
                                 ))}
                                 <td className="text-center">
                                     {a.createdAt
-                                        ? <>완료 <span className="text-sm text-gray-400">({dayFormat(a.createdAt)})</span></>
-                                        : <>대기중</>
+                                        ? (answerCancelMap[a.userId] === undefined
+                                                ?
+                                                <>완료 <span className="text-sm text-gray-400">({dayFormat(a.createdAt)})</span></>
+                                                :
+                                                <Button onClick={() => handleApprovalButton(answerCancelMap[a.userId].id)}>
+                                                    {answerCancelMap[a.userId].approvalType}
+                                                </Button>
+                                        ) : <>대기중</>
                                     }
                                 </td>
                             </tr>
@@ -77,10 +157,14 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
                         : <NoData colSpan={questions.length + 2} message="설문에 대한 답변이 없습니다." />
                     }
                     </tbody>
+
                 </table>}
             </Card>
             <div className="flex mt-3">
                 <Button outline onClick={() => router.push('/admin/campaigns')} className="mr-auto">목록</Button>
+            </div>
+            <div>
+                <ModalBox state={isVisible} modalConf={modalConf} child={answerForRequest()} />
             </div>
         </>
     )

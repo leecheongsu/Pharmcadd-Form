@@ -135,7 +135,7 @@ const Campaign = ({ detail, campaign, createdBy, answer }) => {
 
     const answerCancelRequestButton = async () => {
         console.log(reason.current)
-        await axios.post(`api/campaigns/${campaign.id}/answer-cancels`, { reason: reason.current })
+        await axios.post(`/backapi/campaigns/${campaign.id}/answer-cancels`, { reason: reason.current })
             .then((res) => {
                 if (res.status === 200) {
                     setIsModal(false)
@@ -151,6 +151,9 @@ const Campaign = ({ detail, campaign, createdBy, answer }) => {
                 console.log(e.response)
             })
     }
+
+
+
 
     function handleEditButton() {
         leftButton = ({ title: 'cancel', onClick: modalClose })
