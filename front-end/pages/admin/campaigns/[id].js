@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { dayFormat } from '../../../lib/dayjs'
 import axios from '../../../lib/axios'
@@ -39,28 +39,20 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
         })
     })
 
-    const [cancelAnswer, setCancelAnswer] = useState({
-        id: 0,
-        answer: '',
-    })
+    const cancelAnswerId = useRef(null)
+    const cancelAnswers = useRef(null)
 
-    const handleAnswerCancelButton = (type) => {
-        console.log(cancelAnswer)
-        axios.patch(`/backapi/admin/campaigns/${id}/answer-cancels/${cancelAnswer.id}/${type}`, cancelAnswer.answer)
-            .then((res) => {
-                if (res.status === 200) {
-
-                }
-            })
+    const handleAnswerCancelButton = async (type) => {
+        await axios.patch(`/backapi/admin/campaigns/${id}/answer-cancels/${cancelAnswerId.current}/${type}`, { answer: cancelAnswers.current })
             .catch((e) => {
                 if (e.response.status < 500) {
-
+                    console.log(e.response)
                 }
             })
     }
 
     const [isVisible, setIsVisible] = useState(false)
-    const [modalConf, setModalConf] = useState({
+    const modalConf = {
         title: '답변 취소 요청',
         content: '승인 혹은 거부에 대한 이유를 작성해주세요',
         blindFilter: true,
@@ -72,14 +64,10 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
             title: '거부',
             onClick: () => handleAnswerCancelButton('reject'),
         },
-    })
+    }
 
     const onChangeCancelAnswer = (e) => {
-        const { name, value } = e.target
-        setCancelAnswer((prev) => ({
-            id: prev.id,
-            answer: value,
-        }))
+        cancelAnswers.current = e.target.value
     }
 
     const answerForRequest = () => {
@@ -92,10 +80,7 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     }
 
     const handleApprovalButton = (id) => {
-        setCancelAnswer((prev) => ({
-            id: id,
-            answer: prev.answer,
-        }))
+        cancelAnswerId.current = id
         setIsVisible(true)
     }
 
