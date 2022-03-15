@@ -8,6 +8,8 @@ const instance = axios.create({
     },
 })
 
+instance.defaults.headers.patch['Content-Type'] = 'application/json'
+
 // 요청 인터셉터 추가
 instance.interceptors.request.use(config => {
     return config
