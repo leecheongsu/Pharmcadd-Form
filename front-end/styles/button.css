@@ -166,7 +166,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    @apply rounded-sm;
+    @apply rounded-full;
     background-color: #ccc;
     transition: .2s;
 }
@@ -180,7 +180,7 @@
     bottom: 3px;
     @apply bg-white;
     transition: .2s;
-    @apply rounded-sm;
+    @apply rounded-full;
 }
 
 .switch-button input:checked + .on-off-switch {
