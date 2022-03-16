@@ -35,7 +35,8 @@ class FormScheduleService {
         endsAt: LocalDateTime? = null,
         cronExpression: String? = null,
         cronDuration: Long? = null,
-        active: Boolean
+        active: Boolean,
+        notiInactive: Boolean? = false,
     ): Long {
         val record = dsl.insertInto(FORM_SCHEDULE)
             .set(FORM_SCHEDULE.FORM_ID, formId)
@@ -46,6 +47,7 @@ class FormScheduleService {
             .set(FORM_SCHEDULE.CRON_EXPRESSION, cronExpression)
             .set(FORM_SCHEDULE.CRON_DURATION, cronDuration)
             .set(FORM_SCHEDULE.ACTIVE, active)
+            .set(FORM_SCHEDULE.NOTI_INACTIVE, notiInactive)
             .returning(*FORM_SCHEDULE.fields())
             .fetchOne()!!
 
@@ -59,7 +61,8 @@ class FormScheduleService {
         timeZoneId: Long,
         startsAt: LocalDateTime,
         endsAt: LocalDateTime? = null,
-        active: Boolean
+        active: Boolean,
+        notiInactive: Boolean? = false,
     ): Long {
         return add(
             formId,
@@ -69,7 +72,8 @@ class FormScheduleService {
             endsAt,
             null,
             null,
-            active
+            active,
+            notiInactive
         )
     }
 
@@ -78,7 +82,8 @@ class FormScheduleService {
         timeZoneId: Long,
         cronExpression: String,
         cronDuration: Long,
-        active: Boolean
+        active: Boolean,
+        notiInactive: Boolean? = false,
     ): Long {
         return add(
             formId,
@@ -88,7 +93,8 @@ class FormScheduleService {
             null,
             cronExpression,
             cronDuration,
-            active
+            active,
+            notiInactive,
         )
     }
 
@@ -101,7 +107,8 @@ class FormScheduleService {
         endsAt: LocalDateTime? = null,
         cronExpression: String? = null,
         cronDuration: Long? = null,
-        active: Boolean
+        active: Boolean,
+        notiInactive: Boolean? = false
     ) {
         val record = dsl.update(FORM_SCHEDULE)
             .set(FORM_SCHEDULE.FORM_ID, formId)
@@ -112,6 +119,7 @@ class FormScheduleService {
             .set(FORM_SCHEDULE.CRON_EXPRESSION, cronExpression)
             .set(FORM_SCHEDULE.CRON_DURATION, cronDuration)
             .set(FORM_SCHEDULE.ACTIVE, active)
+            .set(FORM_SCHEDULE.NOTI_INACTIVE, notiInactive)
             .set(FORM_SCHEDULE.UPDATED_AT, DSL.currentOffsetDateTime())
             .where(
                 FORM_SCHEDULE.ID.eq(id)
@@ -135,7 +143,8 @@ class FormScheduleService {
             form.endsAt,
             form.cronExpression,
             form.cronDuration,
-            form.active
+            form.active,
+            form.notiInactive
         )
     }
 
@@ -150,7 +159,8 @@ class FormScheduleService {
             form.endsAt,
             form.cronExpression,
             form.cronDuration,
-            form.active
+            form.active,
+            form.notiInactive
         )
     }
 

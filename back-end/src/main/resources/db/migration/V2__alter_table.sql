@@ -1,0 +1,1 @@
+alter table form_schedule add column noti_inactive boolean default false;

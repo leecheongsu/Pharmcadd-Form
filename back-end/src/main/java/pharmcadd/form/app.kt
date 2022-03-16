@@ -300,7 +300,8 @@ class FormApplication : CommandLineRunner {
                 indiaTimeZoneId,
                 "0 0 6 ? * MON-SAT", // 6시부터 시작해서
                 Duration.ofMinutes(((3 * 60) + 10).toLong()).toMillis(), // 9시 5분에 만료
-                true,
+                active = true,
+                notiInactive = false
             )
 
             dsl

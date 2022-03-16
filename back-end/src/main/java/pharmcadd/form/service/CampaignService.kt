@@ -113,6 +113,7 @@ class CampaignService {
                 adminUser.id,
                 participants.filter { it.type == ParticipantType.USER }.map { it.userId!! },
                 participants.filter { it.type == ParticipantType.GROUP }.map { AddGroup(it.groupId!!, it.includeSubgroup) },
+                schedule.notiInactive,
         )
     }
 
@@ -144,7 +145,8 @@ class CampaignService {
                 },
                 createdBy,
                 participants.filter { it.type == ParticipantType.USER }.map { it.userId!! },
-                participants.filter { it.type == ParticipantType.GROUP }.map { AddGroup(it.groupId!!, it.includeSubgroup) }
+                participants.filter { it.type == ParticipantType.GROUP }.map { AddGroup(it.groupId!!, it.includeSubgroup) },
+                form.notiInactive
         )
     }
 
@@ -159,6 +161,7 @@ class CampaignService {
             createdBy: Long,
             participantUserIds: List<Long>,
             participantGroupIds: List<AddGroup>,
+            notiInactive: Boolean? = false,
     ): Long {
         val campaignId = add(
                 formId,
@@ -173,7 +176,7 @@ class CampaignService {
 
         addParticipants(campaignId, participantUserIds, participantGroupIds)
 
-        if (status == CampaignStatus.RUNNING) {
+        if (status == CampaignStatus.RUNNING && notiInactive == false) {
             sendNotifications(campaignId)
         }
 
