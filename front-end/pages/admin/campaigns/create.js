@@ -52,10 +52,10 @@ const CampaignCreate = ({ formInfo }) => {
         setHasSchedule(checked)
     }
 
-    const [isNotiInactive, setIsNotiInactive] = useState(false)
-    const onChangeNotiInactive = (e) => {
+    const [isMailing, setIsMailing] = useState(true)
+    const onChangeMailing = (e) => {
         const { checked } = e.target
-        setIsNotiInactive(checked)
+        setIsMailing(checked)
     }
 
     const onSubmit = () => {
@@ -63,7 +63,7 @@ const CampaignCreate = ({ formInfo }) => {
             ...inputData,
             startsAt: localDateTime(inputData.startsAt),
             endsAt: localDateTime(inputData.endsAt),
-            notiInactive: isNotiInactive,
+            mailing: isMailing,
         }
         if (hasSchedule) {
             const formId = router.query.formId
@@ -87,10 +87,10 @@ const CampaignCreate = ({ formInfo }) => {
                     <div className="flex items-center mb-2">
                         <FormLabel className="mb-0">내용</FormLabel>
                         <FormCheck
-                            name="notiInactive"
-                            checked={isNotiInactive}
-                            onChange={onChangeNotiInactive}
-                            label="이메일 전송 비활성화"
+                            name="mailing"
+                            checked={isMailing}
+                            onChange={e => onChangeMailing(e)}
+                            label="이메일 전송 활성화"
                             text="xs"
                             className="flex items-center ml-auto"
                         />
