@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pharmcadd.form.jooq.Tables.*
-import pharmcadd.form.jooq.enums.ApprovalType
+import pharmcadd.form.jooq.enums.CancelAnswerStatus
 import pharmcadd.form.jooq.tables.records.CancelAnswerRecord
 
 @Service
@@ -21,8 +21,8 @@ class CancelAnswerService {
     fun addRequest(campaignId: Long, requesterId: Long, reason: String): Long {
         return dsl.insertInto(CANCEL_ANSWER)
             .set(CANCEL_ANSWER.CAMPAIGN_ID, campaignId)
-            .set(CANCEL_ANSWER.APPROVAL_TYPE, ApprovalType.REQUEST)
-            .set(CANCEL_ANSWER.REQUESTER, requesterId)
+            .set(CANCEL_ANSWER.STATUS, CancelAnswerStatus.REQUEST)
+            .set(CANCEL_ANSWER.USER_ID, requesterId)
             .set(CANCEL_ANSWER.REASON, reason)
             .returningResult(CANCEL_ANSWER.ID)
             .fetchOne()!!
@@ -43,12 +43,12 @@ class CancelAnswerService {
     fun approve(id: Long, approverId: Long, answer: String? = null) {
         val cancelAnswer = findOne(id)!!
         val campaignId = cancelAnswer.campaignId
-        val requesterId = cancelAnswer.requester
+        val requesterId = cancelAnswer.userId
 
         update(id) { update ->
             update
-                .set(CANCEL_ANSWER.APPROVAL_TYPE, ApprovalType.APPROVE)
-                .set(CANCEL_ANSWER.APPROVER, approverId)
+                .set(CANCEL_ANSWER.STATUS, CancelAnswerStatus.APPROVE)
+                .set(CANCEL_ANSWER.APPROVED_BY, approverId)
                 .set(CANCEL_ANSWER.ANSWER, answer)
         }
 
@@ -85,8 +85,8 @@ class CancelAnswerService {
     fun reject(id: Long, approverId: Long, answer: String? = null) {
         update(id) { update ->
             update
-                .set(CANCEL_ANSWER.APPROVAL_TYPE, ApprovalType.REJECT)
-                .set(CANCEL_ANSWER.APPROVER, approverId)
+                .set(CANCEL_ANSWER.STATUS, CancelAnswerStatus.REJECT)
+                .set(CANCEL_ANSWER.APPROVED_BY, approverId)
                 .set(CANCEL_ANSWER.ANSWER, answer)
         }
     }
@@ -96,7 +96,7 @@ class CancelAnswerService {
         return dsl
             .selectFrom(CANCEL_ANSWER)
             .where(
-                CANCEL_ANSWER.REQUESTER.eq(userId)
+                CANCEL_ANSWER.USER_ID.eq(userId)
                     .and(CANCEL_ANSWER.DELETED_AT.isNull)
             )
             .fetch()
@@ -108,7 +108,7 @@ class CancelAnswerService {
             .selectFrom(CANCEL_ANSWER)
             .where(
                 CANCEL_ANSWER.CAMPAIGN_ID.eq(campaignId)
-                    .and(CANCEL_ANSWER.REQUESTER.eq(userId))
+                    .and(CANCEL_ANSWER.USER_ID.eq(userId))
                     .and(CANCEL_ANSWER.DELETED_AT.isNull)
             )
             .fetch()

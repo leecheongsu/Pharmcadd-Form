@@ -238,11 +238,11 @@ class CampaignController : BaseController() {
                 a.NAME.`as`(CancelAnswerVo::approverName.name.upperCamelToLowerUnderscore()),
             )
             .from(CANCEL_ANSWER)
-            .leftJoin(r).on(CANCEL_ANSWER.REQUESTER.eq(r.ID).and(r.DELETED_AT.isNull))
-            .leftJoin(a).on(CANCEL_ANSWER.APPROVER.eq(a.ID).and(a.DELETED_AT.isNull))
+            .leftJoin(r).on(CANCEL_ANSWER.USER_ID.eq(r.ID).and(r.DELETED_AT.isNull))
+            .leftJoin(a).on(CANCEL_ANSWER.APPROVED_BY.eq(a.ID).and(a.DELETED_AT.isNull))
             .where(
                 CANCEL_ANSWER.CAMPAIGN_ID.eq(id)
-                    .and(CANCEL_ANSWER.REQUESTER.eq(securityService.userId))
+                    .and(CANCEL_ANSWER.USER_ID.eq(securityService.userId))
                     .and(CANCEL_ANSWER.DELETED_AT.isNull)
             )
             .fetch { it.into(CancelAnswerVo::class.java) }
@@ -259,7 +259,7 @@ class CampaignController : BaseController() {
         @PathVariable("answerCancelId") answerCancelId: Long,
     ) {
         val answer = cancelAnswerService.findOne(answerCancelId) ?: throw NotFound()
-        if (answer.requester != securityService.userId) throw AccessDenied()
+        if (answer.userId != securityService.userId) throw AccessDenied()
         cancelAnswerService.deleteById(answerCancelId)
     }
 }

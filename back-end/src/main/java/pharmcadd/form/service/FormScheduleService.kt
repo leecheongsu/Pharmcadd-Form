@@ -36,7 +36,7 @@ class FormScheduleService {
         cronExpression: String? = null,
         cronDuration: Long? = null,
         active: Boolean,
-        notiInactive: Boolean? = false,
+        mailing: Boolean? = true,
     ): Long {
         val record = dsl.insertInto(FORM_SCHEDULE)
             .set(FORM_SCHEDULE.FORM_ID, formId)
@@ -47,7 +47,7 @@ class FormScheduleService {
             .set(FORM_SCHEDULE.CRON_EXPRESSION, cronExpression)
             .set(FORM_SCHEDULE.CRON_DURATION, cronDuration)
             .set(FORM_SCHEDULE.ACTIVE, active)
-            .set(FORM_SCHEDULE.NOTI_INACTIVE, notiInactive)
+            .set(FORM_SCHEDULE.MAILING, mailing)
             .returning(*FORM_SCHEDULE.fields())
             .fetchOne()!!
 
@@ -62,7 +62,7 @@ class FormScheduleService {
         startsAt: LocalDateTime,
         endsAt: LocalDateTime? = null,
         active: Boolean,
-        notiInactive: Boolean? = false,
+        mailing: Boolean? = true,
     ): Long {
         return add(
             formId,
@@ -73,7 +73,7 @@ class FormScheduleService {
             null,
             null,
             active,
-            notiInactive
+            mailing
         )
     }
 
@@ -83,7 +83,7 @@ class FormScheduleService {
         cronExpression: String,
         cronDuration: Long,
         active: Boolean,
-        notiInactive: Boolean? = false,
+        mailing: Boolean? = true,
     ): Long {
         return add(
             formId,
@@ -94,7 +94,7 @@ class FormScheduleService {
             cronExpression,
             cronDuration,
             active,
-            notiInactive,
+            mailing,
         )
     }
 
@@ -108,7 +108,7 @@ class FormScheduleService {
         cronExpression: String? = null,
         cronDuration: Long? = null,
         active: Boolean,
-        notiInactive: Boolean? = false
+        mailing: Boolean? = true
     ) {
         val record = dsl.update(FORM_SCHEDULE)
             .set(FORM_SCHEDULE.FORM_ID, formId)
@@ -119,7 +119,7 @@ class FormScheduleService {
             .set(FORM_SCHEDULE.CRON_EXPRESSION, cronExpression)
             .set(FORM_SCHEDULE.CRON_DURATION, cronDuration)
             .set(FORM_SCHEDULE.ACTIVE, active)
-            .set(FORM_SCHEDULE.NOTI_INACTIVE, notiInactive)
+            .set(FORM_SCHEDULE.MAILING, mailing)
             .set(FORM_SCHEDULE.UPDATED_AT, DSL.currentOffsetDateTime())
             .where(
                 FORM_SCHEDULE.ID.eq(id)
@@ -144,7 +144,7 @@ class FormScheduleService {
             form.cronExpression,
             form.cronDuration,
             form.active,
-            form.notiInactive
+            form.mailing
         )
     }
 
@@ -160,7 +160,7 @@ class FormScheduleService {
             form.cronExpression,
             form.cronDuration,
             form.active,
-            form.notiInactive
+            form.mailing
         )
     }
 

@@ -11,5 +11,5 @@ data class AdminCampaignForm(
     val endsAt: LocalDateTime? = null,
     val timeZoneId: Long? = null,
     val participants: List<ParticipantVo>,
-    val notiInactive: Boolean? = false
+    val mailing: Boolean? = true
 )

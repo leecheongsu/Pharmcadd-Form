@@ -34,14 +34,14 @@ class AdminAnswerCancelController : BaseController() {
                 a.NAME.`as`(CancelAnswerVo::approverName.name.upperCamelToLowerUnderscore()),
             )
             .from(CANCEL_ANSWER)
-            .leftJoin(r).on(CANCEL_ANSWER.REQUESTER.eq(r.ID).and(r.DELETED_AT.isNull))
-            .leftJoin(a).on(CANCEL_ANSWER.APPROVER.eq(a.ID).and(a.DELETED_AT.isNull))
+            .leftJoin(r).on(CANCEL_ANSWER.USER_ID.eq(r.ID).and(r.DELETED_AT.isNull))
+            .leftJoin(a).on(CANCEL_ANSWER.APPROVED_BY.eq(a.ID).and(a.DELETED_AT.isNull))
             .where(
                 CANCEL_ANSWER.DELETED_AT.isNull
             )
 
         if (form.type != null) {
-            query.and(CANCEL_ANSWER.APPROVAL_TYPE.eq(form.type))
+            query.and(CANCEL_ANSWER.STATUS.eq(form.type))
         }
         if (form.requester != null) {
             query.and(r.NAME.contains(form.requester))

@@ -46,7 +46,7 @@ class SignController : BaseController() {
             authorizationCodeService.findByEmailAndCodeAndVerify(form.email, form.code, false) ?: throw BadRequest()
 
         dsl.update(AUTHORIZATION_CODE)
-            .set(AUTHORIZATION_CODE.IS_VERIFY, true)
+            .set(AUTHORIZATION_CODE.VERIFICATION, true)
             .set(AUTHORIZATION_CODE.EXPIRED_AT, DSL.field("now() + '5 minute'", OffsetDateTime::class.java))
             .where(
                 AUTHORIZATION_CODE.ID.eq(record.id)

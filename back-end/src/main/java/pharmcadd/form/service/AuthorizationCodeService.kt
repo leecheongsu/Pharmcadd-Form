@@ -49,7 +49,7 @@ class AuthorizationCodeService {
             .where(
                 AUTHORIZATION_CODE.EMAIL.eq(email)
                     .and(AUTHORIZATION_CODE.CODE.eq(code))
-                    .and(AUTHORIZATION_CODE.IS_VERIFY.eq(verify))
+                    .and(AUTHORIZATION_CODE.VERIFICATION.eq(verify))
                     .and(AUTHORIZATION_CODE.EXPIRED_AT.greaterThan(DSL.currentOffsetDateTime()))
                     .and(AUTHORIZATION_CODE.DELETED_AT.isNull)
             )

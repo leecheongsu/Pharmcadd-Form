@@ -37,7 +37,7 @@ data class ScheduleVo(
     val cronExpression: String? = null,
     val cronDuration: Long? = null,
     val active: Boolean,
-    val notiInactive: Boolean? = false,
+    val mailing: Boolean? = true,
     val participants: List<ParticipantVo> = emptyList(),
 )
 
