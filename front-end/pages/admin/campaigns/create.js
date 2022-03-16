@@ -52,11 +52,18 @@ const CampaignCreate = ({ formInfo }) => {
         setHasSchedule(checked)
     }
 
+    const [isNotiInactive, setIsNotiInactive] = useState(false)
+    const onChangeNotiInactive = (e) => {
+        const { checked } = e.target
+        setIsNotiInactive(checked)
+    }
+
     const onSubmit = () => {
         const data = {
             ...inputData,
             startsAt: localDateTime(inputData.startsAt),
             endsAt: localDateTime(inputData.endsAt),
+            notiInactive: isNotiInactive,
         }
         if (hasSchedule) {
             const formId = router.query.formId
@@ -77,7 +84,17 @@ const CampaignCreate = ({ formInfo }) => {
             <PageTitle title="설문 발송" />
             <Form validated={validated} onSubmit={e => handleSubmit(e, onSubmit)}>
                 <Card>
-                    <FormLabel>내용</FormLabel>
+                    <div className="flex items-center mb-2">
+                        <FormLabel className="mb-0">내용</FormLabel>
+                        <FormCheck
+                            name="notiInactive"
+                            checked={isNotiInactive}
+                            onChange={onChangeNotiInactive}
+                            label="이메일 전송 비활성화"
+                            text="xs"
+                            className="flex items-center ml-auto"
+                        />
+                    </div>
                     <FormControl
                         name="title"
                         placeholder="발송 제목"
