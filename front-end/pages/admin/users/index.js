@@ -51,6 +51,7 @@ const Users = ({ content, options: initOptions }) => {
         const { name, value } = e.target
         loadData({
             ...options,
+            ...options.page = 1,
             [name]: value,
         })
     }
