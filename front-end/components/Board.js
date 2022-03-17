@@ -4,6 +4,8 @@ import classNames from 'classnames'
 import Search from './Search'
 import NoData from './NoData'
 import Pagination from './Pagination'
+import Button from './Button'
+import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/solid'
 
 const Board = (
     {
@@ -18,7 +20,13 @@ const Board = (
     }) => {
     const [options, setOptions] = useState({
         ...initOptions,
+        sortBy: initOptions.sortBy,
+        sortDesc: initOptions.sortDesc,
     })
+
+    //default :  updated, true
+    const { sortBy, sortDesc } = options
+
     useEffect(() => {
         setOptions({ ...initOptions })
     }, [initOptions])
@@ -29,6 +37,28 @@ const Board = (
         }
         setOptions(newOptions)
         await loadData(newOptions)
+    }
+
+    const [arrowVisibleInfo, setArrowVisibleInfo] = useState({
+        value: sortBy,
+        isVisible: false,
+    })
+
+    useEffect(async () => {
+        await loadData(options)
+    }, [sortBy])
+
+    const handleSortByButton = (value) => {
+        setArrowVisibleInfo((prev) => ({...prev, isVisible : true}))
+        if (sortBy === value) {
+            if (sortDesc === true) {
+                setOptions((prev) => ({ ...prev, sortBy: '', sortDesc: true }))
+            }
+            setOptions((prev) => ({ ...prev, sortDesc: sortDesc !== true }))
+        } else {
+            setArrowVisibleInfo((prev) => ({ ...prev, value : value}))
+            setOptions((prev) => ({ ...prev, sortBy: value, sortDesc: true }))
+        }
     }
 
     return (
@@ -54,7 +84,19 @@ const Board = (
                 <tr>
                     {/* TODO: 정렬 */}
                     {headers.map(({ dayFormat, value, label, ...headerProps }, i) => (
-                        <th {...headerProps} key={i}>{label}</th>
+                        <th {...headerProps} key={i}>
+                            {headerProps.sortable
+                                ? <Button className="btn_sort flex" onClick={() => handleSortByButton(value)}>
+                                    {label}
+                                    {arrowVisibleInfo.value === value && arrowVisibleInfo.isVisible &&
+                                    <>{sortDesc && sortBy === value ?
+                                        <ArrowSmDownIcon className="w-5 h-5" />
+                                        : <ArrowSmUpIcon className="w-5 h-5" />
+                                    }</>}
+                                </Button>
+                                : <>{label}</>
+                            }
+                        </th>
                     ))}
                 </tr>
                 </thead>

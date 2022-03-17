@@ -47,12 +47,12 @@ const Users = ({ content, options: initOptions }) => {
                 })
             })
     }
-    const onChange = (e) => {
+    const onChangeFilter = (e) => {
         const { name, value } = e.target
         loadData({
             ...options,
-            ...options.page = 1,
             [name]: value,
+            page: 1,
         })
     }
 
@@ -73,14 +73,14 @@ const Users = ({ content, options: initOptions }) => {
                                 name="groupId"
                                 value={options.groupId}
                                 options={groups}
-                                onChange={onChange}
+                                onChange={onChangeFilter}
                                 className="form-input mr-3"
                             />
                             <FormSelect
                                 name="positionId"
                                 value={options.positionId}
                                 options={positions}
-                                onChange={onChange}
+                                onChange={onChangeFilter}
                                 className="form-input mr-3"
                                 placeholder="전체"
                             />

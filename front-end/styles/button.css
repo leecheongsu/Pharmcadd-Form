@@ -68,6 +68,38 @@
     border: none;
 }
 
+/* Sorting Button */
+.btn_sort {
+    @apply text-black;
+    background-color: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+
+.btn_sort.active {
+    color: #000;
+    @apply font-medium;
+}
+
+.btn_sort:hover {
+    color: rgba(61, 104, 226, 0.82);
+    background-color: transparent;
+
+}
+
+.btn_sort:focus {
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.btn_sort.disabled {
+    box-shadow: none;
+    background-color: transparent;
+    color: #000;
+    border: none;
+}
+
+
 .btn_icon svg {
     display: inline-block;
 }
