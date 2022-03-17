@@ -18,7 +18,7 @@ export const CAMPAIGNS_HEADER = [
 
 export const USERS_HEADER = [
     { label: 'No.', value: 'id', sortable: true },
-    { label: '이름', value: 'name', className: 'w-1/4', sortable: true },
+    { label: '이름', value: 'name', className: 'w-1/4'},
     { label: '메일', value: 'email' },
     { label: '부서', value: 'groupNames' },
     { label: '직책', value: 'positionNames' },
