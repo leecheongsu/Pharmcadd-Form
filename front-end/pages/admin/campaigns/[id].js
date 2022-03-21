@@ -11,10 +11,22 @@ import NoData from '../../../components/NoData'
 import ModalBox from '../../../components/modal/ModalBox'
 import FormGroup from '../../../components/FormGroup'
 import FormControl from '../../../components/FormControl'
+import { DocumentDownloadIcon } from '@heroicons/react/solid'
+import { CSVLink } from 'react-csv'
+import dayjs from 'dayjs'
 
 const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     const router = useRouter()
     const { id, formId, title, description, startsAt, endsAt, status } = campaign
+
+    const [csvHeaders, setCsvHeaders] = useState([
+        {
+            label: '설문자',
+            key: 'userName',
+        }])
+
+    const [csvData, setCsvData] = useState([{}])
+    const [fileName, setFileName] = useState('')
 
     const [{ questions, answers, cancels }, setData] = useState({
         questions: [],
@@ -30,7 +42,23 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
             setData({ questions, answers, cancels })
         }
         handleData()
+
     }, [formId, id])
+
+    useEffect(() => {
+        const keyMap = {}
+
+        let nowDate = dayjs(new Date()).format('YYYY.MM.DD')
+
+        setFileName(`${nowDate}-${title}`)
+
+        questions.forEach((v, i) => {
+            setCsvHeaders((prev) => [...prev, { label: v.title, key: `ans${i + 1}` }])
+            keyMap[`ans${i + 1}`] = null
+        })
+        setCsvData(answers)
+
+    }, [questions, answers])
 
     const answerCancelMap = {}
     answers.map(a => {
@@ -147,6 +175,12 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
             </Card>
             <div className="flex mt-3">
                 <Button outline onClick={() => router.push('/admin/campaigns')} className="mr-auto">목록</Button>
+                <CSVLink data={csvData} headers={csvHeaders} onClick={() => console.log('processing')}
+                         filename={fileName} className="fl">
+                    <Button icon className="btn_link">
+                        <DocumentDownloadIcon className="w-7 h-7 mb-1"/>엑셀 다운로드
+                    </Button>
+                </CSVLink>
             </div>
             <div>
                 <ModalBox state={isVisible} modalConf={modalConf} child={answerForRequest()} />
