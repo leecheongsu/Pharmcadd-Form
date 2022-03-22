@@ -50,3 +50,22 @@ body {
     bottom: 0;
     border-top: 1px solid rgba(152, 166, 173, .2);
 }
+
+/* Menu */
+.bottom_menu {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px; z-index: 100;
+    border-top: 1px solid black;
+    background-color: white
+}
+
+.bottom_menu > div {
+    float: left;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+    padding-top: 13px;
+}

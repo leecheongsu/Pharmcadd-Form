@@ -128,3 +128,9 @@ export const CAMPAIGNS_STATUS = [
     { id: 'FINISHED', text: 'Finished' },
     { id: 'STOPPED', text: 'Stopped' },
 ]
+
+export const CANCEL_ANSWER_STATUS = [
+    { id: 'REQUEST', text: 'REQUEST' },
+    { id: 'APPROVE', text: 'APPROVE' },
+    { id: 'REJECT', text: 'REJECT' },
+]

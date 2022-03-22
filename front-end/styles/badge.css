@@ -25,3 +25,17 @@
     @apply border-2;
     @apply text-primary;
 }
+
+.badge-green {
+    @apply bg-transparent;
+    @apply border-green-500;
+    @apply border-2;
+    @apply text-green-500;
+}
+
+.badge-red {
+    @apply bg-transparent;
+    @apply border-red-300;
+    @apply border-2;
+    @apply text-red-400;
+}

@@ -110,11 +110,13 @@ export const getServerSideProps = async () => {
         keyword: '',
     })
     const { data } = await axios.get('/backapi/campaigns', { params })
+    const { data: userInfo } = await axios.get('/backapi/users/self')
 
     return {
         props: {
             title: 'Campaigns',
             options: params,
+            userInfo: userInfo,
             data,
         },
     }

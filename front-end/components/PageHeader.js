@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
-import { ChevronLeftIcon } from '@heroicons/react/solid'
+import { ChevronLeftIcon, DocumentIcon, DocumentReportIcon, DocumentTextIcon, HomeIcon, SearchIcon } from '@heroicons/react/solid'
 import { LogoutIcon, UserCircleIcon } from '@heroicons/react/outline'
 import axios from 'axios'
-import Link from './Link'
 import Button from './Button'
 
 export default function PageHeader({ title = 'title' }) {
@@ -26,10 +25,33 @@ export default function PageHeader({ title = 'title' }) {
                 <span className="text-lg font-bold">{title}</span>
             </h2>
             <div className="leading-none text-right">
-                {router.pathname.startsWith('/mypage')
-                    ? <Button icon onClick={logout}> <LogoutIcon className="w-6 h-6 text-gray-500" /></Button>
-                    : <Link icon href="/mypage/profile"><UserCircleIcon className="w-6 h-6 text-gray-500" /></Link>
+                {router.pathname.startsWith('/mypage') &&
+                <Button icon onClick={logout}>
+                    <LogoutIcon className="w-6 h-6 text-gray-500" />
+                </Button>
                 }
+            </div>
+            <div className="bottom_menu">
+                <div>
+                    <Button icon onClick={() => router.push('/campaigns')}>
+                        <HomeIcon className="w-6 h-6 text-gray-500" />
+                    </Button>
+                </div>
+                <div>
+                    <Button icon>
+                        <SearchIcon className="w-6 h-6 text-gray-500" />
+                    </Button>
+                </div>
+                <div>
+                    <Button icon onClick={() => router.push('/mypage/cancel-answer-list')}>
+                        <DocumentTextIcon className="w-6 h-6 text-gray-500" />
+                    </Button>
+                </div>
+                <div>
+                    <Button icon onClick={() => router.push('/mypage/profile')}>
+                        <UserCircleIcon className="w-6 h-6 text-gray-500" />
+                    </Button>
+                </div>
             </div>
         </header>
     )

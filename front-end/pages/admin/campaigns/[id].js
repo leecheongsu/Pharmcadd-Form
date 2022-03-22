@@ -43,7 +43,7 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
         }
         handleData()
 
-    }, [formId, id])
+    }, [id])
 
     useEffect(() => {
         const keyMap = {}
@@ -61,8 +61,9 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     }, [questions, answers])
 
     const answerCancelMap = {}
+
     answers.map(a => {
-        cancels.filter(c => c.requester === a.userId).map(c => {
+        cancels.filter(c => c.userId === a.userId).map(c => {
             answerCancelMap[a.userId] = c
         })
     })
@@ -70,8 +71,14 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
     const cancelAnswerId = useRef(null)
     const cancelAnswers = useRef(null)
 
+    const [isVisible, setIsVisible] = useState(false)
     const handleAnswerCancelButton = async (type) => {
         await axios.patch(`/backapi/admin/campaigns/${id}/answer-cancels/${cancelAnswerId.current}/${type}`, { answer: cancelAnswers.current })
+            .then((res) => {
+                if(res.status === 200) {
+                    setIsVisible(false)
+                }
+            })
             .catch((e) => {
                 if (e.response.status < 500) {
                     console.log(e.response)
@@ -79,7 +86,6 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
             })
     }
 
-    const [isVisible, setIsVisible] = useState(false)
     const modalConf = {
         title: '답변 취소 요청',
         content: '승인 혹은 거부에 대한 이유를 작성해주세요',
@@ -160,7 +166,7 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
                                                 <>완료 <span className="text-sm text-gray-400">({dayFormat(a.createdAt)})</span></>
                                                 :
                                                 <Button onClick={() => handleApprovalButton(answerCancelMap[a.userId].id)}>
-                                                    {answerCancelMap[a.userId].approvalType}
+                                                    {answerCancelMap[a.userId].status}
                                                 </Button>
                                         ) : <>대기중</>
                                     }
@@ -178,7 +184,7 @@ const CampaignDetail = ({ campaign, participantGroups, participantUsers }) => {
                 <CSVLink data={csvData} headers={csvHeaders} onClick={() => console.log('processing')}
                          filename={fileName} className="fl">
                     <Button icon className="btn_link">
-                        <DocumentDownloadIcon className="w-7 h-7 mb-1"/>엑셀 다운로드
+                        <DocumentDownloadIcon className="w-7 h-7 mb-1" />엑셀 다운로드
                     </Button>
                 </CSVLink>
             </div>
