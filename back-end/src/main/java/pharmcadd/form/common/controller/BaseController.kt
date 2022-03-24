@@ -6,11 +6,15 @@ import org.springframework.validation.BindException
 import org.springframework.validation.BindingResult
 import pharmcadd.form.common.security.SecurityService
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 abstract class BaseController {
 
     @Autowired
     lateinit var request: HttpServletRequest
+
+    @Autowired
+    lateinit var response: HttpServletResponse
 
     @Autowired
     lateinit var securityService: SecurityService

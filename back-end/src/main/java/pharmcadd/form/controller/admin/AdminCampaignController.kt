@@ -7,22 +7,23 @@ import pharmcadd.form.common.Constants
 import pharmcadd.form.common.controller.BaseController
 import pharmcadd.form.common.exception.NotFound
 import pharmcadd.form.common.extension.*
+import pharmcadd.form.common.util.excel.Excel
 import pharmcadd.form.common.util.pagination.DataTableForm
 import pharmcadd.form.common.util.pagination.DataTablePagination
 import pharmcadd.form.controller.admin.form.*
 import pharmcadd.form.jooq.Tables.*
 import pharmcadd.form.jooq.enums.AccessModifier
 import pharmcadd.form.jooq.enums.ParticipantType
+import pharmcadd.form.jooq.tables.pojos.AnswerStat
 import pharmcadd.form.jooq.tables.pojos.Campaign
 import pharmcadd.form.jooq.tables.pojos.CancelAnswer
 import pharmcadd.form.model.AnswerStatVo
 import pharmcadd.form.model.ParticipantVo
-import pharmcadd.form.service.CampaignService
-import pharmcadd.form.service.CancelAnswerService
-import pharmcadd.form.service.TimeZoneService
-import pharmcadd.form.service.UserService
+import pharmcadd.form.service.*
+import java.io.IOException
 import java.time.LocalDateTime
 import javax.validation.Valid
+
 
 @RestController
 @RequestMapping("/admin/campaigns")
@@ -39,6 +40,9 @@ class AdminCampaignController : BaseController() {
 
     @Autowired
     lateinit var timeZoneService: TimeZoneService
+
+    @Autowired
+    lateinit var formService: FormService
 
     @GetMapping
     fun list(form: AdminCampaignListForm): DataTablePagination<Campaign> {
@@ -333,4 +337,54 @@ class AdminCampaignController : BaseController() {
     ) {
         cancelAnswerService.reject(answerCancelId, securityService.userId, form.answer)
     }
+
+    @GetMapping("/{id}/answers/download/excel")
+    @Throws(IOException::class)
+    fun answerExcelDownload(@PathVariable("id") id: Long) {
+        val campaignRecord = campaignService.findOne(id)!!
+        val questions = formService.questions(campaignRecord.formId)
+
+
+        val answerStat = dsl.select(
+            *ANSWER_STAT.fields()
+        )
+            .select(
+                USER.NAME.`as`("userName")
+            )
+            .from(ANSWER_STAT)
+            .join(USER)
+            .on(
+                USER.ID.eq(ANSWER_STAT.USER_ID)
+                    .and(USER.DELETED_AT.isNull)
+            )
+            .and(ANSWER_STAT.DELETED_AT.isNull)
+            .where(
+                ANSWER_STAT.CAMPAIGN_ID.eq(id)
+            )
+            .fetch()
+
+        val headerForm = questions.map { it["title"].toString() }
+        headerForm.add(0, "설문자")
+
+        val answers = answerStat.map { record ->
+            val list = (1 until headerForm.size)
+                .map {
+                    record["ans_${it}"].toString()
+                }.toMutableList()
+            list.add(0, record["userName"].toString())
+            list
+        }
+
+        response.contentType = "application/vnd.ms-excel"
+        response.setHeader("Content-Disposition", "attachment;filename=${campaignRecord.title}.xlsx")
+
+
+        val excelFile = Excel().generate(headerForm, answers)
+        excelFile.write(response.outputStream)
+        excelFile.dispose()
+        response.outputStream.close()
+    }
 }
+
+
+
