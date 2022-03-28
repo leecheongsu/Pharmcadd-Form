@@ -31,8 +31,8 @@ const SideMenu = ({ show, className }) => {
                     <Image
                         src="/PharmCADD_CI.png"
                         alt="Pharmcadd"
-                        width={110}
-                        height={39}
+                        width={150}
+                        height={35}
                     />
                 </Link>
                 <nav className="py-5">

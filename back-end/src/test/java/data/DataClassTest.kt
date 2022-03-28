@@ -1,4 +1,8 @@
+import org.jooq.DSLContext
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import java.io.File
 import java.util.*
 
 class Pojo(val foo: String, val bar: String) {
@@ -22,7 +26,11 @@ class Pojo(val foo: String, val bar: String) {
 }
 data class DataPojo(val foo: String, val bar: String)
 
+@SpringBootTest(classes = [DSLContext::class])
 class DataClassTest {
+
+    @Autowired
+    lateinit var dsl: DSLContext
 
     @Test
     fun test() {
@@ -45,4 +53,29 @@ class DataClassTest {
             println("다르다")
         }
     }
+
+
+    class SchemaForm(
+        val schemaName: String,
+        val isDefault: Boolean
+    )
+
+    @Test
+    fun test3() {
+        val query = "select * from information_schema.tables " +
+            "where table_schema = 'public' order by table_name;"
+        dsl.fetch(query)
+            .map { it ->
+                SchemaForm(
+                    schemaName = it.getValue("SCHEMA_NAME", String::class.java),
+                    isDefault = it.getValue("IS_DEFALUT", Boolean::class.java)
+                )
+            }
+            .forEach{
+                println(it)
+            }
+    }
+
+    @Test
+
 }
