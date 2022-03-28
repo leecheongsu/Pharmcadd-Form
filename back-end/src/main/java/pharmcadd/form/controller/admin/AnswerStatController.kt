@@ -52,7 +52,7 @@ class AnswerStatController : BaseController() {
             .from(ANSWER)
             .where(
                 ANSWER.CAMPAIGN_ID.eq(campaign_id)
-                    .and(ANSWER.OPTION_ID.isNotNull)
+                    .and(ANSWER.OPTION_ID.greaterThan(0))
                     .and(ANSWER.DELETED_AT.isNull)
             )
             .groupBy(ANSWER.QUESTION_ID, ANSWER.OPTION_ID, ANSWER.TEXT)
