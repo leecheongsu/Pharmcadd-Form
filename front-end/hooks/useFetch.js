@@ -23,7 +23,7 @@ function useFetch(currentPage, requestUrl, query) {
                 await setCount(response.data.total)
             } catch
                 (err) {
-                console.log(err)
+                // console.log(err)
             }
         }
         , [query, currentPage])

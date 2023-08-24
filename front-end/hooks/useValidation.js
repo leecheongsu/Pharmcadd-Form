@@ -53,5 +53,3 @@ const addStatus = (obj) => {
     })
     return newObj
 }
-
-export default useValidation
