@@ -25,6 +25,6 @@ cp -f "$GIT_PATH_BACK"/build/libs/"$BUILD_FILE" $DIST_PATH_BACK || exit
 
 # 서비스 재실행
 cd "$DIST_PATH_BACK"
-sudo systemctl restart pharmcadd-form || exit
+sudo systemctl restart pharmcadd-form
 
 echo "DONE"

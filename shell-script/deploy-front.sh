@@ -28,7 +28,7 @@ mkdir "$FRONT_FOLDER_NAME"
 cd "$GIT_PATH_FRONT" || exit
 cp -r $DIST_FILES $DIST_PATH_FRONT || exit
 
-# production 모드로 npm install, 실행
-cd "$DIST_PATH_FRONT" || exit
-npm install --production
-pm2 startOrRestart "$PM2_CONFIG"
+## production 모드로 npm install, 실행
+#cd "$DIST_PATH_FRONT" || exit
+#npm install --production
+#pm2 startOrRestart "$PM2_CONFIG"
